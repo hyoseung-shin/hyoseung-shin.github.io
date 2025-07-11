@@ -65,7 +65,7 @@ main {
   white-space: nowrap;
   border-right: 3px solid white;
   width: 0;
-  font-size: clamp(2rem, 8vw, 100px); /* 반응형 폰트 */
+  font-size: clamp(2.5rem, 8vw, 100px); /* 반응형 폰트 */
   animation:
     typing 3s steps(30, end) forwards,
     blink 0.7s step-end infinite;
