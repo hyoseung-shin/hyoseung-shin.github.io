@@ -299,6 +299,7 @@ header {
     white-space: normal;
     border-right: none;
     width: auto;
+    animation: none;
     text-align: center;
   }
   #hyoseung-portfolio p {
