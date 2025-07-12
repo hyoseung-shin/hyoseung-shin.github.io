@@ -476,6 +476,9 @@ header {
   background-color: #1e293b;
   color: white;
   line-height: 1.6;
+  display: flex;
+  justify-content: center;   /* 가로 가운데 */
+  align-items: center;       /* 세로 가운데 */
 }
 
 .experience-page *,
@@ -605,7 +608,6 @@ header {
 .publication-page .glass-box,
 .awards-honors-page .glass-box {
   background: rgba(255, 255, 255, 0.08);
-  width: 100%;
   border-radius: 16px;
   padding: 25px;
   backdrop-filter: blur(10px);
