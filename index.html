@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hyoseung Shin — Homepage (Clone)</title>
+  <style>
+    :root{--bg:#fff;--muted:#555;--accent:#1a73e8;--card:#f8f9fb}
+    *{box-sizing:border-box}
+    body{font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#111;margin:0;line-height:1.45}
+    header{position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid #eee;z-index:50}
+    .container{max-width:980px;margin:0 auto;padding:18px 18px}
+    .nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .brand{font-weight:700;margin-right:auto}
+    .nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:6px}
+    .nav a:hover{background:var(--card);color:#111}
+
+    /* main layout */
+    main.container{display:grid;grid-template-columns:220px 1fr;gap:28px;padding-top:24px}
+    .sidebar{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fafafa,#fff);border:1px solid #f0f0f0}
+    .avatar{width:100%;border-radius:8px;display:block;box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);background: #fff}
+    .name{font-size:22px;font-weight:700;margin-top:12px}
+    .affil{color:var(--muted);font-size:14px;margin-top:6px}
+    .links{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+    .links a{font-size:14px;color:var(--accent);text-decoration:none}
+    .content{padding:6px 4px}
+    section{margin-bottom:32px; scroll-margin-top: 70px}
+    h1,h2,h3,h4{margin:0 0 8px 0}
+    h1{font-size:32px}
+    h2{font-size:20px;border-bottom:1px solid #eee;padding-bottom:8px}
+    .item{padding:12px;border-radius:8px}
+    .pub{display:flex;gap:12px;align-items:center}
+    .pub img{height:100%;width:auto;object-fit:contain;max-height:100px;border-radius:6px;box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);background: #fff}
+    .meta{color:var(--muted);font-size:13px}
+    .badge{display:inline-block;background:#eef7ff;color:#0a58ca;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:8px}
+
+    /* 2) CSS — 팝업 스타일 추가 */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .popup-box {
+      background: white;
+      padding: 20px 28px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      min-width: 220px;
+      position: relative;
+      text-align: center;
+    }
+    .close-btn {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    /* responsive */
+    @media (max-width:880px){
+      main.container{grid-template-columns:1fr;}
+      .sidebar{order:2}
+      header .nav{justify-content:center}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">Hyoseung Shin</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#pubs">Publications</a>
+        <a href="#Conference">Conference</a>
+        <a href="#projects">Projects</a>
+        <a href="#awards">Awards</a>
+        <a href="#pro_act">Professinal Activities</a>
+        <a href="#education">Education</a>
+        <a href="#other">Other</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 1) HTML — 팝업창 구조 추가 -->
+  <div id="popup01" class="popup-overlay">
+    <div class="popup-box">
+      <span class="close-btn">&times;</span>
+      <p style="margin: 0; font-size: 16px;">To be continue...</p>
+    </div>
+  </div>
+  <div id="popup02" class="popup-overlay">
+    <div class="popup-box">
+      <span class="close-btn">&times;</span>
+      <p style="margin: 0; font-size: 16px;">hyoseung8017@yonsei.ac.kr</p>
+    </div>
+  </div>
+
+  <main class="container">
+    <aside class="sidebar" aria-label="profile">
+      <img src="./avatar/증명사진_신효승.jpg" alt="Hyoseung Shin" class="avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=400 height=300><rect width=\'100%\' height=\'100%\' fill=\'%23ececec\'/><text x=50% y=50% dominant-baseline=middle text-anchor=middle font-size=18 fill=\'%23666\'>Profile image</text></svg>'"/>
+      <div class="name">Hyoseung Shin</div>
+      <div class="affil">Yonsei University  — Bachelor</div>
+      <div class="links">
+        <a href="https://maps.app.goo.gl/7bzZ3xrdvZfSafyA9">📍    Wonju, Korea</a>
+        <a href="hyoseung8017@yonsei.ac.kr">📧Email</a>
+        <a href="https://www.linkedin.com"> 📲LinkedIn</a>
+        <a href="https://github.com/hyoseung-shin?tab=repositories">🖥️Github</a>
+        <a href="https://scholar.google.com/citations?hl=ko&view_op=list_works&gmla=AKzYXQ3Ldid6J_G5usfjwD6x8jHjuEO18NjAq1pFOnAkW-Mkh1rVGzgtbdswQ7y6PI9XefRSp1Ibwmdt1PFl3Vo8EoWTE-6b60Nk7O1MkMp6TEeTTg&user=GeA39IUAAAAJ">🎓️Google Scholar</a>
+      </div>
+    </aside>
+
+    <div class="content">
+      <section id="about">
+        <h1>🧑 About</h1>
+        <a>I’m Hyo-seung Shin. I'm pursuing a bachelor's degree in Software Engineering at Yonsei University's Mirae Campus and have been accepted into the integrated master's and doctoral program.</a></br>
+        <a>I'm interested in artificial intelligence, image processing, image compression technology, and related standardization methods and technologies. I hope to make a positive impact on the world through research that integrates these areas of interest.</a>
+      </section>
+
+      <section id="pubs">
+        <h2>📝 Publications</h2>
+        <h4>🌎 Main Content</h4>
+        <article class="item pub">
+          <img src="./pubs/main_publication_imges.png" alt="sym"/>
+          <div>
+            <div style="font-weight:700">Traffic Accident Video Analysis using MoCo v3 and Object Detection <span class="meta">(To be submitted)</span></div>
+            <div class="meta">Junkyung Ju, Hyoseung Shin, Gyumin Park, Taewook Kim, Ellen J.Hong</div>
+            <div style="margin-top:6px"><a href="#">code</a> • <a href="#">paper</a> • <a href="#">poster</a></div>
+          </div>
+        </article>
+
+        <div style="margin-top:14px">
+          <h4>🏠 Domestic</h4>
+          <ul style="padding-left:18px;color:var(--muted)">
+            <span style="font-weight: 570;"><li>Traffic Accident Video Analysis using MoCo v3 and Object Detection</li></span>
+              <span style="font-size: 14px;">
+                <a>Researcher line</a></br>
+                <em>To be submitted</em></br>
+              </span>
+            <span style="font-weight: 570;"><li>객체 탐지와 대조 학습을 활용한 운전자 사고 영상 클러스터링 및 패턴 분석</li></span>
+              <span style="font-size: 14px;">
+                <a>Taewook Kim, Hyoseung Shin, Gyumin Park, Junkyung Ju, Ellen J.Hong</a></br>
+                <em>Winter Conference of KSCI - 2024</em></br>
+                <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12098773">[paper]</a>
+              </span>
+            <span style="font-weight: 570;"><li>TAREF: 운전자 특성 및 실시간 행동 분석 기반 교통사고 위험도 산출 프레임워크</li></span>
+              <span style="font-size: 14px;">
+                <a>Taewook Kim, Junkyung Ju, Hyoseung Shin, Gyumin Park, Ellen J.Hong</a></br>
+                <em>The Joural of Korea Institute of Convergence Signal Processing (JISPS) — 2024</em></br>
+                <a href="https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=JAKO202417550406336">[paper]</a>
+              </span>
+            <span style="font-weight: 570;"><li>비디오 클러스터링을 통한 위험 운전 습관 분석</li></span>
+              <span style="font-size: 14px;">
+                <a>Taewook Kim, Junkyung Ju, Gyumin Park, Hyoseung Shin, Ellen J.Hong</a></br>
+                <em>Summer Conference of KSCI — 2024</em></br>
+                <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11925979">[paper]</a>
+              </span>
+            <span style="font-weight: 570;"><li>대조 학습 기반 운전자 사고 영상 클러스터링 및 사고 패턴 분석</li></span>
+              <span style="font-size: 14px;">
+                <a>Junkyung Ju, Taewook Kim, Gyumin Park, Hyoseung Shin, Ellen J.Hong</a></br>
+                <em>Summer Conference of KICSP — 2024</em></br>
+                <a href="./pubs/대조 학습 기반 운전자 사고 영상 클러스터링 및 사고 패턴 분석_KICSP.pdf">[paper]</a>
+              </span>
+            <span style="font-weight: 570;"><li>QR코드 데이터 손실률에 따른 인식 패턴 복원 알고리즘</li></span>
+              <span style="font-size: 14px;">
+                <a>Doyoung Lee, Hyoseung Shin, Jiyun Byun, Hongrae Lee</a></br>
+                <em>Asia-pacific Journal of Convergent Research Interchange(APJCRI) — 2024</em></br>
+                <a href="http://apjcriweb.org/content/vol10no3/4.pdf">[paper]</a>
+              </span>
+          </ul>
+        </div>
+      </section>
+
+      <section id="Conference">
+        <h2>🧠 Conference</h2>
+        <ul style="padding-left:18px">
+          <span style="color: #555;">
+            <span style="font-weight: 500"><li>The Korea Society of Computer and Information Winter Conference 2025</li></span>
+              <span style="font-size: 14px;">
+                <em>Cheonan(Korea) | January</em></br> 
+                <a href="https://conference-2025-01.ksci.re.kr/">[site]</a></br>
+              </span>
+            <span style="font-weight: 500"><li>The Korea Institute of Convergence Singal Fall Processing 2024</li></span>
+              <span style="font-size: 14px;">
+                <em>Wonju(Korea) | November</em></br> 
+                <a href="https://cafe.naver.com/kicsp​ ">[site]</a> | <a href="./conference/KSCI_2024_11.pdf">[paper]</a></br>
+              </span>
+            <span style="font-weight: 500"><li>The Korea Society of Computer and Information Summer Conference 2024</li></span>
+              <span style="font-size: 14px;">
+                <em>Jeju(Korea) | July</em></br> 
+                <a href="https://conference-2024-02.ksci.re.kr/">[site]</a>
+              </span>
+            <span style="font-weight: 500"><li>The Korea Institute of Convergence Singal Processing Summer 2024</li></span>
+              <span style="font-size: 14px;">
+                <em>Changwon(Korea) | June</em></br> 
+                <a href="https://cafe.naver.com/kicsp">[site]</a> | <a href="./conference/KSCI_2024_06.pdf">[paper]</a></br>
+              </span>
+          </span>
+        </ul>
+      </section>
+
+      <section id="projects">
+        <h2>💬 Projects</h2>
+        <ul style="padding-left:18px">
+          <span style="font-weight: 500;color:#555"><li>Multi-model-based driver-tailored accident risk prediction technique</li></span>
+              <span style="font-size: 14px;">
+                <a>2024.03. - 2025.02.</a></br>
+                <em>National Research Foundation of Korea (NRF)</em></br>
+              </span>
+          <span style="font-weight: 500;color:#555"><li>Data construction using the pharmaceutical quality and safety vision inspection system</li></span>
+              <span style="font-size: 14px;">
+                <a>2024.03. - 2025.02.</a></br>
+                <em>Yonsei University Mirae Campus, National Center of Excellence in Software</em></br>
+                <a href="https://github.com/hyoseung-shin/Data-construction-using-the-pharmaceutical-quality-and-safety-vision-inspection-system">[code]</a> | <a href="./projects/산학공동프젝트 판넬.pdf">[poster]</a>
+              </span>
+          <span style="font-weight: 500;color:#555"><li>Student Self-Directed Learning Mentoring Research Project</li></span>
+              <span style="font-size: 14px;">
+                <a>2024.03. - 2025.02.</a></br>
+                <em>Reduction of image noise according to high and low frequencies</em></br>
+              </span>
+        </ul>
+      </section>
+
+      <section id="awards">
+        <h2>🏆 Honors and Awards</h2>
+        <ul style="padding-left:18px">
+          <span style="font-weight: 500;color:#555"><li>University Vice President's Commendation</li></span>
+              <span style="font-size: 14px;">
+                <em>Commendation | 2025</em></br>
+                <a href="./awards/부총장_표창장.pdf">[testimonial]</a>
+              </span>
+          <span style="font-weight: 500;color:#555"><li>Police Chief's Certificate of Appreciation</li></span>
+              <span style="font-size: 14px;">
+                <em>Certificate of Appreciation | 2025</em></br>
+                <a href="./awards/경찰서장_감사장.pdf">[testimonial]</a>
+              </span>
+          <span style="font-weight: 500;color:#555"><li>2024 Yonsei Murray Camp Outstanding Volunteer Service Contest</li></span>
+              <span style="font-size: 14px;">
+                <em>Excellence Prize | Team of SWeet</em></br>
+                <a href="./awards/연세머레이캠프_우수활동경진대회_우수상.pdf">[testimonial]</a>
+              </span>
+          <span style="font-weight: 500;color:#555"><li>2024 KSCI Summer Conference Outstanding Paper Award</li></span>
+              <span style="font-size: 14px;">
+                <em>Silver Award | Analyzing risky driving habits through video clustering</em></br>
+                <a href="./awards/2024년도_한국컴퓨터정보학회_하계학술대회_우수논문상장.pdf">[testimonial]</a>
+              </span>
+        </ul>
+      </section>
+
+      <section id="pro_act">
+        <h2>💼 Professional Activities</h2>
+        <ul style="padding-left:18px">
+          <span style="font-weight: 500;color:#555"><li>MPEG New Media Forum Summer School</li></span>
+              <span style="font-size: 14px;">
+                <a>2025. 08. 11. - 2025. 08. 13.</a></br>
+                <em>The Korea Institute of Broadcast and Media Engineers</em></br>
+                <a href="https://www.kibme.org/info/board?bo_idx=833">[site]</a>
+              </span>
+        </ul>
+      </section>
+
+      <section id="education">
+        <h2>🎓️ Education</h2>
+        <p>2023.03 - present, Yonsei University Mirae Campus — Bachelor of Software</p>
+      </section>
+
+      <section id="other">
+        <h2>🏎️ Other</h2>
+        <span style="font-weight: 500;color:#555"><li>제34대 총학생회 &lt;사계&gt; 부총학생회장  </li></span>
+              <span style="font-size: 14px;">
+                <a>2024.12. - 2025.11.</a></br>
+                <em>Yonsei University Mirae Campus</em></br>
+        <span style="font-weight: 500;color:#555"><li>연세대학교 미래캠퍼스 머레이봉사센터 SWeet팀 팀원/부팀장/팀장  </li></span>
+              <span style="font-size: 14px;">
+                <a>2023.07. - 2024.12. | 118 hours </a></br>
+                <em>Yonsei University Mirae Campus</em></br>
+        <span style="font-weight: 500;color:#555"><li>제33대 총학생회 &lt;하나&gt; 미래전략정책실 팀원/팀장  </li></span>
+              <span style="font-size: 14px;">
+                <a>2023.11. - 2024.11.</a></br>
+                <em>Yonsei University Mirae Campus</em></br>
+        <span style="font-weight: 500;color:#555"><li>제3대 소프트웨어학부 학생회 &lt;step&gt; 홍보부 수습부원/차장  </li></span>
+              <span style="font-size: 14px;">
+                <a>2024.03. - 2024.10.</a></br>
+                <em>Yonsei University Mirae Campus</em></br>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // smooth scrolling for nav
+    document.querySelectorAll('header a, .links a').forEach(a=>{
+      if(!a.hash) return;
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const target=document.querySelector(a.hash);
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      })
+    });
+    // Popup Elements
+    const popup01 = document.getElementById("popup01");
+    const closeBtn = document.querySelector(".close-btn");
+
+    // Show popup for LinkedIn
+    document.querySelectorAll('a[href="https://www.linkedin.com"]').forEach(el => {
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        popup01.style.display = "flex";
+      });
+    });
+    // Close popup when X is clicked
+    closeBtn.addEventListener("click", () => {
+      popup01.style.display = "none";
+    });
+    // Also close popup when clicking outside
+    popup01.addEventListener("click", (e) => {
+      if (e.target === popup01) popup01.style.display = "none";
+    });
+
+    const popup02 = document.getElementById("popup02");
+    // Show popup for Email
+    document.querySelectorAll('a[href="hyoseung8017@yonsei.ac.kr"]').forEach(el => {
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        popup02.style.display = "flex";
+      });
+    });
+
+    // Close popup when X is clicked
+    closeBtn.addEventListener("click", () => {
+      popup02.style.display = "none";
+    });
+
+    // Also close popup when clicking outside
+    popup02.addEventListener("click", (e) => {
+      if (e.target === popup02) popup02.style.display = "none";
+    });
+  </script>
+</body>
+</html>
