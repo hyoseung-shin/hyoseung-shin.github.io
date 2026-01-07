@@ -68,6 +68,54 @@
       .sidebar{order:-1}
       header .nav{justify-content:center}
     }
+
+/* toggle 기능 추가*/
+.others-list { /* Others 리스트 공통 */
+  padding-left: 18px;
+  color: #555;
+}
+
+.notion-toggle {
+  list-style-type: disc;
+  margin-bottom: 10px;
+}
+
+.toggle-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.notion-toggle.open .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  margin-top: 6px;
+  margin-left: 18px;   /* Notion과 동일한 하위 indent */
+  display: none;
+}
+
+.notion-toggle.open .toggle-content {
+  display: block;
+}
+
+.toggle-meta {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.meta-block {
+  margin-left: 0;
+  font-size: 14px;
+}
   </style>
 </head>
 
@@ -289,14 +337,26 @@
         </ul>
       </section>
 
-      <section id="others">
-        <h2>🏎️ Others</h2>
-        <ul style="padding-left:18px">
-          <span style="font-weight: 500;color:#555"><li>제34대 총학생회 &lt;사계&gt; 부총학생회장</li></span>
-                <span style="font-size: 14px;">
-                  <a>2024.12. - 2025.11.</a></br>
-                  <em>Yonsei University Mirae Campus</em></br></span>
-          <span style="font-weight: 500;color:#555"><li>연세대학교 미래캠퍼스 머레이봉사센터 SWeet팀 팀원/부팀장/팀장</li></span>
+ <section id="others">
+  <h2>🏎️ Others</h2>
+  <ul class="others-list">
+    <li class="notion-toggle">
+      <div class="toggle-header">
+
+        <span>제34대 총학생회 &lt;사계&gt; 부총학생회장</span>
+      </div>
+
+      <ul class="toggle-content">
+        <li>하위목록 01</li>
+      </ul>
+
+      <div class="toggle-meta">
+        <div>2024.12. - 2025.11.</div>
+        <em>Yonsei University Mirae Campus</em>
+      </div>
+    </li>
+
+    <span style="font-weight: 500;color:#555"><li>연세대학교 미래캠퍼스 머레이봉사센터 SWeet팀 팀원/부팀장/팀장</li></span>
                 <span style="font-size: 14px;">
                   <a>2023.07. - 2024.12. | 118 hours </a></br>
                   <em>Yonsei University Mirae Campus</em></br></span>
@@ -308,8 +368,9 @@
                 <span style="font-size: 14px;">
                   <a>2024.03. - 2024.10.</a></br>
                   <em>Yonsei University Mirae Campus</em></br></span>
-        </ul>
-      </section>
+
+  </ul>
+</section>
 
     </div>
   </main>
@@ -362,10 +423,17 @@
     popup02.addEventListener("click", (e) => {
       if (e.target === popup02) popup02.style.display = "none";
     });
+
+
+    // for toggle
+    document.querySelectorAll(".toggle-header").forEach(header => {
+     header.addEventListener("click", () => {
+      header.parentElement.classList.toggle("open");
+    });
+  });
   </script>
 </body>
 </html>
-
 
 
 
