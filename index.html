@@ -378,8 +378,8 @@
         const renderJournalCard = (pub) => `
             <div class="flex flex-col md:flex-row gap-6 md:gap-8 p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition w-full">
                 <div class="w-full md:w-[35%] lg:w-[30%] shrink-0">
-                    <div class="w-full aspect-video bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center overflow-hidden">
-                        ${pub.image ? `<img src="${pub.image}" alt="Publication Cover" class="w-full h-full object-cover">` : `<span class="text-slate-300 text-base font-medium">No Image</span>`}
+                    <div class="w-full aspect-video bg-white border border-slate-200 rounded-xl flex items-center justify-center overflow-hidden p-2 shadow-sm">
+                        ${pub.image ? `<img src="${pub.image}" alt="Publication Cover" class="w-full h-full object-contain">` : `<span class="text-slate-300 text-base font-medium">No Image</span>`}
                     </div>
                 </div>
                 <div class="flex flex-col justify-start w-full">
