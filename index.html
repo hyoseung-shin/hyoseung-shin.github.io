@@ -269,28 +269,25 @@
                         title: "Graduate Student Convergence Research Program",
                         period: "2025.11 - 2026.01",
                         org: "Yonsei University Graduate School Future Innovation Support Center",
-                        links: [{ name: "poster", url: "https://to.be.continue/" }]
+                        link:"https://to.be.continue/"
                     },
                     {
                         title: "Multi-model-based driver-tailored accident risk prediction technique",
                         period: "2024.03 - 2025.02",
                         org: "National Research Foundation of Korea (NRF)",
-                        links: []
+                        link:"https://to.be.continue/"
                     },
                     {
                         title: "Data construction using the pharmaceutical quality and safety vision inspection system",
                         period: "2024.03 - 2025.02",
                         org: "Yonsei University Mirae Campus, National Center of Excellence in Software",
-                        links: [
-                            { name: "code", url: "https://github.com/hyoseung-shin/Data-construction-using-the-pharmaceutical-quality-and-safety-vision-inspection-system" },
-                            { name: "poster", url: "./projects/산학공동프젝트 판넬.pdf" }
-                        ]
+                        links: "./projects/산학공동프젝트 판넬.pdf"
                     },
                     {
                         title: "Student Self-Directed Learning Mentoring Research Project",
                         period: "2024.03 - 2025.02",
                         org: "Reduction of image noise according to high and low frequencies",
-                        links: []
+                        link: "https://to.be.continue/"
                     }
                 ]
             },
@@ -479,13 +476,17 @@
         document.getElementById('project-container').innerHTML = portfolioData.research.projects.map(proj => `
             <div class="relative pl-6 md:pl-8 mb-8">
                 <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
-                <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">${proj.title}</h4>
-                <p class="text-base md:text-lg text-slate-600 mt-2 font-medium">${proj.org} <br> <span class="italic text-slate-500 text-sm md:text-base">${proj.period}</span></p>
-                <div class="flex flex-wrap gap-3 mt-3">
-                    ${proj.links && proj.links.length > 0 ? proj.links.map(link => `
-                        <a href="${link.url}" target="_blank" class="text-sm md:text-base font-bold text-slate-800 hover:text-blue-600 transition inline-block">[${link.name}]</a>
-                    `).join('') : ''}
-                </div>
+                
+                <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">
+                    ${proj.link 
+                        ? `<a href="${proj.link}" target="_blank" class="hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4">${proj.title}</a>` 
+                        : proj.title}
+                </h4>
+                
+                <p class="text-base md:text-lg text-slate-600 mt-2 font-medium">
+                    ${proj.org} <br> 
+                    <span class="italic text-slate-500 text-sm md:text-base">${proj.period}</span>
+                </p>
             </div>
         `).join('');
 
@@ -504,16 +505,14 @@
                 <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
                 
                 <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">
-                    ${award.title}
+                    ${award.link 
+                        ? `<a href="${award.link}" target="_blank" class="hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4">${award.title}</a>` 
+                        : award.title}
                 </h4>
                 
                 <p class="text-slate-700 text-base md:text-lg mt-2 font-medium">
                     ${award.desc}
                 </p>
-                
-                <div class="flex flex-wrap gap-4 mt-3">
-                    ${award.link ? `<a href="${award.link}" target="_blank" class="text-sm md:text-base font-bold text-slate-800 hover:text-blue-600 transition">[Certificate]</a>` : ''}
-                </div>
             </div>
         `).join('');
 
@@ -523,7 +522,9 @@
                 <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
                 
                 <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">
-                    ${act.title}
+                    ${act.link 
+                        ? `<a href="${act.link}" target="_blank" class="hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4">${act.title}</a>` 
+                        : act.title}
                 </h4>
                 
                 <p class="text-slate-700 text-base md:text-lg mt-2 font-medium">
@@ -533,13 +534,9 @@
                 <p class="text-sm md:text-base text-slate-500 mt-2 mb-3 italic">
                     ${act.period}
                 </p>
-                
-                <div class="flex flex-wrap gap-4 mt-3">
-                    ${act.link ? `<a href="${act.link}" target="_blank" class="text-sm md:text-base font-bold text-slate-800 hover:text-blue-600 transition">[Certificate]</a>` : ''}
-                </div>
             </div>
         `).join('');
-
+        
         // Others
         document.getElementById('others-container').innerHTML = portfolioData.others.map(item => {
             if (item.isToggle) {
