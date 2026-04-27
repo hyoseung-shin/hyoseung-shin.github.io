@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: ['2023', '2024', '2025', '2026'],
             datasets: [{
                 label: 'Papers',
-                data: [2, 5, 4, 1],
+                data: [0, 4, 1, 2],
                 borderColor: '#2c3e50',
                 backgroundColor: 'rgba(44, 62, 80, 0.1)',
                 borderWidth: 3,
@@ -38,12 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [
                 {
                     label: 'International',
-                    data: [0, 1, 2, 0],
+                    data: [0, 0, 0, 0],
                     backgroundColor: '#1a4a7c'
                 },
                 {
                     label: 'Domestic',
-                    data: [2, 4, 2, 1],
+                    data: [0, 4, 1, 2],
                     backgroundColor: '#2a9d8f'
                 }
             ]
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: ['Journal', 'Conference'],
             datasets: [{
-                data: [4, 8],
+                data: [4, 3],
                 backgroundColor: ['#1a4a7c', '#7fb3d5'],
                 borderWidth: 0
             }]
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: ['2023', '2024', '2025', '2026'],
             datasets: [{
                 label: 'Contributions',
-                data: [1, 2, 3, 1],
+                data: [0, 0, 0, 0],
                 borderColor: '#e74c3c',
                 backgroundColor: 'rgba(231, 76, 60, 0.1)',
                 borderWidth: 3,
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
             labels: ['VVC', 'VCM'],
             datasets: [{
-                data: [4, 3],
+                data: [0, 0],
                 backgroundColor: ['#9b59b6', '#f39c12'],
                 borderWidth: 0
             }]
