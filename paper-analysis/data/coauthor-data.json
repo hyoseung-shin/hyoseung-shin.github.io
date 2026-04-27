@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "id": "Hyoseung Shin",
+      "group": 1,
+      "role": "Me",
+      "color": "#e74c3c"
+    },
+    {
+      "id": "Kwang-deok Seo",
+      "group": 2,
+      "role": "Professor",
+      "color": "#2c3e50"
+    },
+    {
+      "id": "Min-suk Kim",
+      "group": 3,
+      "role": "Ph.D. Student",
+      "color": "#3498db"
+    },
+    {
+      "id": "Se-hee Park",
+      "group": 4,
+      "role": "MS Student",
+      "color": "#2ecc71"
+    },
+    {
+      "id": "Jun-kyung Ju",
+      "group": 4,
+      "role": "MS Student",
+      "color": "#2ecc71"
+    },
+    {
+      "id": "Tae-wook Kim",
+      "group": 4,
+      "role": "MS Student",
+      "color": "#2ecc71"
+    },
+    {
+      "id": "Gyu-min Park",
+      "group": 5,
+      "role": "Undergraduate",
+      "color": "#f39c12"
+    },
+    {
+      "id": "Ellen J.Hong",
+      "group": 2,
+      "role": "Professor",
+      "color": "#2c3e50"
+    }
+  ],
+  "links": [
+    {
+      "source": "Hyoseung Shin",
+      "target": "Kwang-deok Seo",
+      "value": 5
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Min-suk Kim",
+      "value": 3
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Se-hee Park",
+      "value": 2
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Jun-kyung Ju",
+      "value": 4
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Tae-wook Kim",
+      "value": 4
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Gyu-min Park",
+      "value": 3
+    },
+    {
+      "source": "Hyoseung Shin",
+      "target": "Ellen J.Hong",
+      "value": 3
+    },
+    {
+      "source": "Jun-kyung Ju",
+      "target": "Tae-wook Kim",
+      "value": 5
+    },
+    {
+      "source": "Tae-wook Kim",
+      "target": "Gyu-min Park",
+      "value": 4
+    },
+    {
+      "source": "Min-suk Kim",
+      "target": "Kwang-deok Seo",
+      "value": 5
+    }
+  ]
+}

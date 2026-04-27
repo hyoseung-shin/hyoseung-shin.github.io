@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Analysis - Hyoseung Shin</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <a href="../index-portfolio.html" class="logo" style="cursor: pointer;">Hyo-seung</a>
+                <ul class="nav-links">
+                    <li><a href="../index-portfolio.html#about">About</a></li>
+                    <li><a href="../index-portfolio.html#research" class="active">Research</a></li>
+                    <li><a href="../index-portfolio.html#education">Education</a></li>
+                    <li><a href="../index-portfolio.html#awards">Honors & Awards</a></li>
+                    <li><a href="../index-portfolio.html#activities">Activities</a></li>
+                    <li><a href="../index-portfolio.html#others">Others</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <span class="section-tag">§ RESEARCH DASHBOARD</span>
+                <h1>Paper Analysis</h1>
+                <p class="description">논문 실적 분석 및 연구 네트워크 시각화 대시보드입니다. 연도별 실적, 투고 유형, 그리고 공동 연구 네트워크를 확인할 수 있습니다.</p>
+                
+                <div class="stats-summary">
+                    <div class="stat-item">
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">TOTAL PAPERS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">4</span>
+                        <span class="stat-label">JOURNAL</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">8</span>
+                        <span class="stat-label">CONFERENCE</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">STANDARDS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="analytics-section">
+            <div class="container">
+                <span class="section-tag">§ STATISTICS</span>
+                <h2>Publication Analytics</h2>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-tag">YEARLY OUTPUT</span>
+                            <h3>Papers per Year</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="papersPerYearChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-tag">VENUE TIER</span>
+                            <h3>Int'l vs Domestic</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="intlVsDomesticChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-tag">VENUE TYPE</span>
+                            <h3>Journal vs Conference</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="journalVsConferenceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="analytics-section">
+            <div class="container">
+                <span class="section-tag">§ STANDARDIZATION</span>
+                <h2>Standard Contributions</h2>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-tag">YEARLY CONTRIBUTION</span>
+                            <h3>Contribution per Year</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="contributionPerYearChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-tag">CONTRIBUTION TYPE</span>
+                            <h3>VVC vs VCM</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="contributionTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="network-section">
+            <div class="container">
+                <span class="section-tag">§ NETWORK</span>
+                <h2>Co-authorship Graph</h2>
+                
+                <div class="graph-container">
+                    <div id="coAuthorshipGraph"></div>
+                    <div class="graph-controls">
+                        <h4>GRAPH SETTINGS</h4>
+                        <div class="control-group">
+                            <label>Repulsion (Push)</label>
+                            <input type="range" id="repulsionRange" min="100" max="1000" value="500">
+                        </div>
+                        <div class="control-group">
+                            <label>Gravity (Pull)</label>
+                            <input type="range" id="gravityRange" min="0" max="1" step="0.01" value="0.1">
+                        </div>
+                        <div class="control-group">
+                            <label>Edge Length</label>
+                            <input type="range" id="edgeRange" min="50" max="500" value="200">
+                        </div>
+                        
+                        <h4 style="margin-top: 20px;">SHOW ROLES</h4>
+                        <div class="role-filters">
+                            <label><input type="checkbox" checked> Professor</label>
+                            <label><input type="checkbox" checked> Ph.D. Student</label>
+                            <label><input type="checkbox" checked> MS Student</label>
+                            <label><input type="checkbox" checked> Undergraduate</label>
+                        </div>
+                        
+                        <button id="resetGraphBtn"><i class="fas fa-sync-alt"></i> Reset View</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <p>© 2026 Hyoseung Shin · VISCOM Lab.</p>
+                <a href="../index-portfolio.html#research" style="color: #3498db; text-decoration: none; font-weight: 600;">← Back to Research</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
