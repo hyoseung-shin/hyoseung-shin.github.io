@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyoseung Shin - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            letter-spacing: -0.01em;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+        }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 antialiased selection:bg-blue-200 selection:text-blue-900 relative">
+
+    <nav class="fixed w-full z-50 glass-nav border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-900 tracking-tighter">Hyo<span class="text-blue-600">-</span>seung</a>
+            
+            <div class="hidden md:flex items-center space-x-8 text-base font-medium">
+                <a href="#about" class="text-slate-600 hover:text-blue-600 transition">About</a>
+                
+                <div class="relative group">
+                    <a href="#research" class="flex items-center gap-1 text-slate-600 hover:text-blue-600 transition py-4">
+                        Research
+                        <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </a>
+                    <div class="absolute left-0 top-full mt-0 w-64 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col overflow-hidden">
+                        <a href="#journal" class="px-5 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b border-slate-100">Journal Paper</a>
+                        <a href="#conference" class="px-5 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b border-slate-100">Conference Proceeding</a>
+                        <a href="#patent" class="px-5 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b border-slate-100">Patent</a>
+                        <a href="#standard" class="px-5 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 border-b border-slate-100">International Standard</a>
+                        <a href="#project" class="px-5 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600">Project</a>
+                        <a href="./paper-analysis/index.html" class="px-5 py-3 text-sm text-blue-600 hover:bg-blue-50 font-semibold border-t border-slate-100">📊 View More Research</a>
+                    </div>
+                </div>
+
+                <a href="#education" class="text-slate-600 hover:text-blue-600 transition">Education</a>
+                <a href="#awards" class="text-slate-600 hover:text-blue-600 transition">Honors & Awards</a>
+                <a href="#activities" class="text-slate-600 hover:text-blue-600 transition">Activities</a>
+                <a href="#others" class="text-slate-600 hover:text-blue-600 transition">Others</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-slate-900 focus:outline-none p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 absolute w-full left-0 top-16 shadow-xl max-h-[80vh] overflow-y-auto">
+            <div class="flex flex-col p-6 space-y-4 text-lg font-medium text-slate-600">
+                <a href="#about" class="mobile-link hover:text-blue-600">About</a>
+                
+                <div class="border-y border-slate-100 py-3">
+                    <a href="#research" class="mobile-link font-bold text-slate-900 block mb-3">Research</a>
+                    <div class="flex flex-col pl-4 space-y-3 border-l-2 border-slate-100 text-base">
+                        <a href="#journal" class="mobile-link text-slate-500 hover:text-blue-600">Journal Paper</a>
+                        <a href="#conference" class="mobile-link text-slate-500 hover:text-blue-600">Conference Proceeding</a>
+                        <a href="#patent" class="mobile-link text-slate-500 hover:text-blue-600">Patent</a>
+                        <a href="#standard" class="mobile-link text-slate-500 hover:text-blue-600">International Standard</a>
+                        <a href="#project" class="mobile-link text-slate-500 hover:text-blue-600">Project</a>
+                        <a href="./paper-analysis/index.html" class="mobile-link text-blue-600 font-semibold">📊 View More Research</a>
+                    </div>
+                </div>
+
+                <a href="#education" class="mobile-link hover:text-blue-600">Education</a>
+                <a href="#awards" class="mobile-link hover:text-blue-600">Honors & Awards</a>
+                <a href="#activities" class="mobile-link hover:text-blue-600">Professional Activities</a>
+                <a href="#others" class="mobile-link hover:text-blue-600">Others</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="popup-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden justify-center items-center z-[100] opacity-0 transition-opacity duration-300">
+        <div class="bg-white border border-slate-200 p-8 rounded-2xl relative min-w-[300px] text-center shadow-2xl transform scale-95 transition-transform duration-300" id="popup-box">
+            <button id="close-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-2xl leading-none">&times;</button>
+            <p id="popup-text" class="text-slate-900 text-xl font-bold mt-2"></p>
+        </div>
+    </div>
+
+    <section id="about" class="min-h-[90vh] flex items-center justify-center relative overflow-hidden pt-24 pb-16 bg-white scroll-mt-16">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-blue-400 rounded-full blur-[100px] md:blur-[150px] opacity-10 pointer-events-none"></div>
+        <div class="relative z-10 max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10 md:gap-12 text-center md:text-left">
+            <div class="w-56 md:w-64 aspect-[3/4] flex-shrink-0 border-4 border-white rounded-2xl overflow-hidden shadow-xl bg-slate-100">
+                <img src="./avatar/id_photo.jpg" alt="Hyoseung Shin" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Hyoseung'">
+            </div>
+            <div>
+                <h2 class="text-blue-600 font-bold tracking-wide uppercase text-sm md:text-base mb-2">Yonsei University — Bachelor</h2>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    Hyoseung <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Shin</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 mb-8 leading-loose max-w-2xl break-keep font-medium">
+                    I'm pursuing a bachelor's degree in <strong>Software Engineering</strong> at Yonsei University's Mirae Campus and have been accepted into the integrated master's and doctoral program.<br><br class="hidden md:block">
+                    I'm interested in <strong>Applied Artificial Intelligence, Video Coding & Processing related standardization methods, and Irregular-Surface Adaptive Media</strong>.<br><br class="hidden md:block">
+                    I'm currently affiliated with <a href="https://viscom.yonsei.ac.kr" class="text-blue-600 hover:text-blue-800 underline underline-offset-4">Visual Communications Research Lab(VISCOM Lab.)</a> at Yonsei University.
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4 text-base font-semibold">
+                    <span class="px-5 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 w-full md:w-auto text-center">📍 Wonju, Korea</span>
+                    <a href="#" onclick="showPopup('hyoseung8017@yonsei.ac.kr')" class="px-5 py-2.5 bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-600 hover:text-white rounded-lg transition text-center flex-1 md:flex-none">📧 Email</a>
+                    <a href="https://www.linkedin.com/in/%ED%9A%A8%EC%8A%B9-%EC%8B%A0-b22a6a3aa/" target="_blank" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg transition shadow-sm text-center flex-1 md:flex-none">📲 LinkedIn</a>
+                    <a href="https://github.com/hyoseung-shin" target="_blank" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg transition shadow-sm text-center flex-1 md:flex-none">🖥️ Github</a>
+                    <a href="https://scholar.google.com/citations?user=GeA39IUAAAAJ" target="_blank" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg transition shadow-sm text-center flex-1 md:flex-none">🎓 Scholar</a>
+                    <a href="./avatar/hyoseung-shin_cv.pdf" target="_blank" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg transition shadow-sm text-center flex-1 md:flex-none">📄 CV</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="py-20 md:py-32 bg-slate-50 border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-16 md:mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">🔬 Research</h2>
+                <p class="text-base md:text-lg font-medium text-slate-500">Publications, Conferences, Patents, Standards, and Projects</p>
+                <div class="w-20 h-1.5 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div id="journal" class="mb-20 md:mb-24 scroll-mt-24">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-10 border-l-4 border-blue-500 pl-4">Journal Paper</h3>
+
+                <h4 class="text-lg md:text-xl font-bold text-slate-700 mb-6 border-b border-slate-200 pb-3">International</h4>
+                <div id="journal-intl-container" class="flex flex-col gap-8 w-full mb-12"></div>
+
+                <h4 class="text-lg md:text-xl font-bold text-slate-700 mb-6 border-b border-slate-200 pb-3">Domestic</h4>
+                <div id="journal-domestic-container" class="flex flex-col gap-8 w-full"></div>
+            </div>
+
+            <div id="conference" class="mb-20 md:mb-24 scroll-mt-24">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8 border-l-4 border-purple-500 pl-4">Conference Proceeding</h3>
+                <div id="conference-container" class="flex flex-col gap-6 w-full"></div>
+            </div>
+
+            <div id="patent" class="mb-20 md:mb-24 scroll-mt-24">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8 border-l-4 border-red-500 pl-4">Patent</h3>
+                <div id="patent-container" class="flex flex-col gap-6 w-full"></div>
+            </div>
+
+            <div id="standard" class="mb-20 md:mb-24 scroll-mt-24">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8 border-l-4 border-emerald-500 pl-4">International Standard</h3>
+                <div id="standard-container" class="flex flex-col gap-6 w-full"></div>
+            </div>
+
+            <div id="project" class="scroll-mt-24">
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-8 border-l-4 border-amber-500 pl-4">Project</h3>
+                <div id="project-container" class="flex flex-col gap-6 w-full"></div>
+            </div>
+
+            <!-- View More Research Button -->
+            <div class="mt-16 text-center">
+                <a href="./paper-analysis/index.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold rounded-lg hover:shadow-lg transition-all duration-300 text-lg">
+                    📊 View More Research →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="py-20 md:py-32 bg-white border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-16 md:mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">🎓 Education</h2>
+                <div class="w-20 h-1.5 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            <div id="education-container" class="flex flex-col gap-8"></div>
+        </div>
+    </section>
+
+    <section id="awards" class="py-20 md:py-32 bg-slate-50 border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-16 md:mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">🏆 Honors & Awards</h2>
+                <div class="w-20 h-1.5 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            <div id="awards-container" class="flex flex-col gap-8"></div>
+        </div>
+    </section>
+
+    <section id="activities" class="py-20 md:py-32 bg-white border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-16 md:mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">💼 Professional Activities</h2>
+                <div class="w-20 h-1.5 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            <div id="activities-container" class="flex flex-col gap-8"></div>
+        </div>
+    </section>
+
+    <section id="others" class="py-20 md:py-32 bg-slate-50 border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="mb-16 md:mb-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">🏎️ Others</h2>
+                <p class="text-base md:text-lg font-medium text-slate-500">Extracurricular & Leadership Experiences</p>
+                <div class="w-20 h-1.5 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+            <div id="others-container" class="flex flex-col gap-4"></div>
+        </div>
+    </section>
+
+    <script>
+        // Portfolio Data Configuration
+        const portfolioData = {
+            research: {
+                journals: {
+                    international: [],
+                    domestic: [
+                        {
+                            title: "VCM의 도구 간 상호작용으로 인한 평가 불안정성 개선을 위한 공간적 재표본화 스케일 보정 기법",
+                            authors: "Min-suk Kim, Hyo-seung Shin, Se-hee Park, Kwang-deok Seo",
+                            desc: "To be submitted",
+                            links: [
+                                { name: "code", url: "./404NotFound" },
+                                { name: "paper", url: "./journal/domestic/2026_02_KIBME.pdf" },
+                                { name: "poster", url: "./404NotFound" }
+                            ],
+                            image: "./journal/domestic/img/domestic_img_04.png"
+                        },
+                        {
+                            title: "Traffic Accident Video Analysis using MoCo v3 and Object Detection",
+                            authors: "Jun-kyung Ju, Hyo-seung Shin, Gyu-min Park, Tae-wook Kim, Ellen J.Hong",
+                            desc: "To be submitted",
+                            links: [
+                                { name: "code", url: "./404NotFound" },
+                                { name: "paper", url: "./journal/domestic/2026_01_JISPS.pdf" },
+                                { name: "poster", url: "./404NotFound" }
+                            ],
+                            image: "./journal/domestic/img/domestic_img_03.png"
+                        },
+                        {
+                            title: "TAREF: 운전자 특성 및 실시간 행동 분석 기반 교통사고 위험도 산출 프레임워크",
+                            authors: "Tae-wook Kim, Jun-kyung Ju, Hyo-seung Shin, Gyu-min Park, Ellen J.Hong",
+                            desc: "The Joural of Korea Institute of Convergence Signal Processing (JISPS) — 2024",
+                            links: [
+                                { name: "code", url: "./404NotFound" },
+                                { name: "paper", url: "./journal/domestic/2024_02_JISPS.pdf" },
+                                { name: "poster", url: "./404NotFound" }
+                            ],
+                            image: "./journal/domestic/img/domestic_img_02.png"
+                        },
+                        {
+                            title: "QR코드 데이터 손실률에 따른 인식 패턴 복원 알고리즘",
+                            authors: "Do-young Lee, Hyo-seung Shin, Ji-yun Byun, Hong-rae Lee",
+                            desc: "Asia-pacific Journal of Convergent Research Interchange(APJCRI) — 2024",
+                            links: [
+                                { name: "code", url: "./404NotFound" },
+                                { name: "paper", url: "./journal/domestic/2024_01_APJCRI.pdf" },
+                                { name: "poster", url: "./404NotFound" }
+                            ],
+                            image: "./journal/domestic/img/domestic_img_01.png"
+                        }
+                    ]
+                },
+                conferences: [
+                    {
+                        paperTitle: "객체 탐지와 대조 학습을 활용한 운전자 사고 영상 클러스터링 및 패턴 분석",
+                        paperLink: "./conference/2025_Winter_KSCI.pdf",
+                        author: "Tae-wook Kim, Hyo-seung Shin, Gyu-min Park, Jun-kyung Ju, Ellen J.Hong",
+                        title: "The Korea Society of Computer and Information (KSCI) Winter Conference 2025",
+                        info: "📍 Cheonan (Korea) | January"
+                    },
+                    {
+                        paperTitle: "비디오 클러스터링을 통한 위험 운전 습관 분석",
+                        paperLink: "./conference/2024_Summer_KSCI.pdf",
+                        author: "Tae-wook Kim, Jun-kyung Ju, Gyu-min Park, Hyo-seung Shin, Ellen J.Hong",
+                        title: "The Korea Society of Computer and Informationn (KSCI) Summer Conference 2024",
+                        info: "📍 Jeju (Korea) | July"
+                    },
+                    {
+                        paperTitle: "대조 학습 기반 운전자 사고 영상 클러스터링 및 사고 패턴 분석",
+                        paperLink: "./conference/2024_Summer_KICSP.pdf",
+                        author: "Jun-kyung Ju, Tae-wook Kim, Gyu-min Park, Hyo-seung Shin, Ellen J.Hong",
+                        title: "The Korea Institute of Convergence Singal Processing (KICSP) Summer Conference 2024",
+                        info: "📍 Changwon (Korea) | June"
+                    }
+                ],
+                patents: [],
+                standards: [],
+                projects: [
+                    {
+                        title: "Graduate Student Convergence Research Program",
+                        period: "2025.11 - 2026.01",
+                        org: "Yonsei University Graduate School Future Innovation Support Center",
+                        link:"https://to.be.continue/"
+                    },
+                    {
+                        title: "Multi-model-based driver-tailored accident risk prediction technique",
+                        period: "2024.03 - 2025.02",
+                        org: "National Research Foundation of Korea (NRF)",
+                        link:"https://to.be.continue/"
+                    },
+                    {
+                        title: "Data construction using the pharmaceutical quality and safety vision inspection system",
+                        period: "2024.03 - 2025.02",
+                        org: "Yonsei University Mirae Campus, National Center of Excellence in Software",
+                        link: "./projects/산학공동프젝트_판넬.pdf"
+                    },
+                    {
+                        title: "Student Self-Directed Learning Mentoring Research Project",
+                        period: "2024.03 - 2025.02",
+                        org: "Reduction of image noise according to high and low frequencies",
+                        link: "https://to.be.continue/"
+                    }
+                ]
+            },
+            education: [
+                {
+                    degree: "Bachelor of Software",
+                    univ: "Yonsei University Mirae Campus",
+                    period: "2023.03 - present"
+                }
+            ],
+            awards: [
+                {
+                    title: "University Vice President's Commendation",
+                    desc: "Commendation | 2025",
+                    link: "./awards/부총장_표창장.pdf"
+                },
+                {
+                    title: "Police Chief's Certificate of Appreciation",
+                    desc: "Certificate of Appreciation | 2025",
+                    link: "./awards/경찰서장_감사장.pdf"
+                },
+                {
+                    title: "2024 Yonsei Murray Camp Outstanding Volunteer Service Contest",
+                    desc: "Excellence Prize | Team of SWeet",
+                    link: "./awards/연세머레이캠프_우수활동경진대회_우수상.pdf"
+                },
+                {
+                    title: "2024 KSCI Summer Conference Outstanding Paper Award",
+                    desc: "Silver Award | Analyzing risky driving habits through video clustering",
+                    link: "./awards/2024년도_한국컴퓨터정보학회_하계학술대회_우수논문상장.pdf"
+                }
+            ],
+            activities: [
+                {
+                    title: "2025 AI Convergence Technology Expert Training Program",
+                    period: "2025.09.01 - 2025.12.10",
+                    org: "Korea Artificial-Intelligence Convergence Technology Society",
+                    link: "./pro_act/2025 인공지능 융합기술 전문가 양성 과정 이수 증명서.pdf"
+                },
+                {
+                    title: "MPEG New Media Forum Summer School",
+                    period: "2025.08.11 - 2025.08.13",
+                    org: "The Korea Institute of Broadcast and Media Engineers",
+                    link: "https://www.kibme.org/info/board?bo_idx=833"
+                }
+            ],
+            others: [
+                {
+                    isToggle: true,
+                    title: "2026 총학생회 비상대책위원장",
+                    period: "2026.01 - present",
+                    org: "Yonsei University Mirae Campus",
+                    details: [
+                        "연세대학교 등록금심의위원회 학생위원 (2026)",
+                        "연세대학교 대학평의원회 평의원 (2026)",
+                        "연세대학교 학생건강공제회 이사장 (2026)",
+                        "연세대학교 미래캠퍼스 중앙선거관리위원장 (2026)",
+                        "연세대학교 미래캠퍼스 대학발전위원회 위원 (2026)",
+                        "연세대학교 미래캠퍼스 RISE운영위원회 위원 (2026)",
+                        "연세대학교 미래캠퍼스 인권센터 심의위원회 학생위원 (2026)",
+                        "연세대학교 미래캠퍼스 대학혁신지원사업단 자체평가소위원회 위원 (2026)",
+                        "연세대학교 미래캠퍼스 대학혁신지원사업단 대학혁신운영위원회 위원 (2026)",
+                        "연세대학교 미래캠퍼스 흡연구역 설치 및 금연구역 관리운영위원회 위원 (2026)"
+                    ]
+                },
+                {
+                    isToggle: true,
+                    title: "제34대 총학생회 &lt;사계&gt; 부총학생회장",
+                    period: "2024.12 - 2026.01",
+                    org: "Yonsei University Mirae Campus",
+                    details: [
+                        "연세대학교 미래캠퍼스 중앙선거관리위원장",
+                        "연세대학교 미래캠퍼스 원격수업관리위원회 학생위원",
+                        "연세대학교 미래캠퍼스 인권센터 심의위원회 학생위원"
+                    ]
+                },
+                {
+                    isToggle: true,
+                    title: "연세대학교 미래캠퍼스 머레이봉사센터 SWeet팀 팀원/부팀장/팀장",
+                    period: "2023.07 - 2024.12",
+                    org: "118 hours",
+                    details: []
+                },
+                {
+                    isToggle: true,
+                    title: "제33대 총학생회 &lt;하나&gt; 미래전략정책실 팀원/팀장",
+                    period: "2023.11 - 2024.11",
+                    org: "Yonsei University Mirae Campus",
+                    details: []
+                },
+                {
+                    isToggle: true,
+                    title: "제3대 소프트웨어학부 학생회 홍보부 수습부원/차장",
+                    period: "2024.03 - 2024.10",
+                    org: "Yonsei University Mirae Campus",
+                    details: []
+                }
+            ]
+        };
+
+        // Render Functions
+        function renderContent() {
+            // Journal Papers
+            document.getElementById('journal-intl-container').innerHTML = portfolioData.research.journals.international.length === 0 
+                ? '<p class="text-slate-500 italic">No international publications to display yet.</p>' 
+                : portfolioData.research.journals.international.map(paper => renderJournalPaper(paper)).join('');
+
+            document.getElementById('journal-domestic-container').innerHTML = portfolioData.research.journals.domestic.map(paper => renderJournalPaper(paper)).join('');
+
+            // Conferences
+            document.getElementById('conference-container').innerHTML = portfolioData.research.conferences.length === 0 
+                ? '<p class="text-slate-500 italic">No conferences to display yet.</p>' 
+                : portfolioData.research.conferences.map(conf => renderConference(conf)).join('');
+
+            // Patents
+            document.getElementById('patent-container').innerHTML = portfolioData.research.patents.length === 0 
+                ? '<p class="text-slate-500 italic">No patents to display yet.</p>' 
+                : portfolioData.research.patents.map(patent => renderPatent(patent)).join('');
+
+            // Standards
+            document.getElementById('standard-container').innerHTML = portfolioData.research.standards.length === 0 
+                ? '<p class="text-slate-500 italic">No international standards to display yet.</p>' 
+                : portfolioData.research.standards.map(std => renderStandard(std)).join('');
+
+            // Projects
+            document.getElementById('project-container').innerHTML = portfolioData.research.projects.map(proj => renderProject(proj)).join('');
+
+            // Education
+            document.getElementById('education-container').innerHTML = portfolioData.education.map(edu => `
+                <div class="relative pl-6 md:pl-8">
+                    <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
+                    <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">${edu.degree}</h4>
+                    <p class="text-slate-700 text-base md:text-lg mt-2 font-medium">${edu.univ}</p>
+                    <p class="text-sm md:text-base text-slate-500 mt-2 italic">${edu.period}</p>
+                </div>
+            `).join('');
+
+            // Awards
+            document.getElementById('awards-container').innerHTML = portfolioData.awards.map(award => `
+                <div class="relative pl-6 md:pl-8 mb-8">
+                    <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
+                    <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">
+                        ${award.link 
+                            ? `<a href="${award.link}" target="_blank" class="hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4">${award.title}</a>` 
+                            : award.title}
+                    </h4>
+                    <p class="text-slate-700 text-base md:text-lg mt-2 font-medium">${award.desc}</p>
+                </div>
+            `).join('');
+
+            // Activities
+            document.getElementById('activities-container').innerHTML = portfolioData.activities.map(act => `
+                <div class="relative pl-6 md:pl-8 mb-8">
+                    <div class="absolute left-[-6px] top-2.5 w-3 h-3 rounded-full bg-slate-400"></div>
+                    <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug">
+                        ${act.link 
+                            ? `<a href="${act.link}" target="_blank" class="hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4">${act.title}</a>` 
+                            : act.title}
+                    </h4>
+                    <p class="text-slate-700 text-base md:text-lg mt-2 font-medium">${act.org}</p>
+                    <p class="text-sm md:text-base text-slate-500 mt-2 mb-3 italic">${act.period}</p>
+                </div>
+            `).join('');
+
+            // Others
+            document.getElementById('others-container').innerHTML = portfolioData.others.map(item => {
+                if (item.isToggle) {
+                    return `
+                    <details class="group bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all duration-300 shadow-sm open:shadow-md">
+                        <summary class="flex items-center cursor-pointer p-5 md:p-6 font-bold text-slate-900 hover:bg-slate-50 transition text-base md:text-lg leading-snug">
+                            <svg class="w-5 h-5 flex-shrink-0 mr-4 text-emerald-500 transition-transform duration-300 group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            ${item.title}
+                        </summary>
+                        <div class="p-5 md:p-6 pt-0 pl-14 md:pl-16 text-sm md:text-base text-slate-700 bg-white border-t border-slate-100 font-medium">
+                            <div class="flex flex-wrap items-center gap-2 mb-4 text-xs md:text-sm font-mono text-slate-500 mt-4">
+                                <span class="font-semibold">${item.period}</span> <span class="hidden md:inline">|</span> <span class="block w-full md:w-auto md:inline mt-1 md:mt-0">${item.org}</span>
+                            </div>
+                            <ul class="list-disc pl-5 space-y-2.5">
+                                ${item.details.map(detail => `<li>${detail}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </details>`;
+                } else {
+                    return `
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 pl-14 md:pl-16 shadow-sm">
+                        <h4 class="font-bold text-slate-900 text-base md:text-lg mb-2 leading-snug">${item.title}</h4>
+                        <p class="text-xs md:text-sm font-mono text-slate-500 font-semibold">${item.period}</p>
+                    </div>`;
+                }
+            }).join('');
+        }
+
+        function renderJournalPaper(paper) {
+            return `
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row">
+                    <div class="w-full md:w-[35%] lg:w-[30%] flex-shrink-0 bg-slate-100 overflow-hidden" style="aspect-ratio: 16 / 9;">
+                        <img src="${paper.image}" alt="${paper.title}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/640x360?text=Paper'">
+                    </div>
+                    <div class="p-6 md:p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-lg md:text-xl leading-snug mb-3 line-clamp-2">${paper.title}</h4>
+                            <p class="text-slate-600 text-sm md:text-base mb-3">${paper.authors}</p>
+                            <p class="text-slate-500 text-sm md:text-base mb-4 italic">${paper.desc}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            ${paper.links.map(link => `
+                                <a href="${link.url}" target="_blank" class="px-4 py-2 bg-blue-50 border border-blue-200 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition text-sm font-semibold">[${link.name}]</a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderConference(conf) {
+            return `
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
+                    <a href="${conf.paperLink}" target="_blank" class="font-bold text-slate-900 text-lg md:text-xl hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4 leading-snug">
+                        ${conf.paperTitle}
+                    </a>
+                    <p class="text-slate-600 text-sm md:text-base mt-3">${conf.author}</p>
+                    <p class="text-slate-700 text-base md:text-lg mt-3 font-medium">${conf.title}</p>
+                    <p class="text-slate-500 text-sm md:text-base mt-2">${conf.info}</p>
+                </div>
+            `;
+        }
+
+        function renderPatent(patent) {
+            return `<p class="text-slate-500 italic">No patents to display yet.</p>`;
+        }
+
+        function renderStandard(std) {
+            return `<p class="text-slate-500 italic">No standards to display yet.</p>`;
+        }
+
+        function renderProject(proj) {
+            return `
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
+                    <a href="${proj.link}" target="_blank" class="font-bold text-slate-900 text-lg md:text-xl hover:text-blue-600 transition underline decoration-slate-300 underline-offset-4 leading-snug">
+                        ${proj.title}
+                    </a>
+                    <p class="text-slate-600 text-sm md:text-base mt-3">${proj.org}</p>
+                    <p class="text-slate-500 text-sm md:text-base mt-2 italic">${proj.period}</p>
+                </div>
+            `;
+        }
+
+        // Initialize on page load
+        renderContent();
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Popup Logic
+        const popupOverlay = document.getElementById('popup-overlay');
+        const popupBox = document.getElementById('popup-box');
+        const popupText = document.getElementById('popup-text');
+        
+        function showPopup(text) {
+            popupText.innerText = text;
+            popupOverlay.classList.remove('hidden');
+            popupOverlay.style.display = 'flex';
+            setTimeout(() => {
+                popupOverlay.classList.remove('opacity-0');
+                popupBox.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closePopup() {
+            popupOverlay.classList.add('opacity-0');
+            popupBox.classList.add('scale-95');
+            setTimeout(() => { 
+                popupOverlay.classList.add('hidden'); 
+                popupOverlay.style.display = 'none';
+            }, 300);
+        }
+
+        document.getElementById('close-btn').addEventListener('click', closePopup);
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) closePopup();
+        });
+    </script>
+</body>
+</html>
