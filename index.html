@@ -131,7 +131,7 @@ async function load(){
 /* ---------- profile / hero ---------- */
 function renderProfile(p){
   $("#eyebrow").textContent=p.eyebrow||"";
-  $("#heroName").innerHTML=`${(p.name||"").replace(/ /,"<br/>")}<span class="ko">${p.nameKo||""}</span>`;
+  $("#heroName").innerHTML=`<span class="name-en">${p.name||""}</span><span class="ko">${p.nameKo||""}</span>`;
   $("#heroImg").src=p.avatar||"";
   const aff=`<a href="${p.affiliation?.url||'#'}" target="_blank">${p.affiliation?.name||''}</a>`;
   $("#heroBio").innerHTML=(p.bio||[]).map(par=>`<p>${par.replace("{affiliation}",aff)}</p>`).join("<br>");
