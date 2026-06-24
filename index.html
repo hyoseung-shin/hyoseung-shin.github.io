@@ -13,7 +13,7 @@
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <div class="brand" onclick="scrollTo({top:0,behavior:'smooth'})"><span class="dot"></span>Hyoseung Shin</div>
+    <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="dot"></span>Hyoseung Shin</div>
     <nav class="nav-links">
       <a onclick="scrollToId('intro')">Introduction</a>
       <a onclick="scrollToId('analysis')">Analysis</a>
@@ -46,13 +46,13 @@
 
   <section class="hero reveal" id="intro">
     <div class="hero-grid">
-      <div>
-        <div class="eyebrow" id="eyebrow"></div>
-        <h1 id="heroName"></h1>
+      <div class="hero-eyebrow"><div class="eyebrow" id="eyebrow"></div></div>
+      <h1 id="heroName" class="hero-name"></h1>
+      <div class="portrait" id="heroPortrait"><img id="heroImg" alt="Hyoseung Shin" /><div class="frame"></div><div class="tick mono">FIG.01 · PORTRAIT</div></div>
+      <div class="hero-text">
         <div class="hero-bio" id="heroBio"></div>
         <div class="links" id="heroLinks"></div>
       </div>
-      <div class="portrait"><img id="heroImg" alt="Hyoseung Shin" /><div class="frame"></div><div class="tick mono">FIG.01 · PORTRAIT</div></div>
     </div>
   </section>
 
@@ -102,7 +102,7 @@
 <footer>
   <div class="wrap foot">
     <div class="mono">© 2026 Hyoseung Shin · VISCOM Lab. · Yonsei University Mirae Campus<br/>Editorial × Bitstream</div>
-    <div class="up mono" onclick="scrollTo({top:0,behavior:'smooth'})">↑ BACK TO TOP</div>
+    <div class="up mono" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ BACK TO TOP</div>
   </div>
 </footer>
 
