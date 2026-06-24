@@ -1,0 +1,43 @@
+{
+  "name": "Hyoseung Shin",
+  "nameKo": "신효승",
+  "eyebrow": "Yonsei University — Bachelor",
+  "avatar": "./avatar/id_photo.jpg",
+  "affiliation": {
+    "name": "Visual Communications Research Lab (VISCOM Lab.)",
+    "url": "https://viscom.yonsei.ac.kr/_renewal/index.php"
+  },
+  "bio": [
+    "I'm pursuing a bachelor's degree in <strong>Software Engineering</strong> at Yonsei University's Mirae Campus and have been accepted into the integrated master's and doctoral program.",
+    "I'm interested in <strong>Codec Standardization, Video Coding &amp; Processing, and Applied Artificial Intelligence</strong>.",
+    "I'm currently affiliated with {affiliation} at Yonsei University."
+  ],
+  "links": {
+    "email": "hyoseung8017@yonsei.ac.kr",
+    "linkedin": "https://www.linkedin.com/in/%ED%9A%A8%EC%8A%B9-%EC%8B%A0-b22a6a3aa/",
+    "github": "https://github.com/hyoseung-shin",
+    "scholar": "https://scholar.google.com/citations?user=GeA39IUAAAAJ",
+    "cv": "./avatar/hyoseung-shin_cv.pdf",
+    "orcid": "https://orcid.org/0009-0003-1817-1625"
+  },
+  "education": [
+    { "degree": "Bachelor of Software", "univ": "Yonsei University Mirae Campus", "period": "2023.03 - present" }
+  ],
+  "awards": [
+    { "title": "University Vice President's Commendation", "desc": "Commendation | 2025", "link": "./awards/부총장_표창장.pdf" },
+    { "title": "Police Chief's Certificate of Appreciation", "desc": "Certificate of Appreciation | 2025", "link": "./awards/경찰서장_감사장.pdf" },
+    { "title": "2024 Yonsei Murray Camp Outstanding Volunteer Service Contest", "desc": "Excellence Prize | Team of SWeet", "link": "./awards/연세머레이캠프_우수활동경진대회_우수상.pdf" },
+    { "title": "2024 KSCI Summer Conference Outstanding Paper Award", "desc": "Silver Award | Analyzing risky driving habits through video clustering", "link": "./awards/2024년도_한국컴퓨터정보학회_하계학술대회_우수논문상장.pdf" }
+  ],
+  "activities": [
+    { "title": "2025 AI Convergence Technology Expert Training Program", "period": "2025.09.01 - 2025.12.10", "org": "Korea Artificial-Intelligence Convergence Technology Society", "link": "./pro_act/2025 인공지능 융합기술 전문가 양성 과정 이수 증명서.pdf" },
+    { "title": "MPEG New Media Forum Summer School", "period": "2025.08.11 - 2025.08.13", "org": "The Korea Institute of Broadcast and Media Engineers", "link": "https://www.kibme.org/info/board?bo_idx=833" }
+  ],
+  "others": [
+    { "title": "2026 총학생회 비상대책위원장", "period": "2026.01 - present", "org": "Yonsei University Mirae Campus", "details": ["연세대학교 등록금심의위원회 학생위원 (2026)","연세대학교 대학평의원회 평의원 (2026)","연세대학교 학생건강공제회 이사장 (2026)","연세대학교 미래캠퍼스 중앙선거관리위원장 (2026)","연세대학교 미래캠퍼스 대학발전위원회 위원 (2026)","연세대학교 미래캠퍼스 RISE운영위원회 위원 (2026)","연세대학교 미래캠퍼스 인권센터 심의위원회 학생위원 (2026)","연세대학교 미래캠퍼스 대학혁신지원사업단 자체평가소위원회 위원 (2026)","연세대학교 미래캠퍼스 대학혁신지원사업단 대학혁신운영위원회 위원 (2026)","연세대학교 미래캠퍼스 흡연구역 설치 및 금연구역 관리운영위원회 위원 (2026)"] },
+    { "title": "제34대 총학생회 &lt;사계&gt; 부총학생회장", "period": "2024.12 - 2026.01", "org": "Yonsei University Mirae Campus", "details": ["연세대학교 미래캠퍼스 중앙선거관리위원장","연세대학교 미래캠퍼스 원격수업관리위원회 학생위원","연세대학교 미래캠퍼스 인권센터 심의위원회 학생위원"] },
+    { "title": "연세대학교 미래캠퍼스 머레이봉사센터 SWeet팀 팀원/부팀장/팀장", "period": "2023.07 - 2024.12", "org": "118 hours", "details": [] },
+    { "title": "제33대 총학생회 &lt;하나&gt; 미래전략정책실 팀원/팀장", "period": "2023.11 - 2024.11", "org": "Yonsei University Mirae Campus", "details": [] },
+    { "title": "제3대 소프트웨어학부 학생회 홍보부 수습부원/차장", "period": "2024.03 - 2024.10", "org": "Yonsei University Mirae Campus", "details": [] }
+  ]
+}

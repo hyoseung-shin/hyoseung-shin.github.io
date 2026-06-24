@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research & Graph — Hyoseung Shin</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="./styles.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+<div class="motif"></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="./index.html"><span class="dot"></span>Hyoseung Shin</a>
+    <nav class="nav-links">
+      <a href="./index.html#research">Research</a>
+      <a onclick="scrollToId('journal')">Journal</a>
+      <a onclick="scrollToId('conference')">Conference</a>
+      <a onclick="scrollToId('patent')">Patent</a>
+      <a onclick="scrollToId('standard')">Standard</a>
+      <a onclick="scrollToId('project')">Project</a>
+      <a class="pill" href="./index.html">← Home</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn"><span class="ico" id="themeIco"></span><span id="themeTxt">Light</span></button>
+      <button class="burger" id="burger">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="scrollToId('graph')">Knowledge Graph</a>
+    <a onclick="scrollToId('journal')">Journal Paper</a>
+    <a onclick="scrollToId('conference')">Conference Proceeding</a>
+    <a onclick="scrollToId('patent')">Patent</a>
+    <a onclick="scrollToId('standard')">International Standard</a>
+    <a onclick="scrollToId('project')">Project</a>
+    <a href="./index.html">← Back to Home</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="errBox"></div>
+
+  <div class="page-head">
+    <div>
+      <div class="sec-label"><span class="sec-num">∞</span> Archive</div>
+      <h2 class="sec-title">All Research &amp; Knowledge Graph</h2>
+    </div>
+    <a class="back" href="./index.html">← Back to Home</a>
+  </div>
+
+  <!-- GRAPH -->
+  <section id="graph" style="padding-top:34px;scroll-margin-top:80px">
+    <div class="graph-shell">
+      <div class="graph-stage">
+        <div class="graph-hint mono">DRAG · SCROLL TO ZOOM · CLICK A NODE</div>
+        <svg id="graph-svg"></svg>
+        <div class="graph-empty" id="graphEmpty" style="display:none">
+          <div class="big">To Be Continue</div>
+          <div>연구 내역을 추가하면 그래프가 자동 생성됩니다</div>
+        </div>
+      </div>
+      <aside class="graph-side">
+        <div class="gs-block"><div class="gs-h">Search</div><input class="search-in mono" id="searchIn" placeholder="type to filter…" /></div>
+        <div class="gs-block">
+          <div class="gs-h">Forces</div>
+          <div class="slider-row"><label>Repulsion <span id="vRep">340</span></label><input type="range" id="rep" min="80" max="900" value="340"></div>
+          <div class="slider-row"><label>Gravity <span id="vGrav">0.06</span></label><input type="range" id="grav" min="0" max="30" value="6"></div>
+          <div class="slider-row"><label>Edge Length <span id="vLen">80</span></label><input type="range" id="len" min="30" max="220" value="80"></div>
+          <button class="btn-reset mono" id="resetBtn">Reset View</button>
+        </div>
+        <div class="gs-block"><div class="gs-h">Filter</div><div class="legend" id="legend"></div></div>
+        <div class="gs-detail" id="detail"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- FULL LISTS -->
+  <div id="fullList" style="padding-bottom:60px"></div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="mono">© 2026 Hyoseung Shin · VISCOM Lab. · Yonsei University Mirae Campus<br/>Built with D3.js · Editorial × Bitstream</div>
+    <div class="up mono" onclick="scrollTo({top:0,behavior:'smooth'})">↑ BACK TO TOP</div>
+  </div>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const getCSS=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tbc=()=>`<div class="tbc">To Be Continue<span class="cur"></span></div>`;
+const dead=u=>/404NotFound|to\.be\.continue/i.test(u||"");
+const linkBtn=l=>dead(l.url)?`<span class="btn-link disabled">${l.name} · TBC</span>`:`<a class="btn-link" href="${l.url}" target="_blank" rel="noopener">${l.name}</a>`;
+const sortY=a=>a.slice().sort((x,y)=>(y.year||0)-(x.year||0));
+const ME=["hyoseung shin","hyo-seung shin","신효승","hyoseung","shin hyoseung"];
+const isMe=n=>ME.includes((n||"").toLowerCase().trim());
+
+let PROFILE=null, RESEARCH=null;
+
+async function load(){
+  try{
+    const [p,r]=await Promise.all([
+      fetch('./profile.json',{cache:'no-store'}).then(x=>x.json()),
+      fetch('./research.json',{cache:'no-store'}).then(x=>x.json())
+    ]);
+    PROFILE=p; RESEARCH=r;
+    renderFull(r); buildGraph();           // ← research.json 기반 동적 생성
+    const h=location.hash.replace('#','');
+    if(h){const el=document.getElementById(h);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth'}),120);}
+  }catch(e){
+    $("#errBox").innerHTML=`<div class="err">데이터 로드 실패 — file://가 아닌 서버로 열어주세요. 예) <b>python3 -m http.server 8000</b> → http://localhost:8000/research.html (GitHub Pages 배포 시 정상)</div>`;
+    console.error(e);
+  }
+}
+
+/* ---------- card renderers (index.html과 동일 규칙) ---------- */
+function jCard(p){return `<div class="rcard row">
+  ${p.image?`<div class="thumb"><img src="${p.image}" alt="" onerror="this.parentElement.style.display='none'"></div>`:""}
+  <div class="body">
+    <div class="yrtag">${p.year||""}</div>
+    <div class="ttl">${p.title}</div>
+    <div class="auth">${(p.authors||[]).join(", ")}</div>
+    <div class="ven">${p.venue||""}${p.year?` — ${p.year}`:""}</div>
+    <div class="btns">${(p.links||[]).map(linkBtn).join("")}</div>
+  </div></div>`;}
+function cCard(c){return `<div class="rcard"><div class="body">
+  <div class="yrtag">${c.year||""}</div>
+  <div class="ttl">${c.title}</div>
+  <div class="auth">${(c.authors||[]).join(", ")}</div>
+  <div class="ven">${c.venue||""}</div>
+  ${c.info?`<div class="info">${c.info}</div>`:""}
+  <div class="btns">${(c.links||[]).map(linkBtn).join("")}</div>
+</div></div>`;}
+function pCard(p){return `<div class="rcard"><div class="body">
+  <div class="ttl">${p.title}</div>
+  <div class="auth">${p.org||""}</div>
+  ${p.period?`<div class="info">${p.period}</div>`:""}
+  <div class="btns">${(p.links||[]).map(linkBtn).join("")}</div>
+</div></div>`;}
+
+function renderFull(r){
+  const intl=r.journal?.international||[], dom=r.journal?.domestic||[];
+  const journalBlock=`
+    <div class="cat" id="journal"><div class="cat-h"><h3>Journal Paper</h3><span class="ct">${String(intl.length+dom.length).padStart(2,'0')}</span></div>
+      <div class="cat-h" style="border:none;margin-bottom:10px"><span class="subh">International</span></div>
+      <div class="rgrid">${intl.length?sortY(intl).map(jCard).join(""):tbc()}</div>
+      <div class="cat-h" style="border:none;margin:18px 0 10px"><span class="subh">Domestic</span></div>
+      <div class="rgrid">${dom.length?sortY(dom).map(jCard).join(""):tbc()}</div>
+    </div>`;
+  const block=(id,name,arr,fn)=>`<div class="cat" id="${id}"><div class="cat-h"><h3>${name}</h3><span class="ct">${String(arr.length).padStart(2,'0')}</span></div>
+      <div class="rgrid">${arr.length?sortY(arr).map(fn).join(""):tbc()}</div></div>`;
+  $("#fullList").innerHTML=journalBlock
+    +block("conference","Conference Proceeding",r.conference||[],cCard)
+    +block("patent","Patent",r.patent||[],pCard)
+    +block("standard","International Standard",r.standard||[],pCard)
+    +block("project","Project",r.project||[],pCard);
+}
+
+/* ============================================================
+   KNOWLEDGE GRAPH — research.json → nodes/links 동적 파생
+   me · papers(journal/conference) · projects · co-authors
+   ============================================================ */
+const TYPES=[{t:"me",label:"Me"},{t:"journal",label:"Journal"},{t:"conference",label:"Conference"},
+  {t:"project",label:"Project"},{t:"person",label:"Collaborator"}];
+
+function buildGraphData(){
+  const r=RESEARCH, nodes=[], links=[], map={};
+  const ensure=(id,o)=>{if(!map[id]){map[id]=o;nodes.push(o);}return map[id];};
+  ensure("me",{id:"me",label:(PROFILE?.name)||"Hyoseung Shin",type:"me"});
+  const papers=[
+    ...(r.journal?.international||[]).map(x=>({...x,_t:"journal"})),
+    ...(r.journal?.domestic||[]).map(x=>({...x,_t:"journal"})),
+    ...(r.conference||[]).map(x=>({...x,_t:"conference"}))
+  ];
+  papers.forEach(p=>{
+    ensure(p.id,{id:p.id,label:p.title,type:p._t,year:p.year,venue:p.venue,authors:p.authors,links:p.links});
+    (p.authors||[]).forEach(a=>{
+      const aid=isMe(a)?"me":"person:"+a;
+      if(aid!=="me")ensure(aid,{id:aid,label:a,type:"person"});
+      links.push({source:aid,target:p.id,rel:"authored"});
+    });
+  });
+  (r.project||[]).forEach(pr=>{
+    ensure(pr.id,{id:pr.id,label:pr.title,type:"project",year:pr.year,venue:pr.org,links:pr.links});
+    links.push({source:"me",target:pr.id,rel:"led"}); // 본인 프로젝트 → me 연결
+  });
+  const seen=new Set();
+  const clean=links.filter(l=>map[l.source]&&map[l.target]&&l.source!==l.target)
+    .filter(l=>{const k=l.source+"|"+l.target;if(seen.has(k))return false;seen.add(k);return true;});
+  return {nodes,links:clean,map};
+}
+
+let sim,svg,gZoom,zoom,nodeSel,linkSel,adj={},deg={},nodeMap={};
+let selectedId=null,searchTerm="",activeTypes=new Set(TYPES.map(t=>t.t));
+
+function nodeColor(n){const a=getCSS('--accent'),as=getCSS('--accent-strong'),tx=getCSS('--text'),td=getCSS('--text-dim'),tf=getCSS('--text-faint');
+  if(n.type==="me")return as; if(n.type==="project")return a;
+  if(n.type==="journal")return tx; if(n.type==="conference")return td; return tf;}
+function legendColor(t){return nodeColor({type:t});}
+function nodeR(n){if(n.id==="me")return 18; if(n.type==="project")return 11; if(n.type==="person")return 6+Math.min((deg[n.id]||0),5); return 9;}
+
+function buildLegend(){
+  $("#legend").innerHTML=TYPES.map(t=>`<div class="lg-item ${activeTypes.has(t.t)?'':'off'}" data-t="${t.t}"><span class="lg-dot" style="background:${legendColor(t.t)}"></span>${t.label}</div>`).join("");
+  $$("#legend .lg-item").forEach(el=>el.onclick=()=>{const t=el.dataset.t;
+    if(activeTypes.has(t)){activeTypes.delete(t);el.classList.add("off");}else{activeTypes.add(t);el.classList.remove("off");}applyVisual();});
+}
+function clearDetail(){$("#detail").innerHTML=`<div class="gs-empty mono">// 노드를 선택하면 상세 정보가 표시됩니다.<br/>// SELECT A NODE TO INSPECT</div>`;}
+
+function buildGraph(){
+  const G=buildGraphData(); nodeMap=G.map;
+  adj={};G.nodes.forEach(n=>adj[n.id]=new Set());
+  G.links.forEach(l=>{adj[l.source].add(l.target);adj[l.target].add(l.source);});
+  deg={};G.nodes.forEach(n=>deg[n.id]=adj[n.id].size);
+  $("#graphEmpty").style.display=G.nodes.length<=1?"flex":"none";
+
+  svg=d3.select("#graph-svg"); svg.selectAll("*").remove();
+  let W=svg.node().clientWidth||800,H=svg.node().clientHeight||640;
+  svg.attr("viewBox",[0,0,W,H]);
+  gZoom=svg.append("g");
+  zoom=d3.zoom().scaleExtent([0.25,4]).on("zoom",e=>gZoom.attr("transform",e.transform));
+  svg.call(zoom).on("dblclick.zoom",null);
+
+  linkSel=gZoom.append("g").selectAll("line").data(G.links).join("line").attr("class","link");
+  nodeSel=gZoom.append("g").selectAll("g").data(G.nodes).join("g").attr("class","node");
+  nodeSel.append("circle").attr("r",nodeR).attr("fill",d=>nodeColor(d)).attr("stroke",getCSS('--bg')).attr("stroke-width",d=>d.type==="me"?0:.5);
+  nodeSel.append("text").text(d=>d.label.length>22?d.label.slice(0,21)+"…":d.label).attr("x",d=>nodeR(d)+5).attr("y",4);
+
+  sim=d3.forceSimulation(G.nodes)
+    .force("link",d3.forceLink(G.links).id(d=>d.id).distance(+$("#len").value))
+    .force("charge",d3.forceManyBody().strength(-$("#rep").value))
+    .force("center",d3.forceCenter(W/2,H/2))
+    .force("x",d3.forceX(W/2).strength(+$("#grav").value/100))
+    .force("y",d3.forceY(H/2).strength(+$("#grav").value/100))
+    .force("collide",d3.forceCollide(d=>nodeR(d)+5));
+  sim.on("tick",()=>{linkSel.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+    nodeSel.attr("transform",d=>`translate(${d.x},${d.y})`);});
+  nodeSel.call(d3.drag()
+    .on("start",(e,d)=>{if(!e.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y;})
+    .on("drag",(e,d)=>{d.fx=e.x;d.fy=e.y;})
+    .on("end",(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
+  nodeSel.on("click",(e,d)=>{e.stopPropagation();selectedId=selectedId===d.id?null:d.id;renderDetail();applyVisual();});
+  svg.on("click",()=>{selectedId=null;renderDetail();applyVisual();});
+  buildLegend(); clearDetail(); applyVisual();
+}
+window.refreshGraph=buildGraph;
+
+function applyVisual(){
+  if(!nodeSel)return;
+  const hood=selectedId?new Set([selectedId,...adj[selectedId]]):null;
+  nodeSel.each(function(d){const el=d3.select(this),typeOk=activeTypes.has(d.type),
+    matchOk=!searchTerm||d.label.toLowerCase().includes(searchTerm),hoodOk=!hood||hood.has(d.id);
+    el.classed("is-hidden",!typeOk);el.classed("is-dim",typeOk&&((searchTerm&&!matchOk)||(hood&&!hoodOk)));
+    el.classed("is-sel",d.id===selectedId);el.classed("is-match",searchTerm&&matchOk);});
+  linkSel.each(function(l){const el=d3.select(this),s=l.source.id||l.source,t=l.target.id||l.target,
+    typeOk=activeTypes.has(nodeMap[s].type)&&activeTypes.has(nodeMap[t].type),touch=selectedId&&(s===selectedId||t===selectedId);
+    el.classed("is-hidden",!typeOk);el.classed("is-active",!!touch);
+    el.classed("is-dim",typeOk&&((selectedId&&!touch)||(searchTerm&&!(nodeMap[s].label.toLowerCase().includes(searchTerm)||nodeMap[t].label.toLowerCase().includes(searchTerm)))));});
+}
+function renderDetail(){
+  const d=selectedId?nodeMap[selectedId]:null,box=$("#detail");
+  if(!d){clearDetail();return;}
+  const typeName=(TYPES.find(t=>t.t===d.type)||{}).label||d.type;
+  const conns=[...adj[d.id]].map(id=>nodeMap[id]);
+  const paperLink=(d.links||[]).find(l=>!dead(l.url));
+  box.innerHTML=`<div class="det-type">${typeName}</div><div class="det-title">${d.label}</div>
+    ${(d.venue||d.year)?`<div class="det-meta">${[d.venue,d.year].filter(Boolean).join(" · ")}</div>`:""}
+    <div class="det-conn-h">Connections · ${conns.length}</div>
+    <div class="det-conn">${conns.map(c=>`<button data-go="${c.id}">${c.label.length>18?c.label.slice(0,17)+"…":c.label}</button>`).join("")||'<span class="gs-empty mono">none</span>'}</div>
+    ${paperLink?`<a class="det-link" href="${paperLink.url}" target="_blank">↗ ${paperLink.name}</a>`:""}`;
+  box.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{selectedId=b.dataset.go;renderDetail();applyVisual();});
+}
+
+/* graph controls */
+$("#searchIn").oninput=e=>{searchTerm=e.target.value.toLowerCase().trim();applyVisual();};
+$("#rep").oninput=e=>{$("#vRep").textContent=e.target.value;if(sim){sim.force("charge").strength(-e.target.value);sim.alpha(.5).restart();}};
+$("#grav").oninput=e=>{const v=+e.target.value/100;$("#vGrav").textContent=v.toFixed(2);if(sim){sim.force("x").strength(v);sim.force("y").strength(v);sim.alpha(.5).restart();}};
+$("#len").oninput=e=>{$("#vLen").textContent=e.target.value;if(sim){sim.force("link").distance(+e.target.value);sim.alpha(.5).restart();}};
+$("#resetBtn").onclick=()=>{selectedId=null;searchTerm="";$("#searchIn").value="";if(svg)svg.transition().duration(500).call(zoom.transform,d3.zoomIdentity);renderDetail();applyVisual();};
+
+/* nav / theme */
+function scrollToId(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth"});$("#mobileMenu").classList.remove("open");}
+window.scrollToId=scrollToId;
+$("#burger").onclick=()=>$("#mobileMenu").classList.toggle("open");
+
+const SUN=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>`;
+const MOON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>`;
+let theme="dark";
+function setTheme(m){document.documentElement.setAttribute("data-theme",m);$("#themeIco").innerHTML=m==="dark"?SUN:MOON;$("#themeTxt").textContent=m==="dark"?"Light":"Dark";
+  if(nodeSel){nodeSel.select("circle").attr("fill",d=>nodeColor(d)).attr("stroke",getCSS('--bg'));$$("#legend .lg-dot").forEach((el,i)=>el.style.background=legendColor(TYPES[i].t));}}
+setTheme("dark");
+$("#themeBtn").onclick=()=>{theme=theme==="dark"?"light":"dark";setTheme(theme);};
+
+/* responsive graph */
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{
+  if(svg&&sim){const W=svg.node().clientWidth,H=svg.node().clientHeight||640;svg.attr("viewBox",[0,0,W,H]);
+    sim.force("center",d3.forceCenter(W/2,H/2));sim.force("x").x(W/2);sim.force("y").y(H/2);sim.alpha(.3).restart();}},200);});
+
+load();
+</script>
+</body>
+</html>

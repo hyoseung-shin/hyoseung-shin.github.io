@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hyoseung Shin — Portfolio</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div class="motif"></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand" onclick="scrollTo({top:0,behavior:'smooth'})"><span class="dot"></span>Hyoseung Shin</div>
+    <nav class="nav-links">
+      <a onclick="scrollToId('intro')">Introduction</a>
+      <a onclick="scrollToId('analysis')">Analysis</a>
+      <a onclick="scrollToId('research')">Research</a>
+      <a onclick="scrollToId('education')">Education</a>
+      <a onclick="scrollToId('awards')">Awards</a>
+      <a onclick="scrollToId('activities')">Activities</a>
+      <a onclick="scrollToId('beyond')">Beyond</a>
+      <a class="pill" href="./research.html">Graph ↗</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn"><span class="ico" id="themeIco"></span><span id="themeTxt">Light</span></button>
+      <button class="burger" id="burger">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="scrollToId('intro')">Introduction</a>
+    <a onclick="scrollToId('analysis')">Analysis</a>
+    <a onclick="scrollToId('research')">Research</a>
+    <a onclick="scrollToId('education')">Education</a>
+    <a onclick="scrollToId('awards')">Honors &amp; Awards</a>
+    <a onclick="scrollToId('activities')">Activities</a>
+    <a onclick="scrollToId('beyond')">Beyond Research</a>
+    <a href="./research.html">All Research &amp; Graph ↗</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="errBox"></div>
+
+  <section class="hero reveal" id="intro">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow" id="eyebrow"></div>
+        <h1 id="heroName"></h1>
+        <div class="hero-bio" id="heroBio"></div>
+        <div class="links" id="heroLinks"></div>
+      </div>
+      <div class="portrait"><img id="heroImg" alt="Hyoseung Shin" /><div class="frame"></div><div class="tick mono">FIG.01 · PORTRAIT</div></div>
+    </div>
+  </section>
+
+  <section class="reveal" id="analysis">
+    <div class="sec-label"><span class="sec-num">02</span> Analysis</div>
+    <h2 class="sec-title">Publication Metrics</h2>
+    <p class="sec-sub">연도별 실적 · 투고 유형 분석 (research.json 기반 자동 계산)</p>
+    <div id="analysisBody"></div>
+  </section>
+
+  <section class="reveal" id="research">
+    <div class="sec-label"><span class="sec-num">03</span> Research</div>
+    <h2 class="sec-title">Selected Output</h2>
+    <p class="sec-sub">각 분야 최신 3건. 전체 내역과 Knowledge Graph는 <b>more view</b>에서.</p>
+    <div id="researchPreview"></div>
+  </section>
+
+  <section class="reveal" id="education">
+    <div class="sec-label"><span class="sec-num">04</span> Education</div>
+    <h2 class="sec-title">Academic Path</h2>
+    <div id="eduBody"></div>
+  </section>
+
+  <section class="reveal" id="awards">
+    <div class="grid2">
+      <div>
+        <div class="sec-label"><span class="sec-num">05</span> Honors &amp; Awards</div>
+        <h2 class="sec-title" style="font-size:clamp(24px,3vw,32px)">Recognition</h2>
+        <div id="awardBody" style="margin-top:24px"></div>
+      </div>
+      <div id="activities">
+        <div class="sec-label"><span class="sec-num">06</span> Activities</div>
+        <h2 class="sec-title" style="font-size:clamp(24px,3vw,32px)">Service &amp; Roles</h2>
+        <div id="actBody" style="margin-top:24px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal" id="beyond">
+    <div class="sec-label"><span class="sec-num">07</span> Beyond Research</div>
+    <h2 class="sec-title">Beyond Research</h2>
+    <p class="sec-sub">Extracurricular &amp; leadership experiences</p>
+    <div id="beyondBody"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="mono">© 2026 Hyoseung Shin · VISCOM Lab. · Yonsei University Mirae Campus<br/>Editorial × Bitstream</div>
+    <div class="up mono" onclick="scrollTo({top:0,behavior:'smooth'})">↑ BACK TO TOP</div>
+  </div>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const getCSS=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tbc=()=>`<div class="tbc">To Be Continue<span class="cur"></span></div>`;
+const dead=u=>/404NotFound|to\.be\.continue/i.test(u||"");
+const linkBtn=l=>dead(l.url)?`<span class="btn-link disabled">${l.name} · TBC</span>`:`<a class="btn-link" href="${l.url}" target="_blank" rel="noopener">${l.name}</a>`;
+const sortY=a=>a.slice().sort((x,y)=>(y.year||0)-(x.year||0));
+
+/* ---------- load both JSON files ---------- */
+async function load(){
+  try{
+    const [p,r]=await Promise.all([
+      fetch('./profile.json',{cache:'no-store'}).then(x=>x.json()),
+      fetch('./research.json',{cache:'no-store'}).then(x=>x.json())
+    ]);
+    renderProfile(p); renderLists(p); renderAnalysis(r); renderPreview(r);
+  }catch(e){
+    $("#errBox").innerHTML=`<div class="err">데이터 로드 실패 — 로컬에서 열 때는 file://가 아닌 서버로 열어야 합니다. 예) <b>python3 -m http.server 8000</b> 후 http://localhost:8000 접속. (GitHub Pages 배포 시엔 정상 동작)</div>`;
+    console.error(e);
+  }
+}
+
+/* ---------- profile / hero ---------- */
+function renderProfile(p){
+  $("#eyebrow").textContent=p.eyebrow||"";
+  $("#heroName").innerHTML=`${(p.name||"").replace(/ /,"<br/>")}<span class="ko">${p.nameKo||""}</span>`;
+  $("#heroImg").src=p.avatar||"";
+  const aff=`<a href="${p.affiliation?.url||'#'}" target="_blank">${p.affiliation?.name||''}</a>`;
+  $("#heroBio").innerHTML=(p.bio||[]).map(par=>`<p>${par.replace("{affiliation}",aff)}</p>`).join("<br>");
+  const order=[["email","Email"],["linkedin","LinkedIn"],["github","GitHub"],["scholar","Scholar"],["cv","CV"],["orcid","ORCID"]];
+  const L=p.links||{};
+  $("#heroLinks").innerHTML=order.map(([k,label])=>{
+    const v=L[k]||"";
+    if(k==="email"&&v) return `<a href="mailto:${v}">↗ ${label}</a>`;
+    return `<a href="${v||'#'}" ${v?'target="_blank"':''}>↗ ${label}</a>`;
+  }).join("");
+}
+
+/* ---------- analysis (dynamic from research.json) ---------- */
+function renderAnalysis(r){
+  const papers=[...(r.journal?.international||[]),...(r.journal?.domestic||[]),...(r.conference||[])];
+  if(!papers.length){$("#analysisBody").innerHTML=tbc();return;}
+  const jc=(r.journal?.international||[]).length+(r.journal?.domestic||[]).length;
+  const cc=(r.conference||[]).length, sc=(r.standard||[]).length;
+  const stats=[["Total Papers",papers.length],["Journal",jc],["Conference",cc],["Standards",sc]]
+    .map(([l,n])=>`<div class="stat"><div class="n">${String(n).padStart(2,'0')}</div><div class="l">${l}</div></div>`).join("");
+  const years={};papers.forEach(p=>{if(p.year)years[p.year]=(years[p.year]||0)+1;});
+  const yk=Object.keys(years).sort(),ymax=Math.max(...Object.values(years),1);
+  const bars=yk.map(y=>`<div class="vbar"><div class="col" data-v="${years[y]}" style="height:0"></div><div class="yr">${y}</div></div>`).join("");
+  const intl=papers.filter(p=>p.intl).length, dom=papers.length-intl; // 현재 데이터는 모두 domestic
+  const journalIntl=(r.journal?.international||[]).length;
+  $("#analysisBody").innerHTML=`<div class="stats-row">${stats}</div>
+    <div class="charts">
+      <div class="card"><div class="card-h">Papers per <b>Year</b></div><div class="vbars" id="yearBars">${bars}</div></div>
+      <div class="card"><div class="card-h">Int'l vs <b>Domestic</b></div><div class="donut-wrap"><div class="donut" id="dT"><div class="cn" id="dTn"></div></div><div class="dleg" id="dTl"></div></div></div>
+      <div class="card"><div class="card-h">Journal vs <b>Conference</b></div><div class="donut-wrap"><div class="donut" id="dY"><div class="cn" id="dYn"></div></div><div class="dleg" id="dYl"></div></div></div>
+    </div>`;
+  setTimeout(()=>$$("#yearBars .col").forEach((c,i)=>c.style.height=(years[yk[i]]/ymax*100)+"%"),200);
+  drawDonut("dT","dTn","dTl",intl,dom,"Int'l","Domestic");
+  drawDonut("dY","dYn","dYl",jc,cc,"Journal","Conf.");
+}
+function drawDonut(el,n,leg,a,b,la,lb){
+  const t=a+b||1,pa=Math.round(a/t*100),ac=getCSS('--accent'),ln=getCSS('--line-strong');
+  document.getElementById(el).style.background=`conic-gradient(${ac} 0 ${pa}%, ${ln} 0)`;
+  document.getElementById(n).textContent=t;
+  document.getElementById(leg).innerHTML=`<div><span class="k" style="background:${ac}"></span>${la} · ${a}</div><div><span class="k" style="background:${ln}"></span>${lb} · ${b}</div>`;
+}
+
+/* ---------- research previews (3 latest each) ---------- */
+function jCard(p){
+  return `<div class="rcard row">
+    ${p.image?`<div class="thumb"><img src="${p.image}" alt="" onerror="this.parentElement.style.display='none'"></div>`:""}
+    <div class="body">
+      <div class="yrtag">${p.year||""}</div>
+      <div class="ttl">${p.title}</div>
+      <div class="auth">${(p.authors||[]).join(", ")}</div>
+      <div class="ven">${p.venue||""}${p.year?` — ${p.year}`:""}</div>
+      <div class="btns">${(p.links||[]).map(linkBtn).join("")}</div>
+    </div></div>`;
+}
+function cCard(c){
+  return `<div class="rcard"><div class="body">
+    <div class="yrtag">${c.year||""}</div>
+    <div class="ttl">${c.title}</div>
+    <div class="auth">${(c.authors||[]).join(", ")}</div>
+    <div class="ven">${c.venue||""}</div>
+    ${c.info?`<div class="info">${c.info}</div>`:""}
+    <div class="btns">${(c.links||[]).map(linkBtn).join("")}</div>
+  </div></div>`;
+}
+function pCard(p){
+  return `<div class="rcard"><div class="body">
+    <div class="ttl">${p.title}</div>
+    <div class="auth">${p.org||""}</div>
+    ${p.period?`<div class="info">${p.period}</div>`:""}
+    <div class="btns">${(p.links||[]).map(linkBtn).join("")}</div>
+  </div></div>`;
+}
+function emptyCard(){return tbc();}
+function renderPreview(r){
+  const journals=[...(r.journal?.international||[]),...(r.journal?.domestic||[])];
+  const sections=[
+    ["Journal Paper",sortY(journals).slice(0,3).map(jCard),journals.length,"journal"],
+    ["Conference Proceeding",sortY(r.conference||[]).slice(0,3).map(cCard),(r.conference||[]).length,"conference"],
+    ["Patent",(r.patent||[]).slice(0,3).map(pCard),(r.patent||[]).length,"patent"],
+    ["International Standard",(r.standard||[]).slice(0,3).map(pCard),(r.standard||[]).length,"standard"],
+    ["Project",sortY(r.project||[]).slice(0,3).map(pCard),(r.project||[]).length,"project"]
+  ];
+  $("#researchPreview").innerHTML=sections.map(([name,cards,count,id])=>`
+    <div class="cat">
+      <div class="cat-h"><h3>${name}</h3><span class="ct">${String(count).padStart(2,'0')}</span>
+        <a class="more" href="./research.html#${id}">more view →</a></div>
+      <div class="rgrid">${cards.length?cards.join(""):emptyCard()}</div>
+    </div>`).join("");
+}
+
+/* ---------- lists from profile.json ---------- */
+function renderLists(p){
+  $("#eduBody").innerHTML=(p.education||[]).length
+    ?`<div class="tl">${p.education.map(e=>`<div class="tl-item"><div class="yr">${e.period||""}</div><div class="ti">${e.degree||""}</div><div class="ds">${e.univ||""}</div></div>`).join("")}</div>`:tbc();
+  $("#awardBody").innerHTML=(p.awards||[]).length
+    ?p.awards.map(a=>`<div class="award"><div class="t">${a.link?`<a href="${a.link}" target="_blank">${a.title}</a>`:a.title}</div><div class="o">${a.desc||""}</div></div>`).join(""):tbc();
+  $("#actBody").innerHTML=(p.activities||[]).length
+    ?p.activities.map(a=>`<div class="award"><div class="t">${a.link?`<a href="${a.link}" target="_blank">${a.title}</a>`:a.title}</div><div class="o">${a.org||""} · ${a.period||""}</div></div>`).join(""):tbc();
+  $("#beyondBody").innerHTML=(p.others||[]).length
+    ?`<div style="margin-top:28px">${p.others.map(o=>`<details class="toggle"><summary>${o.title}</summary><div class="meta">${o.period||""}${o.org?` | ${o.org}`:""}</div>${(o.details||[]).length?`<ul>${o.details.map(d=>`<li>${d}</li>`).join("")}</ul>`:""}</details>`).join("")}</div>`:tbc();
+}
+
+/* ---------- nav / theme / misc ---------- */
+function scrollToId(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth"});$("#mobileMenu").classList.remove("open");}
+window.scrollToId=scrollToId;
+$("#burger").onclick=()=>$("#mobileMenu").classList.toggle("open");
+
+const SUN=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>`;
+const MOON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>`;
+let theme="dark";
+function setTheme(m){document.documentElement.setAttribute("data-theme",m);$("#themeIco").innerHTML=m==="dark"?SUN:MOON;$("#themeTxt").textContent=m==="dark"?"Light":"Dark";
+  // 차트 색상 재적용
+  document.querySelectorAll('.donut').forEach(()=>{}); }
+setTheme("dark");
+$("#themeBtn").onclick=()=>{theme=theme==="dark"?"light":"dark";setTheme(theme);load();};
+
+$$(".reveal").forEach(s=>s.classList.add("in"));
+load();
+</script>
+</body>
+</html>

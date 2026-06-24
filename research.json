@@ -1,0 +1,124 @@
+{
+  "journal": {
+    "international": [],
+    "domestic": [
+      {
+        "id": "j-2026-jbe",
+        "title": "VCM의 도구 간 상호작용으로 인한 평가 불안정성 개선을 위한 공간적 재표본화 스케일 보정 기법",
+        "authors": ["Min-suk Kim","Hyo-seung Shin","Se-hee Park","Kwang-deok Seo"],
+        "venue": "The Journal of Broadcast Engineering (JBE)",
+        "year": 2026,
+        "image": "./journal/domestic/img/domestic_img_04.png",
+        "links": [
+          { "name": "code", "url": "./404NotFound" },
+          { "name": "paper", "url": "./journal/domestic/2026_02_KIBME.pdf" },
+          { "name": "poster", "url": "./404NotFound" }
+        ]
+      },
+      {
+        "id": "j-2026-jisps",
+        "title": "Traffic Accident Video Analysis using MoCo v3 and Object Detection",
+        "authors": ["Jun-kyung Ju","Hyo-seung Shin","Gyu-min Park","Tae-wook Kim","Ellen J.Hong"],
+        "venue": "The Joural of Korea Institute of Convergence Signal Processing (JISPS)",
+        "year": 2026,
+        "image": "./journal/domestic/img/domestic_img_03.png",
+        "links": [
+          { "name": "code", "url": "./404NotFound" },
+          { "name": "paper", "url": "./journal/domestic/2026_01_JISPS.pdf" },
+          { "name": "poster", "url": "./404NotFound" }
+        ]
+      },
+      {
+        "id": "j-2024-jisps",
+        "title": "TAREF: 운전자 특성 및 실시간 행동 분석 기반 교통사고 위험도 산출 프레임워크",
+        "authors": ["Tae-wook Kim","Jun-kyung Ju","Hyo-seung Shin","Gyu-min Park","Ellen J.Hong"],
+        "venue": "The Joural of Korea Institute of Convergence Signal Processing (JISPS)",
+        "year": 2024,
+        "image": "./journal/domestic/img/domestic_img_02.png",
+        "links": [
+          { "name": "code", "url": "./404NotFound" },
+          { "name": "paper", "url": "./journal/domestic/2024_02_JISPS.pdf" },
+          { "name": "poster", "url": "./404NotFound" }
+        ]
+      },
+      {
+        "id": "j-2024-apjcri",
+        "title": "QR코드 데이터 손실률에 따른 인식 패턴 복원 알고리즘",
+        "authors": ["Do-young Lee","Hyo-seung Shin","Ji-yun Byun","Hong-rae Lee"],
+        "venue": "Asia-pacific Journal of Convergent Research Interchange(APJCRI)",
+        "year": 2024,
+        "image": "./journal/domestic/img/domestic_img_01.png",
+        "links": [
+          { "name": "code", "url": "./404NotFound" },
+          { "name": "paper", "url": "./journal/domestic/2024_01_APJCRI.pdf" },
+          { "name": "poster", "url": "./404NotFound" }
+        ]
+      }
+    ]
+  },
+  "conference": [
+    {
+      "id": "c-2025-ksci-w",
+      "title": "객체 탐지와 대조 학습을 활용한 운전자 사고 영상 클러스터링 및 패턴 분석",
+      "authors": ["Tae-wook Kim","Hyo-seung Shin","Gyu-min Park","Jun-kyung Ju","Ellen J.Hong"],
+      "venue": "The Korea Society of Computer and Information (KSCI) Winter Conference 2025",
+      "info": "📍 Cheonan (Korea) | January",
+      "year": 2025,
+      "links": [ { "name": "paper", "url": "./conference/2025_Winter_KSCI.pdf" } ]
+    },
+    {
+      "id": "c-2024-ksci-s",
+      "title": "비디오 클러스터링을 통한 위험 운전 습관 분석",
+      "authors": ["Tae-wook Kim","Jun-kyung Ju","Gyu-min Park","Hyo-seung Shin","Ellen J.Hong"],
+      "venue": "The Korea Society of Computer and Informationn (KSCI) Summer Conference 2024",
+      "info": "📍 Jeju (Korea) | July",
+      "year": 2024,
+      "links": [ { "name": "paper", "url": "./conference/2024_Summer_KSCI.pdf" } ]
+    },
+    {
+      "id": "c-2024-kicsp-s",
+      "title": "대조 학습 기반 운전자 사고 영상 클러스터링 및 사고 패턴 분석",
+      "authors": ["Jun-kyung Ju","Tae-wook Kim","Gyu-min Park","Hyo-seung Shin","Ellen J.Hong"],
+      "venue": "The Korea Institute of Convergence Singal Processing (KICSP) Summer Conference 2024",
+      "info": "📍 Changwon (Korea) | June",
+      "year": 2024,
+      "links": [ { "name": "paper", "url": "./conference/2024_Summer_KICSP.pdf" } ]
+    }
+  ],
+  "patent": [],
+  "standard": [],
+  "project": [
+    {
+      "id": "p-2025-gscrp",
+      "title": "Graduate Student Convergence Research Program",
+      "org": "Yonsei University Graduate School Future Innovation Support Center",
+      "period": "2025.11 - 2026.01",
+      "year": 2025,
+      "links": [ { "name": "document", "url": "https://to.be.continue/" } ]
+    },
+    {
+      "id": "p-2024-nrf",
+      "title": "Multi-model-based driver-tailored accident risk prediction technique",
+      "org": "National Research Foundation of Korea (NRF)",
+      "period": "2024.03 - 2025.02",
+      "year": 2024,
+      "links": [ { "name": "document", "url": "https://to.be.continue/" } ]
+    },
+    {
+      "id": "p-2024-pharma",
+      "title": "Data construction using the pharmaceutical quality and safety vision inspection system",
+      "org": "Yonsei University Mirae Campus, National Center of Excellence in Software",
+      "period": "2024.03 - 2025.02",
+      "year": 2024,
+      "links": [ { "name": "document", "url": "./projects/산학공동프젝트_판넬.pdf" } ]
+    },
+    {
+      "id": "p-2024-mentoring",
+      "title": "Student Self-Directed Learning Mentoring Research Project",
+      "org": "Reduction of image noise according to high and low frequencies",
+      "period": "2024.03 - 2025.02",
+      "year": 2024,
+      "links": [ { "name": "document", "url": "https://to.be.continue/" } ]
+    }
+  ]
+}
