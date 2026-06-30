@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학업 및 연구 통합 로드맵</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        .section-card {
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            border-top: 6px solid #3b82f6;
+        }
+        @media (min-width: 768px) {
+            .section-card { padding: 3rem; }
+        }
+        
+        /* 테이블 반응형 개선: 화면 밖으로 밀려나지 않도록 처리 */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            margin: 1.5rem 0;
+            background: white;
+        }
+        table { min-width: 600px; width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th, td { border: 1px solid #e2e8f0; padding: 1rem; text-align: center; font-size: 0.875rem; word-wrap: break-word; }
+        th { background-color: #f8fafc; color: #475569; font-weight: 700; }
+
+        /* 주간 계획 그리드 */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.25rem;
+        }
+        @media (min-width: 640px) { .schedule-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1280px) { .schedule-grid { grid-template-columns: repeat(7, 1fr); } }
+
+        .day-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .day-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
+        .day-header { font-weight: 800; font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #f1f5f9; }
+        
+        /* 학습 로드맵: 개별 주차별 박스 */
+        .study-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        @media (min-width: 768px) { .study-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1280px) { .study-grid { grid-template-columns: repeat(5, 1fr); } }
+
+        .study-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border-left: 4px solid #3b82f6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .study-box:hover { background: #f0f9ff; border-color: #3b82f6; }
+        
+        /* 프로세스 화살표 */
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+        .process-step {
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #cbd5e1;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #334155;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .process-arrow { color: #94a3b8; font-weight: 900; }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .badge-blue { background-color: #dbeafe; color: #1e40af; }
+        .badge-green { background-color: #dcfce7; color: #166534; }
+        .badge-orange { background-color: #ffedd5; color: #9a3412; }
+        
+        .info-list { font-size: 0.875rem; color: #475569; }
+        .info-list li { margin-bottom: 0.6rem; position: relative; padding-left: 1.25rem; }
+        .info-list li::before { content: "•"; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
+
+        /* 텍스트 줄바꿈 최적화: 데스크탑에서는 한 줄, 모바일에서는 자동 */
+        .text-adaptive {
+            white-space: normal;
+            word-break: keep-all;
+        }
+        @media (min-width: 1024px) {
+            .text-adaptive-nowrap { white-space: nowrap; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10 lg:p-16">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-12 md:mb-20">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">학업 및 연구 통합 로드맵</h1>
+            <div class="inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">2026 SUMMER - 2031 GRADUATE</div>
+        </header>
+
+        <!-- Section 1: 여름학기 연구 및 학습 -->
+        <section id="summer-summary" class="section-card">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="p-3 bg-blue-600 rounded-xl text-white shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">2026 여름학기 연구 및 학습</h2>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span> VCM-VAD 연구 프로젝트
+                </h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">월별</th>
+                                <th style="width: 25%;">프로젝트 명</th>
+                                <th style="width: 60%;">목표 및 타겟</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-bold">7월</span></td>
+                                <td class="font-bold text-blue-700">T-DuROC</td>
+                                <td class="text-left text-adaptive">2026 한국방송미디어공학회 추계 학술대회 마무리</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td><span class="bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-bold">8월</span></td>
+                                <td class="font-bold text-blue-700">Multi-Meta-VAD</td>
+                                <td class="text-left text-adaptive">방송미디어공학회 12월 저널 마무리</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-bold">9월</span></td>
+                                <td class="font-bold text-blue-700">BitGraph-VAD</td>
+                                <td class="text-left text-adaptive">Target: TPAMI or TCSVT (High-impact Journal)</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td><span class="bg-blue-600 text-white px-3 py-1 rounded-md text-xs font-bold">10월</span></td>
+                                <td class="font-bold text-blue-700">BitAD-RASD</td>
+                                <td class="text-left text-adaptive">Target: CVPR 2027 (Top-tier Conference)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span> 연구 카테고리 상세 학습 계획 (주차별)
+                </h3>
+                <div class="study-grid">
+                    <!-- 7월 -->
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase mb-1">7월 1주</span>
+                        <p class="text-xs font-bold text-slate-800">AVC 공부</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase mb-1">7월 2주</span>
+                        <p class="text-xs font-bold text-slate-800">HEVC 공부</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase mb-1">7월 3주</span>
+                        <p class="text-xs font-bold text-slate-800">VVC 공부</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-blue-600 uppercase mb-1">7월 4주</span>
+                        <p class="text-xs font-bold text-slate-800">MPEG 뉴미디어스쿨 복습</p>
+                    </div>
+                    <!-- 8월 -->
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-indigo-600 uppercase mb-1">8월 1주</span>
+                        <p class="text-xs font-bold text-slate-800">VCM 공부</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-indigo-600 uppercase mb-1">8월 2주</span>
+                        <p class="text-xs font-bold text-slate-800">컴퓨터 비전과 딥러닝</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-indigo-600 uppercase mb-1">8월 3주</span>
+                        <p class="text-xs font-bold text-slate-800">만들면서 배우는 생성 AI</p>
+                    </div>
+                    <div class="study-box">
+                        <span class="text-[10px] font-bold text-indigo-600 uppercase mb-1">8월 4주</span>
+                        <p class="text-xs font-bold text-slate-800">심층학습 응용 (NLP/CV)</p>
+                    </div>
+                    <!-- 9월 -->
+                    <div class="study-box border-l-green-500">
+                        <span class="text-[10px] font-bold text-green-600 uppercase mb-1">9월</span>
+                        <p class="text-xs font-bold text-slate-800">영상통신개론 복습</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: 주간 계획표 -->
+        <section id="weekly-plan" class="section-card border-top border-purple-600">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-purple-600 rounded-xl text-white shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">주간 루틴 대시보드</h2>
+                </div>
+                <div class="bg-purple-50 px-4 py-2 rounded-xl border border-purple-100">
+                    <p class="text-[10px] font-bold text-purple-600 uppercase tracking-widest mb-1">Daily Habit</p>
+                    <p class="text-xs text-slate-600 font-medium text-adaptive">식사 중 큰별쌤 유튜브 강의 수강 (2028 응시 목표)</p>
+                </div>
+            </div>
+
+            <div class="schedule-grid">
+                <div class="day-card">
+                    <div class="day-header text-blue-600">MON</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">스포츠센터 운동 (오전)</li>
+                        <li class="text-adaptive">VCM-VAD 연구 수행</li>
+                        <li class="text-adaptive">연구 카테고리 학습</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <div class="day-header text-green-600">TUE</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">방미공 저널 비판적 사고</li>
+                        <li class="text-adaptive">VCM-VAD 연구 수행</li>
+                        <li class="text-adaptive">연구 카테고리 학습</li>
+                        <li class="text-adaptive">영어 회화/토플 (2h)</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <div class="day-header text-orange-600">WED</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">스포츠센터 운동 (오전)</li>
+                        <li class="text-adaptive">VCM-VAD 연구 수행</li>
+                        <li class="text-adaptive">연구 카테고리 학습</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <div class="day-header text-indigo-600">THU</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">영어 논문 1개 정독</li>
+                        <li class="text-adaptive">VCM-VAD 연구 수행</li>
+                        <li class="text-adaptive">연구 카테고리 학습</li>
+                        <li class="text-adaptive">Agent 역량 공부 (2h)</li>
+                    </ul>
+                </div>
+                <div class="day-card">
+                    <div class="day-header text-red-600">FRI</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">스포츠센터 운동 (오전)</li>
+                        <li class="text-adaptive">VCM-VAD 연구 수행</li>
+                        <li class="text-adaptive">연구 카테고리 학습</li>
+                        <li class="text-adaptive">주간 연구 마무리</li>
+                    </ul>
+                </div>
+                <div class="day-card bg-slate-50 border-dashed">
+                    <div class="day-header text-slate-400">SAT</div>
+                    <div class="flex flex-col items-center justify-center h-full py-4">
+                        <span class="text-2xl">😴</span>
+                        <p class="text-xs font-bold text-slate-400 mt-2">완전 휴식</p>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="day-header text-blue-800">SUN</div>
+                    <ul class="info-list text-xs">
+                        <li class="text-adaptive">표준화 동향 분석</li>
+                        <li class="text-adaptive">Next VVC CfP 준비</li>
+                        <li class="text-adaptive">통신 공부</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 대학원 수료 및 졸업 -->
+        <section id="completion-requirements" class="section-card border-top border-green-600">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="p-3 bg-green-600 rounded-xl text-white shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">대학원 수료 및 졸업 마스터 플랜</h2>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-green-600 rounded-full"></span> 학위 취득 프로세스
+                </h3>
+                <div class="process-flow">
+                    <div class="process-step">학위논문 제출자격 충족</div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">학위논문 예비 심사 통과</div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">학위논문 본 심사 통과</div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">학위논문 제출</div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-step">최종 졸업</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-green-500 rounded-full"></span> 기본 수료 요건
+                        </h4>
+                        <ul class="info-list">
+                            <li class="text-adaptive">정규 등록: 6학기 이상 (박사/통합)</li>
+                            <li class="text-adaptive">이수 학점: 54학점 이상 (전산학과 42학점 필수)</li>
+                            <li class="text-adaptive">총 평량평균: 3.0 이상 / 4.3 만점</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-green-500 rounded-full"></span> 외국어 자격 시험
+                        </h4>
+                        <div class="table-container">
+                            <table style="min-width: 400px;">
+                                <thead>
+                                    <tr><th>과정</th><th>TOEIC</th><th>TOEFL</th><th>NEW TEPS</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>석사</td><td>700↑</td><td>80↑</td><td>265↑</td></tr>
+                                    <tr class="bg-blue-50 font-bold"><td>박사/통합</td><td>750↑</td><td>85↑</td><td>285↑</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-green-500 rounded-full"></span> 종합 자격 시험 (종시)
+                        </h4>
+                        <ul class="info-list">
+                            <li class="text-adaptive"><strong>응시 자격:</strong> 1학기 이상 이수 및 9학점 이상 취득</li>
+                            <li class="text-adaptive"><strong>시험 방법:</strong> 전공 5과목 선택 (필답/구술)</li>
+                            <li class="text-adaptive"><strong>합격 기준:</strong> 과목별 80점 이상 (100점 만점)</li>
+                            <li class="text-adaptive"><strong>재시험:</strong> 과목별 최대 2회 한정 응시 가능</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <span class="w-1 h-4 bg-green-500 rounded-full"></span> 졸업 논문 요건
+                        </h4>
+                        <ul class="info-list">
+                            <li class="text-adaptive">연구계획서 승인 후 2학기 이상 논문 연구지도 필수</li>
+                            <li class="text-adaptive">심사 전 국내/국외 전문학술지 각 1편 이상 게재 필수</li>
+                            <li class="text-adaptive">본심사 위원회(5인) 구성 및 최종 승인</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: 전문연구요원 -->
+        <section id="special-agent" class="section-card border-top border-red-500">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="p-3 bg-red-600 rounded-xl text-white shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">전문연구요원 선발 및 복무</h2>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-red-600 rounded-full"></span> 선발 프로세스 (한국연구재단 주관)
+                </h3>
+                <div class="table-container">
+                    <table style="table-layout: auto;">
+                        <thead>
+                            <tr class="bg-slate-50">
+                                <th style="width: 80px;">절차</th>
+                                <th>신청</th>
+                                <th>접수</th>
+                                <th>평가</th>
+                                <th>선발</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold bg-slate-50">주체</td>
+                                <td>연구자, 대학교</td>
+                                <td>한국연구재단</td>
+                                <td>한국연구재단</td>
+                                <td>한국연구재단</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold bg-slate-50">내용</td>
+                                <td class="text-left p-4">
+                                    <ul class="info-list text-[11px]">
+                                        <li class="text-adaptive">온라인 신청</li>
+                                        <li class="text-adaptive">현황표 취합 제출</li>
+                                    </ul>
+                                </td>
+                                <td class="text-left p-4">
+                                    <ul class="info-list text-[11px]">
+                                        <li class="text-adaptive">접수 확인</li>
+                                        <li class="text-adaptive">신청공문 및 서류 구비</li>
+                                    </ul>
+                                </td>
+                                <td class="text-left p-4">
+                                    <ul class="info-list text-[11px]">
+                                        <li class="text-adaptive">지원자격 요건 검토</li>
+                                        <li class="text-adaptive">선발기준 검토</li>
+                                    </ul>
+                                </td>
+                                <td class="text-left p-4">
+                                    <ul class="info-list text-[11px]">
+                                        <li class="text-adaptive">합격자 발표</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h4 class="font-bold text-slate-800 mb-4">선발 기준</h4>
+                    <ul class="info-list">
+                        <li class="text-adaptive"><strong>한국사:</strong> 1~3급 (Pass/Fail)</li>
+                        <li class="text-adaptive"><strong>영어:</strong> TEPS 268점 이상 (300점 배점)</li>
+                        <li class="text-adaptive"><strong>성적:</strong> 석사과정 성적 산출 반영</li>
+                        <li class="text-adaptive"><strong>우선순위:</strong> 성적 → 영어 → 연소자 순</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-red-50 rounded-2xl border border-red-100">
+                    <h4 class="font-bold text-red-800 mb-4">복무 및 전직 주의사항</h4>
+                    <p class="text-xs text-red-700 leading-relaxed text-adaptive">
+                        박사 수료 후 편입 시 2년 내 학위 취득이 원칙이며, 최대 3년까지 유예 가능합니다. 학위 취득 후에는 반드시 1년 간 타 병역지정업체(연구소)로 전직하여 근무해야 하므로, 졸업 수개월 전부터 취업 준비가 병행되어야 합니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-400 text-xs mt-20 pb-16">
+            <p>© 2026 Academic & Research Management System. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
