@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Curriculum &amp; Career Roadmap</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --c-blue:#45688f;   --c-blue-soft:#eef2f7;  --c-blue-txt:#3b5878;
+        --c-indigo:#5a5f92; --c-indigo-soft:#eff0f6;--c-indigo-txt:#4b5080;
+        --c-green:#457a5e;  --c-green-soft:#eef4f0; --c-green-txt:#3a6650;
+        --c-violet:#6a6191; --c-violet-soft:#f1f0f6;--c-violet-txt:#575080;
+        --c-amber:#8f6f3f;  --c-amber-soft:#f6f2ea; --c-amber-txt:#7a5e34;
+        --c-cyan:#4a7386;   --c-cyan-soft:#eef3f5;  --c-cyan-txt:#3f6274;
+        --c-rose:#8d6069;   --c-rose-soft:#f6f0f1;  --c-rose-txt:#77505a;
+        --c-red:#a35555;    --c-red-soft:#f7efef;   --c-red-txt:#8b4747;
+
+        --r-lg:5px; --r-md:4px; --r-sm:3px; --r-xs:2px;
+    }
+    body {
+        font-family:'Noto Sans KR','Inter',sans-serif;
+        background-color:#f1f4f7; color:#1e293b; line-height:1.6; word-break:keep-all;
+    }
+    .section-card {
+        background:#fff; border-radius:var(--r-lg);
+        box-shadow:0 2px 14px rgba(15,30,50,.05);
+        padding:1.5rem; margin-bottom:2.25rem; border-top:5px solid var(--c-blue);
+    }
+    @media (min-width:768px){ .section-card{ padding:2.75rem 3rem; } }
+
+    .ico { padding:.7rem; border-radius:var(--r-md); color:#fff; }
+    .hbar { display:inline-block; width:4px; height:1.2rem; border-radius:var(--r-xs); }
+    .subbar { display:inline-block; width:3px; height:1rem; border-radius:var(--r-xs); }
+    .subhead { font-size:.98rem; font-weight:800; color:#1e293b; margin:0 0 .9rem; display:flex; align-items:center; gap:.5rem; }
+
+    /* ===== tabs ===== */
+    .tabs { display:flex; gap:4px; border-bottom:2px solid #dde4ec; margin-bottom:2.25rem; flex-wrap:wrap; }
+    .tab {
+        padding:.7rem 1.5rem; font-weight:800; font-size:.92rem; color:#7b8a9c;
+        background:#e9eef4; border:1px solid #dde4ec; border-bottom:0;
+        border-radius:var(--r-sm) var(--r-sm) 0 0; cursor:pointer; margin-bottom:-2px;
+        transition:background .18s, color .18s;
+    }
+    .tab:hover { background:#f2f6fa; color:#5a6a7d; }
+    .tab.active { background:#fff; color:var(--c-blue-txt); box-shadow:inset 0 3px 0 var(--c-blue); }
+    .page { display:none; }
+    .page.on { display:block; animation:fadeIn .28s ease; }
+
+    /* ===== tables ===== */
+    .table-container {
+        width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+        border-radius:var(--r-sm); border:1px solid #e2e8f0; margin:1.25rem 0; background:#fff;
+    }
+    table { min-width:720px; width:100%; border-collapse:collapse; }
+    th, td { border:1px solid #e8edf2; padding:.8rem 1rem; text-align:center; font-size:.875rem; word-wrap:break-word; }
+    th { background:#f7f9fb; color:#5a6a7d; font-weight:700; }
+    #wbody-wrap th { position:sticky; top:0; z-index:5; }
+    td.tl { text-align:left; }
+    tr.zebra { background:#f7f9fb; }
+    tr.hi { background:var(--c-blue-soft); font-weight:700; }
+
+    .card { background:#fff; border:1px solid #e4e9ef; border-radius:var(--r-sm); padding:1.4rem 1.5rem; height:100%; transition:box-shadow .2s, border-color .2s; }
+    .card:hover { box-shadow:0 4px 14px rgba(15,30,50,.06); border-color:#cdd8e4; }
+    .panel { background:#f8fafc; border:1px solid #e6ebf1; border-radius:var(--r-sm); padding:1.4rem 1.5rem; }
+
+    .day-card { background:#fff; border:1px solid #e4e9ef; border-radius:var(--r-sm); padding:1.15rem; height:100%; transition:box-shadow .2s, border-color .2s; }
+    .day-card:hover { box-shadow:0 4px 14px rgba(15,30,50,.06); border-color:#cdd8e4; }
+    .day-header { font-weight:800; font-size:1.02rem; margin-bottom:.9rem; padding-bottom:.5rem; border-bottom:2px solid #eef2f6; }
+
+    .study-box { background:#f8fafc; border:1px solid #e6ebf1; border-radius:var(--r-sm); padding:.95rem 1.05rem; border-left:4px solid var(--c-blue); }
+
+    .badge { display:inline-block; padding:.2rem .55rem; border-radius:var(--r-xs); font-size:.71rem; font-weight:700; }
+    .badge-blue{background:#e7edf5;color:var(--c-blue-txt)}
+    .badge-green{background:#e8f1ec;color:var(--c-green-txt)}
+    .badge-orange{background:#f4ece0;color:var(--c-amber-txt)}
+    .badge-red{background:#f4e8e8;color:var(--c-red-txt)}
+    .badge-purple{background:#eeecf4;color:var(--c-violet-txt)}
+    .badge-cyan{background:#e7eff2;color:var(--c-cyan-txt)}
+    .badge-slate{background:#e8edf2;color:#5a6a7d}
+
+    .info-list { font-size:.875rem; color:#4d5b6b; margin:0; padding:0; list-style:none; }
+    .info-list li { margin-bottom:.55rem; position:relative; padding-left:1.1rem; line-height:1.65; }
+    .info-list li:last-child { margin-bottom:0; }
+    .info-list li::before { content:""; position:absolute; left:0; top:.62em; width:5px; height:5px; border-radius:var(--r-xs); background:#a9b6c5; }
+    .info-list.sm { font-size:.76rem; }
+    .info-list.sm li { padding-left:.9rem; margin-bottom:.35rem; }
+
+    .text-adaptive { white-space:normal; word-break:keep-all; }
+
+    /* ===== definition list (tracks) ===== */
+    .tcard-h { display:flex; align-items:center; gap:.6rem; padding-bottom:.8rem; border-bottom:2px solid #eef2f6; margin-bottom:.9rem; }
+    .tcard-h b { font-size:1.05rem; font-weight:800; letter-spacing:-.01em; }
+    .swatch { width:11px; height:11px; border-radius:var(--r-xs); flex:0 0 auto; }
+    .tcard-lede { font-size:.86rem; line-height:1.7; color:#5a6a7d; margin:0 0 .3rem; }
+    .deflist { margin:0; }
+    .deflist > div { display:grid; grid-template-columns:118px 1fr; gap:0 1.15rem; padding:.85rem 0; border-top:1px solid #eef2f6; }
+    .deflist > div:first-child { border-top:0; }
+    @media (max-width:640px){ .deflist > div{ grid-template-columns:1fr; gap:.3rem; } }
+    .deflist dt { font-size:.735rem; font-weight:800; color:#6b7a8c; letter-spacing:.02em; padding-top:.22rem; line-height:1.45; }
+    .deflist dd { margin:0; font-size:.885rem; line-height:1.72; color:#3f4c5c; }
+    .deflist dd b { color:#1b2734; font-weight:700; }
+    .deflist dd i { font-style:italic; color:#5a6a7d; }
+    .deflist dd .q { color:#5a6a7d; }
+
+    /* ===== paper list ===== */
+    .plist { list-style:none; margin:0; padding:0; }
+    .plist li { display:grid; grid-template-columns:34px 1fr; gap:0 .85rem; padding:.85rem 0; border-top:1px solid #eef2f6; }
+    .plist li:first-child { border-top:0; }
+    .pnum { font-size:.72rem; font-weight:800; color:#98a7b8; padding-top:.22rem; font-family:'Inter',monospace; }
+    .ptitle { margin:0; font-size:.9rem; font-weight:700; color:#1b2734; line-height:1.5; }
+    .pmeta { margin:.2rem 0 0; font-size:.755rem; color:#8b9aab; font-weight:600; }
+    .pnote { margin:.35rem 0 0; font-size:.79rem; color:#5a6a7d; line-height:1.6; }
+
+    /* ===== Layer chart ===== */
+    #chart-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; padding:.25rem .25rem 1rem; scrollbar-width:thin; }
+    .chart { display:grid; grid-template-columns:152px repeat(24,minmax(78px,1fr));
+        grid-template-rows:32px 60px 34px repeat(8,54px); min-width:2030px; row-gap:7px; }
+    .mcell { grid-row:1; display:flex; align-items:center; padding-left:.7rem; font-size:.72rem; font-weight:700; color:#93a2b4; letter-spacing:.06em; border-left:1px solid #e2e8f0; }
+    .wcell { grid-row:2; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; cursor:pointer;
+        border-radius:var(--r-sm); margin:0 3px; position:relative; z-index:4; transition:background .18s, border-color .18s; background:#f8fafc; border:1px solid #e4e9ef; }
+    .wcell:hover { background:var(--c-blue-soft); border-color:#c3d3e4; }
+    .wcell.active { background:var(--c-blue); border-color:var(--c-blue); }
+    .wcell.active .wn, .wcell.active .wd { color:#fff; }
+    .wcell .wn { font-weight:800; font-size:.85rem; color:#3d4c5d; }
+    .wcell .wd { font-size:.63rem; color:#93a2b4; font-weight:600; }
+    .wcell .rap { position:absolute; top:-7px; width:10px; height:10px; border-radius:var(--r-xs); background:#fff; border:3px solid var(--c-red); box-sizing:border-box; transform:rotate(45deg); }
+    .corner { grid-row:1/3; grid-column:1; display:flex; align-items:flex-end; padding:0 0 1.1rem .1rem; }
+    .corner span { font-size:.68rem; font-weight:700; color:#93a2b4; letter-spacing:.1em; text-transform:uppercase; }
+    .band { grid-row:3; display:flex; align-items:center; justify-content:center; margin:0 3px; border-radius:var(--r-sm);
+        font-size:.75rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:0 .7rem; }
+    .band-lab { grid-row:3; grid-column:1; display:flex; align-items:center; padding-right:.8rem; }
+    .band-lab b { font-size:.78rem; font-weight:800; color:#6b7a8c; }
+    .lane-lab { grid-column:1; display:flex; flex-direction:column; justify-content:center; padding-right:.8rem; }
+    .lane-lab b { font-size:.84rem; font-weight:800; color:#3d4c5d; line-height:1.25; }
+    .lane-lab i { font-style:normal; font-size:.64rem; font-weight:700; color:#93a2b4; }
+    .lane-bg { background:#f8fafc; border:1px solid #eef2f6; border-radius:var(--r-sm); }
+    .seg { margin:0 3px; border-radius:var(--r-sm); display:flex; align-items:center; padding:0 .95rem; color:#fff;
+        font-size:.79rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; z-index:2; position:relative; }
+    .seg.ghost { background:#fff; color:#6b7a8c; border:1px dashed #cbd5e1; }
+    .rapline { grid-row:2/-1; border-left:2px dashed #e3c6c6; pointer-events:none; z-index:1; }
+
+    .fade-in { animation:fadeIn .28s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+
+    #wbody tr { cursor:pointer; }
+    #wbody tr:hover { background:#f7f9fb; }
+    #wbody tr.hit { background:#f6f1e2 !important; }
+    #wbody tr.hit td:first-child { box-shadow:inset 3px 0 0 var(--c-amber); }
+    mark { background:#f3ead1; padding:0 .25rem; border-radius:var(--r-xs); font-weight:700; color:#7a5e34; }
+
+    /* ===== day-by-day panel ===== */
+    .dgrid { display:grid; grid-template-columns:1fr; gap:.7rem; }
+    @media (min-width:700px){ .dgrid{grid-template-columns:repeat(2,1fr)} }
+    @media (min-width:1100px){ .dgrid{grid-template-columns:repeat(4,1fr)} }
+    @media (min-width:1400px){ .dgrid{grid-template-columns:repeat(7,1fr)} }
+    .dcard { background:#fff; border:1px solid #e4e9ef; border-radius:var(--r-sm); padding:.9rem .95rem; display:flex; flex-direction:column; gap:.55rem; }
+    .dcard.off { background:#f8fafc; }
+    .dcard h5 { font-weight:800; font-size:.93rem; margin:0; display:flex; align-items:center; justify-content:space-between; gap:.4rem; }
+    .dtask { font-size:.8rem; font-weight:600; color:#334155; line-height:1.5; background:var(--c-amber-soft); border-radius:var(--r-xs); padding:.5rem .6rem; }
+    .dcard.off .dtask { background:#eef2f6; color:#94a3b8; font-weight:500; }
+    .drow { font-size:.735rem; color:#64748b; display:flex; gap:.4rem; line-height:1.45; }
+    .drow b { color:#475569; font-weight:700; flex:0 0 auto; min-width:2.7rem; }
+    .dfix { font-size:.7rem; color:#94a3b8; border-top:1px dashed #e4e9ef; padding-top:.5rem; line-height:1.45; }
+
+    /* ===== process flow ===== */
+    .process-flow { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.6rem;
+        background:#f8fafc; padding:1.4rem; border-radius:var(--r-sm); border:1px solid #e6ebf1; }
+    .process-step { background:#fff; padding:.7rem 1.05rem; border-radius:var(--r-sm); border:1px solid #dbe3ec;
+        font-size:.83rem; font-weight:700; color:#3f4c5c; text-align:center; line-height:1.45; max-width:230px; }
+    .process-step em { display:block; font-style:normal; font-size:.68rem; color:#93a2b4; font-weight:600; margin-top:.25rem; }
+    .process-arrow { color:#a9b6c5; font-weight:900; }
+
+    /* ===== year timeline ===== */
+    #timeline-track { display:flex; align-items:flex-start; gap:0; overflow-x:auto; padding:1.1rem .25rem 1.4rem; scrollbar-width:thin; }
+    .tl-wrap { display:flex; align-items:flex-start; flex:0 0 auto; }
+    .tl-conn { width:26px; height:2px; margin-top:20px; background:#cfd8e2; flex:0 0 auto; }
+    @media (min-width:768px){ .tl-conn{width:46px} }
+    .tl-node { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:.45rem; cursor:pointer;
+        padding:.5rem .7rem; border-radius:var(--r-sm); transition:background .18s; min-width:98px; max-width:116px; }
+    .tl-node:hover { background:var(--c-blue-soft); }
+    .tl-dot { width:17px; height:17px; border-radius:var(--r-xs); background:#fff; border:3px solid #a9b6c5; box-sizing:border-box; transform:rotate(45deg); transition:all .18s; }
+    .tl-node.active .tl-dot { background:var(--c-blue); border-color:var(--c-blue); }
+    .tl-node.active .tl-year { color:var(--c-blue-txt); }
+    .tl-node.active .tl-tag { color:var(--c-blue); }
+    .tl-year { font-weight:800; font-size:1rem; color:#7b8a9c; }
+    .tl-tag { font-size:.66rem; color:#98a7b8; font-weight:700; text-align:center; width:100%; word-break:keep-all;
+        display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; min-height:2.2em; line-height:1.2; }
+
+    .year-card { background:#f8fafc; border:1px solid #e6ebf1; border-radius:var(--r-sm); padding:1.25rem 1.35rem; height:100%; }
+    .year-card h4 { display:flex; align-items:center; gap:.5rem; font-weight:800; font-size:.92rem; margin:0 0 .85rem; color:#1e293b; }
+    .dot-icon { width:9px; height:9px; border-radius:var(--r-xs); flex:0 0 auto; }
+</style>
+</head>
+<body class="p-4 md:p-10 lg:p-16">
+<div class="max-w-7xl mx-auto">
+
+<header class="text-center mb-8">
+    <p class="text-sm font-bold mb-3 tracking-widest" style="color:var(--c-blue)">VIDEO CODING &amp; COMPRESSION STANDARDS RESEARCHER</p>
+    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Hyoseung's Research &amp; Career Plan</h1>
+</header>
+
+<div class="tabs">
+    <button class="tab active" data-page="curriculum">학습 커리큘럼 · W01–W24</button>
+    <button class="tab" data-page="roadmap">커리어 로드맵 · 2026–2033</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 1 — 학습 커리큘럼
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page on" id="page-curriculum">
+
+<div class="text-center mb-10 md:mb-12">
+    <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">24-Week Study Curriculum</h2>
+    <div class="inline-block text-white px-4 py-1.5 text-sm font-bold" style="background:var(--c-blue);border-radius:var(--r-sm)">2026.08.17 — 2027.01.31 · W01–W24</div>
+    <p class="text-slate-500 text-sm mt-5 max-w-2xl mx-auto text-adaptive">
+        이 기간의 고정점은 하나입니다 — <b class="text-slate-700">2027년 1월 10–12일, 이화여자대학교, IWAIT 2027 영어 발표.</b>
+        8개 트랙의 부하를 모두 그 앞뒤로 조절했으며, 매주 월요일에 해당 주차 하나만 확인하면 되도록 구성했습니다.
+    </p>
+</div>
+
+<!-- 01. 전체 배치도 -->
+<section class="section-card" style="border-top-color:var(--c-blue);">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="ico" style="background:var(--c-blue)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">전체 배치도</h2>
+            <p class="text-xs text-slate-400 mt-1">맨 윗줄이 학사 일정 · 주차를 클릭하면 아래 「주차별 상세」로 이동해 일차별 계획이 펼쳐집니다</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div class="study-box" style="border-left-color:var(--c-blue)"><p class="text-2xl font-extrabold text-slate-800">8</p><p class="text-xs text-slate-500 font-semibold">동시 진행 트랙</p></div>
+        <div class="study-box" style="border-left-color:var(--c-green)"><p class="text-2xl font-extrabold text-slate-800">6.7h</p><p class="text-xs text-slate-500 font-semibold">평일 고정 학습량</p></div>
+        <div class="study-box" style="border-left-color:var(--c-violet)"><p class="text-2xl font-extrabold text-slate-800">4</p><p class="text-xs text-slate-500 font-semibold">매일 추적할 표준 기술</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-2xl font-extrabold text-slate-800">6</p><p class="text-xs text-slate-500 font-semibold">고정 마일스톤</p></div>
+        <div class="study-box" style="border-left-color:var(--c-amber)"><p class="text-2xl font-extrabold text-slate-800">3</p><p class="text-xs text-slate-500 font-semibold">부하 감축 주간</p></div>
+    </div>
+
+    <div id="chart-scroll">
+    <div class="chart">
+        <div class="corner"><span>Track / Week</span></div>
+        <div class="mcell" style="grid-column:2/span 3">2026 · 8월</div>
+        <div class="mcell" style="grid-column:5/span 4">9월</div>
+        <div class="mcell" style="grid-column:9/span 4">10월</div>
+        <div class="mcell" style="grid-column:13/span 5">11월</div>
+        <div class="mcell" style="grid-column:18/span 4">12월</div>
+        <div class="mcell" style="grid-column:22/span 4">2027 · 1월</div>
+
+        <div id="ruler" style="display:contents"></div>
+
+        <div class="rapline" style="grid-column:4"></div>
+        <div class="rapline" style="grid-column:10"></div>
+        <div class="rapline" style="grid-column:19"></div>
+        <div class="rapline" style="grid-column:22"></div>
+        <div class="rapline" style="grid-column:23"></div>
+        <div class="rapline" style="grid-column:25"></div>
+
+        <div class="band-lab"><b>학사 일정</b></div>
+        <div class="band" style="grid-column:2/span 2;background:#eef2f6;color:#5a6a7d;border:1px solid #dbe3ec">여름방학 · 개강 전</div>
+        <div class="band" style="grid-column:4/span 16;background:#e2eaf3;color:var(--c-blue-txt);border:1px solid #c8d6e6">2026-2학기 · 수업 9학점 &nbsp;|&nbsp; 중간 W09 &nbsp;·&nbsp; 기말 W18</div>
+        <div class="band" style="grid-column:20/span 6;background:#e8f0eb;color:var(--c-green-txt);border:1px solid #cfe0d6">겨울방학 · 수업 없음 (12.21~)</div>
+        <div class="band" style="grid-column:22/span 2;background:var(--c-red);color:#fff;z-index:3">IWAIT 2027 · 학회 모드</div>
+
+        <div class="lane-lab" style="grid-row:4"><b>연구 · 저널</b><i>DAILY · 5h</i></div>
+        <div class="lane-bg" style="grid-row:4;grid-column:2/span 24"></div>
+        <div class="seg" style="grid-row:4;grid-column:2/span 24;background:var(--c-green)">연구 4h + 방송미디어공학회 저널 정독 1h — 하루도 빠짐없이</div>
+
+        <div class="lane-lab" style="grid-row:5"><b>표준 기고서</b><i>DAILY · 40m</i></div>
+        <div class="lane-bg" style="grid-row:5;grid-column:2/span 24"></div>
+        <div class="seg ghost" style="grid-row:5;grid-column:2/span 1">세팅</div>
+        <div class="seg" style="grid-row:5;grid-column:3/span 23;background:var(--c-violet)">VCM · beyond-VVC CfP · FCM · GSC — 요일 로테이션으로 하루 1건, 금요일 통합 요약 1p</div>
+
+        <div class="lane-lab" style="grid-row:6"><b>학회 · 회화 영어</b><i>DAILY · 60m</i></div>
+        <div class="lane-bg" style="grid-row:6;grid-column:2/span 24"></div>
+        <div class="seg" style="grid-row:6;grid-column:2/span 9;background:#5b7fa5">P1 입 트기 · 발음 교정</div>
+        <div class="seg" style="grid-row:6;grid-column:11/span 6;background:var(--c-blue)">P2 원고 · 셰도잉 · 암기</div>
+        <div class="seg" style="grid-row:6;grid-column:17/span 5;background:#3b5878">P3 Q&amp;A · 리허설</div>
+        <div class="seg" style="grid-row:6;grid-column:22/span 2;background:var(--c-red)">실전</div>
+        <div class="seg" style="grid-row:6;grid-column:24/span 2;background:#5b7fa5">재정비</div>
+
+        <div class="lane-lab" style="grid-row:7"><b>논문 영어</b><i>화 · 2h</i></div>
+        <div class="lane-bg" style="grid-row:7;grid-column:2/span 24"></div>
+        <div class="seg ghost" style="grid-row:7;grid-column:2/span 3">교재 입수 · 준비</div>
+        <div class="seg" style="grid-row:7;grid-column:5/span 12;background:var(--c-cyan)">Glasman-Deal Ch1–8 + 문장 패턴 노트 축적</div>
+        <div class="seg" style="grid-row:7;grid-column:17/span 9;background:#3f6274">내 논문에 직접 적용 · 퇴고</div>
+
+        <div class="lane-lab" style="grid-row:8"><b>TEPS</b><i>화·목 · 2.5h</i></div>
+        <div class="lane-bg" style="grid-row:8;grid-column:2/span 24"></div>
+        <div class="seg ghost" style="grid-row:8;grid-column:4/span 1">진단</div>
+        <div class="seg" style="grid-row:8;grid-column:5/span 12;background:#557f96">1단계 · 어휘 / 문법 / 청해 감각</div>
+        <div class="seg" style="grid-row:8;grid-column:17/span 9;background:#456a80">2단계 · 파트별 유형 훈련</div>
+
+        <div class="lane-lab" style="grid-row:9"><b>통신 프로토콜</b><i>월 · 2h</i></div>
+        <div class="lane-bg" style="grid-row:9;grid-column:2/span 24"></div>
+        <div class="seg ghost" style="grid-row:9;grid-column:2/span 2">준비</div>
+        <div class="seg" style="grid-row:9;grid-column:4/span 5;background:#9a7a49">M1 전송 기반</div>
+        <div class="seg" style="grid-row:9;grid-column:9/span 4;background:var(--c-amber)">M2 스트리밍</div>
+        <div class="seg" style="grid-row:9;grid-column:13/span 4;background:#82633a">M3 저지연</div>
+        <div class="seg" style="grid-row:9;grid-column:17/span 4;background:var(--c-amber)">M4 적응 · QoE</div>
+        <div class="seg" style="grid-row:9;grid-column:21/span 5;background:#82633a">M5 서비스 · 기고문 완성</div>
+
+        <div class="lane-lab" style="grid-row:10"><b>연구 주제 탐색</b><i>토 · 1.5h</i></div>
+        <div class="lane-bg" style="grid-row:10;grid-column:2/span 24"></div>
+        <div class="seg" style="grid-row:10;grid-column:2/span 9;background:#6f7d5e">키워드 수집 → 5개 축 그룹화</div>
+        <div class="seg" style="grid-row:10;grid-column:11/span 6;background:#5e6b4f">후보 3개 압축 · 실현가능성 평가</div>
+        <div class="seg" style="grid-row:10;grid-column:17/span 9;background:#4f5a42">1개로 수렴 → 문제 정의 → 실험 설계</div>
+
+        <div class="lane-lab" style="grid-row:11"><b>기타 · 체력</b><i>주 5.5h</i></div>
+        <div class="lane-bg" style="grid-row:11;grid-column:2/span 24"></div>
+        <div class="seg" style="grid-row:11;grid-column:2/span 9;background:var(--c-rose)">Block A · DL 기초 재정비</div>
+        <div class="seg" style="grid-row:11;grid-column:11/span 8;background:#7a525a">Block B · 생성모델 (GAN → Diffusion)</div>
+        <div class="seg" style="grid-row:11;grid-column:19/span 7;background:#684550">Block C · Vision 응용</div>
+    </div>
+    </div>
+
+    <h3 class="text-lg font-bold text-slate-700 mt-8 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-red)"></span> 고정 마일스톤 6개</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W03 · 9.1</p><p class="text-sm font-semibold text-slate-700">26-2학기 개강</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W09 · 10.12–16</p><p class="text-sm font-semibold text-slate-700">중간고사 — 부하 60%</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W18 · 12.14–18</p><p class="text-sm font-semibold text-slate-700">기말고사 — 부하 50%</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W21 · 1.10</p><p class="text-sm font-semibold text-slate-700">IWAIT 2027 개막 · 이화여대</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W22 · 1.11–12</p><p class="text-sm font-semibold text-slate-700">영어 발표 + 45차 JVET</p></div>
+        <div class="study-box" style="border-left-color:var(--c-red)"><p class="text-xs font-extrabold mb-1" style="color:var(--c-red-txt)">W24 · 1.31</p><p class="text-sm font-semibold text-slate-700">사이클 종료 · 전체 회고</p></div>
+    </div>
+</section>
+
+<!-- 02. 하루 · 한 주 골격 -->
+<section class="section-card" style="border-top-color:var(--c-green);">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="ico" style="background:var(--c-green)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">하루 · 한 주의 골격</h2>
+            <p class="text-xs text-slate-400 mt-1">학기 중과 방학 중 두 벌 · 주차별 내용은 바뀌어도 이 골격은 24주 내내 고정입니다</p>
+        </div>
+    </div>
+
+    <h3 class="text-lg font-bold text-slate-700 mb-1 flex items-center gap-2"><span class="hbar" style="background:var(--c-green)"></span> 평일 시간 블록</h3>
+    <div class="table-container">
+        <table>
+            <thead><tr>
+                <th style="width:120px">시간</th>
+                <th style="width:44%">학기 중 &nbsp;<span class="badge badge-blue">W03–W18</span></th>
+                <th>방학 중 &nbsp;<span class="badge badge-green">W01–W02 · W19–W24</span></th>
+            </tr></thead>
+            <tbody>
+                <tr style="background:var(--c-green-soft)"><td class="font-bold" style="color:var(--c-green-txt)">09:00–13:00</td><td class="tl font-bold">연구 4시간</td><td class="tl font-bold">연구 4시간 <span class="text-xs text-slate-500 font-normal">— 동일. 어떤 주간에도 줄이지 않습니다.</span></td></tr>
+                <tr><td class="text-slate-400">13:00–14:00</td><td class="tl text-slate-400">점심 · 산책</td><td class="tl text-slate-400">점심 · 산책</td></tr>
+                <tr><td class="font-bold text-slate-600">14:00–15:00</td><td class="tl">방미공 저널 정독 1편</td><td class="tl">방미공 저널 정독 1편</td></tr>
+                <tr><td class="font-bold text-slate-600">15:00–15:40</td><td class="tl">표준 기고서 1건 <span class="text-xs text-slate-500">(요일별 트랙)</span></td><td class="tl">표준 기고서 1건 <span class="text-xs text-slate-500">(요일별 트랙)</span></td></tr>
+                <tr><td class="text-slate-400">15:40–16:00</td><td class="tl text-slate-400">휴식</td><td class="tl text-slate-400">휴식</td></tr>
+                <tr><td class="font-bold text-slate-600">16:00–17:00</td><td class="tl">영어 1시간</td><td class="tl">영어 <b>1.5시간</b> <span class="text-xs text-slate-500">(17:30까지 — 방학엔 리허설·모의 Q&amp;A로 확장)</span></td></tr>
+                <tr><td class="font-bold text-slate-600">17:00–19:00</td><td class="tl">수업 <b>또는</b> 로테이션 A <span class="text-xs text-slate-500">(수업 있는 날은 저녁·토요일로 이월)</span></td><td class="tl">로테이션 A <span class="text-xs text-slate-500">— 수업이 없어 <b>매일 확보</b>됩니다 (17:30–19:00)</span></td></tr>
+                <tr><td class="text-slate-400">19:00–20:00</td><td class="tl text-slate-400">저녁</td><td class="tl text-slate-400">저녁</td></tr>
+                <tr><td class="font-bold text-slate-600">20:00–21:00</td><td class="tl">로테이션 B <span class="text-xs text-slate-500">(운동 또는 TEPS)</span></td><td class="tl">로테이션 B + <b>밀린 항목 회수</b></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="p-4 mb-2" style="background:var(--c-red-soft);border:1px solid #e8d6d6;border-radius:var(--r-sm)">
+        <p class="text-sm text-slate-700 text-adaptive">
+            <b style="color:var(--c-red-txt)">예외 — W21·W22 (1.4–1.17) 학회 모드.</b>
+            이 2주는 위 블록이 적용되지 않습니다. 연구 블록만 유지하고 나머지 시간은 전부 리허설·발표·회고에 씁니다. 기고서와 로테이션은 W23으로 미룹니다.
+        </p>
+    </div>
+
+    <h3 class="text-lg font-bold text-slate-700 mt-10 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-green)"></span> 주간 로테이션</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-7 gap-3">
+        <div class="day-card"><div class="day-header text-slate-800">월</div>
+            <p class="mb-2"><span class="badge badge-orange">슬롯 A</span></p><p class="text-sm font-semibold mb-3">통신 프로토콜</p>
+            <p class="mb-2"><span class="badge badge-red">슬롯 B</span></p><p class="text-sm font-semibold">운동</p></div>
+        <div class="day-card"><div class="day-header text-slate-800">화</div>
+            <p class="mb-2"><span class="badge badge-cyan">슬롯 A</span></p><p class="text-sm font-semibold mb-3">논문 영어</p>
+            <p class="mb-2"><span class="badge badge-blue">슬롯 B</span></p><p class="text-sm font-semibold">TEPS</p></div>
+        <div class="day-card"><div class="day-header text-slate-800">수</div>
+            <p class="mb-2"><span class="badge badge-red">슬롯 A</span></p><p class="text-sm font-semibold mb-3">영상통신 외 신기술</p>
+            <p class="mb-2"><span class="badge badge-red">슬롯 B</span></p><p class="text-sm font-semibold">운동</p></div>
+        <div class="day-card"><div class="day-header text-slate-800">목</div>
+            <p class="mb-2"><span class="badge badge-purple">슬롯 A</span></p><p class="text-sm font-semibold mb-3">Agent 역량</p>
+            <p class="mb-2"><span class="badge badge-blue">슬롯 B</span></p><p class="text-sm font-semibold">TEPS</p></div>
+        <div class="day-card"><div class="day-header text-slate-800">금</div>
+            <p class="mb-2"><span class="badge badge-green">슬롯 A</span></p><p class="text-sm font-semibold mb-3">한국사능력검정</p>
+            <p class="mb-2"><span class="badge badge-red">슬롯 B</span></p><p class="text-sm font-semibold">운동</p></div>
+        <div class="day-card" style="border-color:#ccd6c3"><div class="day-header text-slate-800">토</div>
+            <p class="mb-2"><span class="badge badge-purple">오전</span></p><p class="text-sm font-semibold mb-3">Overview Paper 정독 2–3h</p>
+            <p class="mb-2"><span class="badge badge-green">오후</span></p><p class="text-sm font-semibold">새로운 연구 주제 탐색 90m<br><span class="text-xs text-slate-400 font-normal">+ 주간 회고 30m</span></p></div>
+        <div class="day-card" style="background:#f8fafc"><div class="day-header text-slate-400">일</div>
+            <p class="mb-2"><span class="badge badge-slate">OFF</span></p><p class="text-sm font-semibold text-slate-500 mb-3">완전 휴무 · 예비일</p>
+            <p class="text-xs text-slate-400">밀린 것만 이월</p></div>
+    </div>
+
+    <div class="mt-5 p-5" style="background:var(--c-green-soft);border:1px solid #d7e4dc;border-radius:var(--r-sm)">
+        <p class="text-sm text-slate-700 text-adaptive">
+            <b style="color:var(--c-green-txt)">일요일을 비워두는 것이 이 계획의 핵심 장치입니다.</b>
+            24주 중 절반은 무언가 밀립니다. 이월할 곳이 없으면 밀린 항목이 다음 주를 무너뜨리고, 그 지점에서 커리큘럼이 폐기됩니다.
+            일요일에 공부하기 시작하면 <b>그 주가 이미 과부하였다는 신호</b>로 읽으세요.
+        </p>
+    </div>
+</section>
+
+<!-- 03. 트랙별 커리큘럼 -->
+<section class="section-card" style="border-top-color:var(--c-violet);">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="ico" style="background:var(--c-violet)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">트랙별 커리큘럼</h2>
+            <p class="text-xs text-slate-400 mt-1">왼쪽이 시기 또는 항목, 오른쪽이 내용</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-blue)"></span><b>학회 · 회화 영어</b><span class="badge badge-blue ml-auto">DAILY · 60m</span></div>
+            <p class="tcard-lede">"프리토킹"을 목표로 두지 않습니다. 목표는 <b class="text-slate-700">15분 발표 완수 + Q&amp;A 생존</b>이며, 이 둘은 서로 다른 훈련입니다.</p>
+            <dl class="deflist">
+                <div><dt>P1 · W01–09</dt><dd><b>입 트기 · 발음</b><br>하루 20분 스픽으로 습관을 고정하고, ELSA로 한국인이 자주 걸리는 자음(r/l, f/p, θ, 어말자음)을 교정합니다. 일반 회화 앱이 유용한 건 이 국면뿐입니다.</dd></div>
+                <div><dt>P2 · W10–15</dt><dd><b>원고 · 셰도잉 · 암기</b><br>1,200단어 발표 스크립트를 쓴 뒤 ICIP·VCIP·ICASSP 발표 영상으로 셰도잉합니다. 일반 영어 셰도잉보다 효율이 몇 배 높습니다. W13부터 암기 시작.</dd></div>
+                <div><dt>P3 · W16–20</dt><dd><b>Q&amp;A · 리허설</b><br>예상 질문 30개와 답변 스크립트를 만들고, AI 음성 모드로 매일 15분 모의 Q&amp;A를 돌립니다. 링글·캠블리 세션 주 2회.</dd></div>
+                <div><dt>도구</dt><dd>ChatGPT·Gemini <b>음성 모드</b> — 무료이면서 내 논문으로 연습할 수 있는 유일한 도구라 1순위입니다.<br>스픽(습관) · ELSA Speak(발음) · 링글(원고 첨삭 + 모의 Q&amp;A)</dd></div>
+                <div><dt>암기 3종</dt><dd class="q">실전에서 가장 많이 쓰게 될 문장들입니다.<br>· "Could you repeat the question a bit more slowly?"<br>· "So, if I understand correctly, you're asking about…?"<br>· "That's a good point — it's part of our future work."</dd></div>
+            </dl>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:#6f7d5e"></span><b>새로운 연구 주제 탐색</b><span class="badge badge-green ml-auto">토 · 1.5h</span></div>
+            <p class="tcard-lede">Overview Paper를 읽은 직후 시간에 붙였습니다. <b class="text-slate-700">읽은 것이 식기 전에 아이디어로 옮기는 것</b>이 이 슬롯의 목적입니다. 최종 목표는 SCIE급 후속 연구 주제 1개 확정.</p>
+            <dl class="deflist">
+                <div><dt>W01–09 발산</dt><dd>아이디어 로그 파일을 만들고 관심 키워드 20개를 나열 → 5개 축으로 그룹화 → 축별로 최근 3년 논문 헤드라인을 훑습니다. 이 단계에서는 <b>거르지 않는 것</b>이 원칙입니다.</dd></div>
+                <div><dt>W10–15 압축</dt><dd>후보를 3개로 좁히고 각각 1문단으로 정의합니다. 선행연구 5편씩 확보 후 실현가능성(데이터·연산자원·기간)을 평가합니다.</dd></div>
+                <div><dt>W16–24 수렴</dt><dd>1개로 확정 → 문제 정의 1페이지 → 실험 설계 → 환경 세팅. W23–24에 첫 실험이 돌아가는 것이 목표입니다.</dd></div>
+                <div><dt>유력 후보</dt><dd>VCM 보간에 <b>경량 GAN</b>을 도입하는 아이디어. 기타 트랙의 Block B(생성모델)가 W10–17이라 학습 시기와 정확히 맞물립니다.</dd></div>
+                <div><dt>기록 원칙</dt><dd>버린 후보도 <b>"왜 버렸는지" 한 줄</b>씩 남깁니다. 6개월 뒤 같은 아이디어를 처음부터 다시 검토하는 낭비를 막아줍니다.</dd></div>
+            </dl>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-cyan)"></span><b>논문 영어</b><span class="badge badge-cyan ml-auto">화 · 2h</span></div>
+            <p class="tcard-lede">읽기와 쓰기를 분리하지 않습니다. 읽는 논문에서 <b class="text-slate-700">문장 패턴을 채집</b>해 내 논문에 이식하는 것이 전부입니다.</p>
+            <dl class="deflist">
+                <div><dt>주교재</dt><dd>Glasman-Deal, <i>Science Research Writing for Non-Native Speakers of English</i><br>IMRaD 절별로 실제 문장 패턴을 해부하는 책입니다. 주 1챕터씩, W04–W15에 Ch1–8을 끝냅니다.</dd></div>
+                <div><dt>보조</dt><dd>Schimel, <i>Writing Science</i> — 구조와 서사<br>Swales &amp; Feak, <i>Academic Writing for Graduate Students</i> — 서론의 CARS 모형</dd></div>
+                <div><dt>주간 루틴</dt><dd>① 교재 1챕터 → ② TCSVT·TIP 논문 1편에서 표현 10개 채집 → ③ 내 문장 5개 리라이팅</dd></div>
+                <div><dt>도구</dt><dd>Springer Exemplar · Linggle · AntConc<br>"이 표현이 실제 논문에서 쓰이는가"를 확인하는 용도입니다. 생성이 아니라 <b>검증</b>에 씁니다.</dd></div>
+                <div><dt>W16–24</dt><dd>교재를 덮고 후속 논문 초고에 직접 적용합니다. 표현 노트를 상시 참조 문서로 전환.</dd></div>
+            </dl>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:#557f96"></span><b>TEPS</b><span class="badge badge-blue ml-auto">화·목 · 2.5h</span></div>
+            <p class="tcard-lede">응시 시점을 <b class="text-slate-700">27년 하반기 1차 → 28-1학기 본 응시</b>로 조정 반영했습니다. 목표는 박사/통합 졸업요건인 <b class="text-slate-700">NEW TEPS 285점</b> — 이를 넘기면 전문연구요원 선발 기준(268점)은 자동으로 충족됩니다.</p>
+            <dl class="deflist">
+                <div><dt>1단계<br>26.09–11</dt><dd><b>W03–15</b> · 어휘 1회독 + 문법 유형 정리 + 청해 감각. 진단 모의고사 1회로 시작점을 기록해 둡니다.</dd></div>
+                <div><dt>2단계<br>26.12–27.02</dt><dd><b>W16–24</b> · 파트별 유형 훈련과 독해 스킬. 월 1회 하프 모의고사.</dd></div>
+                <div><dt>3단계<br>27.03–05</dt><dd>회차별 실전 모의고사 주 1회 + 오답 회귀</dd></div>
+                <div><dt>4단계<br>27.06–08</dt><dd>실전 반복 → <b>27년 하반기 1차 응시</b>로 실점수 확보</dd></div>
+                <div><dt>5단계<br>27.09–28.02</dt><dd>1차 점수의 취약 파트만 집중 보강 → <b>28-1학기 본 응시</b>로 285점 달성</dd></div>
+                <div><dt>이 24주는</dt><dd><b>의도적으로 저강도</b>입니다. 발표가 우선이고, TEPS는 뒤에 시간이 충분합니다.</dd></div>
+            </dl>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-violet)"></span><b>표준 기고서 4트랙</b><span class="badge badge-purple ml-auto">DAILY · 40m</span></div>
+            <p class="tcard-lede">지금 문서가 가장 많이 쏟아지는 네 곳. 제출자가 아니라 <b class="text-slate-700">관찰자</b>로 붙습니다 — 남이 낸 제안과 그 채택 과정을 읽는 것이 목적입니다.</p>
+            <dl class="deflist">
+                <div><dt>월<br>beyond-VVC</dt><dd><b>차세대 코덱 CfP (JVET)</b> · 최종 CfP는 JVET-AQ2021. 4개 테스트 케이스(런타임 무제한 / 5× / 1× / 0.2×)와 7개 카테고리로 평가됩니다. 제안 제출은 10월 말, 45차 회의(27.1)에서 평가, 표준 완성 목표는 29.10.<br>이 24주가 <b>제안이 쏟아지고 평가되는 구간</b>과 정확히 겹칩니다.</dd></div>
+                <div><dt>화<br>VCM</dt><dd><b>ISO/IEC 23888-2</b> · 본인 주력 분야. 프로파일 확정 이후의 conformance(Part 7) 흐름을 추적합니다.</dd></div>
+                <div><dt>수<br>FCM</dt><dd><b>Feature Coding for Machines</b> · VTM→HM18.0 전환과 NNC 도입 이후 실험 조건이 어떻게 바뀌는지가 관전 포인트입니다.</dd></div>
+                <div><dt>목<br>GSC</dt><dd><b>Gaussian Splat Coding</b> · 아직 탐색 단계(use case 문서 확정 직후). 지금 진입하면 표준이 형성되는 과정을 처음부터 볼 수 있는 유일한 트랙입니다.</dd></div>
+                <div><dt>읽는 법</dt><dd>① 문서번호 · 제안사 · 요지 → ② 실험 조건(CTC) → ③ 결과 표 BD-rate → ④ 논의 · 채택 여부<br>이 순서로 <b>3줄 요약</b>을 누적하고, 금요일에 4건을 1페이지로 통합합니다.</dd></div>
+            </dl>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-amber)"></span><b>통신 프로토콜</b><span class="badge badge-orange ml-auto">월 · 2h</span></div>
+            <p class="tcard-lede">순수 학습이 아니라 <b class="text-slate-700">학회지 기고문의 집필 일정</b>입니다. 매달 정리 노트 2페이지가 곧 기고문의 한 절이 됩니다.</p>
+            <dl class="deflist">
+                <div><dt>M1 · 9월</dt><dd><b>전송 기반</b> — TCP 혼잡제어, UDP, HTTP/1.1→2→3, TLS 1.3, QUIC 구조</dd></div>
+                <div><dt>M2 · 10월</dt><dd><b>스트리밍</b> — RTP/RTCP/RTSP, MPEG-DASH(ISO/IEC 23009-1), HLS(RFC 8216), CMAF(ISO/IEC 23000-19)</dd></div>
+                <div><dt>M3 · 11월</dt><dd><b>저지연</b> — LL-DASH, LL-HLS, chunked CMAF, WebRTC, SRT, RIST, Media over QUIC</dd></div>
+                <div><dt>M4 · 12월</dt><dd><b>적응 · 품질</b> — ABR 알고리즘(BOLA / MPC / Pensieve), CDN·Multi-CDN, CMCD/CMSD, ITU-T P.1203·P.1204</dd></div>
+                <div><dt>M5 · 1월</dt><dd><b>서비스 통합</b> — OTT 서비스 아키텍처 사례 분석, 기고문 최종 원고 완성</dd></div>
+            </dl>
+        </div>
+
+        <div class="card xl:col-span-2">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-rose)"></span><b>기타 · 체력</b><span class="badge badge-red ml-auto">주 5.5h</span></div>
+            <p class="tcard-lede">Block B(생성모델)를 W10–17에 둔 것은 의도적입니다 — 연구 주제 탐색 트랙의 유력 후보와 학습 시기를 맞추기 위해서입니다.</p>
+            <dl class="deflist">
+                <div><dt>신기술 · 수</dt><dd><b>Block A</b> (W01–09) DL 기초 재정비 · CNN / Transformer / ViT<br><b>Block B</b> (W10–17) 생성모델 · GAN 원전(2014) → StyleGAN → DDPM → GAN 경량화<br><b>Block C</b> (W18–24) Vision 응용 · Detection(YOLO/DETR) · Segmentation · Video Understanding</dd></div>
+                <div><dt>Agent · 목</dt><dd><b>W01–06</b> MCP 개념과 서버 직접 구축 · Claude Code 실전<br><b>W07–14</b> 에이전트 아키텍처 · RAG 파이프라인<br><b>W15–24</b> 연구 자동화 에이전트 구축 — 실험 스크립트 자동화, 서베이 봇</dd></div>
+                <div><dt>한국사 · 금</dt><dd>1~3급 취득 목표. 이 24주의 목표는 <b>전 범위 1회독 완주</b>뿐입니다 — 전근대(W01–12) / 근현대(W13–24). 기출 회독과 심화는 27-1학기부터 시작해도 늦지 않습니다.</dd></div>
+                <div><dt>운동 · 월수금</dt><dd>주 3회. 12월 이후에는 성실성 항목이 아니라 <b>발표 컨디션 관리</b>로 성격이 바뀝니다.</dd></div>
+            </dl>
+        </div>
+
+    </div>
+</section>
+
+<!-- 04. 주차별 상세 -->
+<section class="section-card" id="weeks" style="border-top-color:var(--c-amber);">
+    <div class="flex items-center gap-4 mb-2">
+        <div class="ico" style="background:var(--c-amber)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">주차별 상세 · W01–W24</h2>
+            <p class="text-xs text-slate-400 mt-1">주차 행을 클릭하면 아래에 일차별 계획이 펼쳐집니다 · 다시 누르면 닫힙니다</p>
+        </div>
+    </div>
+    <div class="table-container" id="wbody-wrap" style="max-height:66vh;overflow-y:auto">
+        <table style="min-width:900px">
+            <thead><tr>
+                <th style="width:100px">Week</th><th style="width:66px">Phase</th><th style="min-width:210px">핵심 과제</th>
+                <th style="min-width:185px">영어</th><th style="min-width:185px">표준 · 기고서</th><th style="min-width:175px">기타</th>
+            </tr></thead>
+            <tbody id="wbody"></tbody>
+        </table>
+    </div>
+    <div id="day-panel"></div>
+</section>
+
+<!-- 05. Overview Paper -->
+<section class="section-card" style="border-top-color:var(--c-cyan);">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="ico" style="background:var(--c-cyan)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">Overview Paper 16편</h2>
+            <p class="text-xs text-slate-400 mt-1">토요일 오전 슬롯 · 24주에 16편이므로 격주로 여유가 있습니다 — 남는 주는 재독에 쓰세요</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-cyan)"></span><b>고전 표준 Overview</b><span class="badge badge-cyan ml-auto">W01–08</span></div>
+            <ol class="plist">
+                <li><span class="pnum">01</span><div><p class="ptitle">Overview of the H.264/AVC Video Coding Standard</p><p class="pmeta">Wiegand et al. · IEEE TCSVT, 2003</p></div></li>
+                <li><span class="pnum">02</span><div><p class="ptitle">Overview of the High Efficiency Video Coding (HEVC) Standard</p><p class="pmeta">Sullivan et al. · IEEE TCSVT, 2012</p></div></li>
+                <li><span class="pnum">03</span><div><p class="ptitle">Overview of the Versatile Video Coding (VVC) Standard and its Applications</p><p class="pmeta">Bross et al. · IEEE TCSVT, 2021</p></div></li>
+                <li><span class="pnum">04</span><div><p class="ptitle">Rate-Distortion Optimization for Video Compression</p><p class="pmeta">Sullivan &amp; Wiegand · IEEE Signal Processing Magazine, 1998</p><p class="pnote">이 분야의 사고방식 자체를 만든 논문입니다. 다른 어떤 것보다 먼저 읽어도 좋습니다.</p></div></li>
+                <li><span class="pnum">05</span><div><p class="ptitle">Calculation of Average PSNR Differences between RD-curves</p><p class="pmeta">Bjøntegaard · VCEG-M33, 2001</p><p class="pnote">BD-rate의 원전. 4페이지짜리 기고문이지만 매일 쓰는 숫자의 출처입니다.</p></div></li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-violet)"></span><b>머신 비전 · VCM</b><span class="badge badge-purple ml-auto">W09–15</span></div>
+            <ol class="plist">
+                <li><span class="pnum">06</span><div><p class="ptitle">Video Coding for Machines: A Paradigm of Collaborative Compression and Intelligent Analytics</p><p class="pmeta">Duan et al. · IEEE TIP, 2020</p><p class="pnote">VCM이라는 문제 설정 자체를 정의한 논문. 본인 논문 서론에서 인용 빈도가 가장 높을 겁니다.</p></div></li>
+                <li><span class="pnum">07</span><div><p class="ptitle">Video Coding for Machines: Compact Visual Representation Compression for Intelligent Collaborative Analytics</p><p class="pmeta">Yang et al. · IEEE TPAMI, 2024</p></div></li>
+                <li><span class="pnum">08</span><div><p class="ptitle">VNVC: A Versatile Neural Video Coding Framework for Efficient Human-Machine Vision</p><p class="pmeta">Sheng et al. · IEEE TPAMI, 2024</p><p class="pnote">사람용·기계용 코딩을 한 프레임워크로 묶는 접근. 후속 연구 주제와 직결됩니다.</p></div></li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-rose)"></span><b>신경망 압축</b><span class="badge badge-red ml-auto">W16–20</span></div>
+            <ol class="plist">
+                <li><span class="pnum">09</span><div><p class="ptitle">End-to-End Optimized Image Compression</p><p class="pmeta">Ballé et al. · ICLR, 2017</p><p class="pnote">학습 기반 압축의 출발점. 이후 논문 대부분이 이 구조의 변형입니다.</p></div></li>
+                <li><span class="pnum">10</span><div><p class="ptitle">Variational Image Compression with a Scale Hyperprior</p><p class="pmeta">Ballé et al. · ICLR, 2018</p></div></li>
+                <li><span class="pnum">11</span><div><p class="ptitle">DVC: An End-to-End Deep Video Compression Framework</p><p class="pmeta">Lu et al. · CVPR, 2019</p></div></li>
+                <li><span class="pnum">12</span><div><p class="ptitle">Neural Video Compression with Feature Modulation (DCVC-FM)</p><p class="pmeta">Li, Li &amp; Lu · CVPR, 2024</p><p class="pnote">현재 신경망 비디오 압축의 대표 성능 기준선. 후속 연구의 비교 대상이 됩니다.</p></div></li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <div class="tcard-h"><span class="swatch" style="background:var(--c-amber)"></span><b>전송 · 서비스</b><span class="badge badge-orange ml-auto">W21–24</span></div>
+            <ol class="plist">
+                <li><span class="pnum">13</span><div><p class="ptitle">The MPEG-DASH Standard for Multimedia Streaming over the Internet</p><p class="pmeta">Sodagar · IEEE MultiMedia, 2011</p></div></li>
+                <li><span class="pnum">14</span><div><p class="ptitle">A Survey on Bitrate Adaptation Schemes for Streaming Media over HTTP</p><p class="pmeta">Bentaleb et al. · IEEE Communications Surveys &amp; Tutorials, 2019</p><p class="pnote">학회지 기고문의 뼈대가 될 서베이. 프로토콜 트랙 M4와 함께 읽으세요.</p></div></li>
+                <li><span class="pnum">15</span><div><p class="ptitle">The QUIC Transport Protocol: Design and Internet-Scale Deployment</p><p class="pmeta">Langley et al. · ACM SIGCOMM, 2017</p></div></li>
+                <li><span class="pnum">16</span><div><p class="ptitle">A Survey of Rate Adaptation Techniques for Dynamic Adaptive Streaming over HTTP</p><p class="pmeta">Kua et al. · IEEE Communications Surveys &amp; Tutorials, 2017</p></div></li>
+            </ol>
+        </div>
+    </div>
+    <p class="text-xs text-slate-400 mt-5">※ 서지사항은 인용 전 DOI로 한 번 더 확인하세요.</p>
+</section>
+
+</div><!-- /page-curriculum -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 2 — 커리어 로드맵
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-roadmap">
+
+<div class="text-center mb-10 md:mb-12">
+    <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Career Integration Roadmap</h2>
+    <div class="inline-block text-white px-4 py-1.5 text-sm font-bold" style="background:var(--c-blue);border-radius:var(--r-sm)">2026 SUMMER — 2033 CAREER HIGH</div>
+    <p class="text-slate-500 text-sm mt-5 max-w-2xl mx-auto text-adaptive">VCM/FCM 및 차세대 비디오 코딩 표준(NGVC, H.267) 연구를 축으로, 대학원 졸업과 전문연구요원 복무를 통과하며 2033년 커리어 하이에 도달하기 위한 8개년 계획입니다.</p>
+</div>
+
+<!-- 연도별 로드맵 타임라인 -->
+<section class="section-card" style="border-top-color:var(--c-blue);">
+    <div class="flex items-center gap-4 mb-4">
+        <div class="ico" style="background:var(--c-blue)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">연도별 로드맵 타임라인</h2>
+            <p class="text-xs text-slate-400 mt-1">연도를 클릭하면 아래에 해당 연도의 목표가 표시됩니다</p>
+        </div>
+    </div>
+    <div id="timeline-track"></div>
+    <div id="year-panel" class="fade-in"></div>
+</section>
+
+<!-- 대학원 졸업 마스터 플랜 -->
+<section id="graduation-plan" class="section-card" style="border-top-color:var(--c-green);">
+    <div class="flex items-center gap-4 mb-9">
+        <div class="ico" style="background:var(--c-green)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">대학원 졸업 마스터 플랜</h2>
+            <p class="text-xs text-slate-400 mt-1">2026-2(1학년 1학기) 입학 · 목표 졸업 시점: 2031-1학기(5학년 2학기)</p>
+        </div>
+    </div>
+
+    <div class="mb-11">
+        <h3 class="text-lg font-bold text-slate-700 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-green)"></span> 학위 취득 프로세스 &amp; 연도 매핑</h3>
+        <div class="process-flow">
+            <div class="process-step">수료 요건 충족 · 종합자격시험 합격<em>2029-1 (29-1)</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">전문연구요원 편입 · 논문연구지도 개시<em>2029-2 (29-2)</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">국내·국외 논문 각 1편 게재 · 연구지도 2학기 충족<em>2029-2 ~ 2030-1</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">학위논문연구계획서 제출<em>2030-2 (30-2)</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">예비심사 통과 → 본심사 통과 → 제출<em>2031-1 (31-1)</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">최종 졸업<em>2031-1</em></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-3 text-adaptive">※ 학사 안내자료(대학원 졸업 및 전문연구요원 요약) 기준 학기 배치이며, 실제 종합시험·심사 일정에 따라 조정될 수 있습니다.</p>
+    </div>
+
+    <div class="mb-11">
+        <h3 class="text-lg font-bold text-slate-700 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-green)"></span> 학년 · 학기별 상세 로드맵</h3>
+        <div class="table-container">
+            <table>
+                <thead><tr><th style="width:14%">학년</th><th style="width:12%">학기</th><th style="width:16%">수강 학점</th><th>주요 이벤트</th></tr></thead>
+                <tbody>
+                    <tr><td rowspan="2" class="font-bold">1학년</td><td>26-2</td><td>9학점</td><td class="tl text-adaptive">대학원 입학 · TEPS/한국사 공부 시작</td></tr>
+                    <tr><td>27-1</td><td>9학점</td><td class="tl text-adaptive">TEPS/한국사 공부 지속</td></tr>
+                    <tr class="zebra"><td rowspan="2" class="font-bold">2학년</td><td>27-2</td><td>9학점</td><td class="tl text-adaptive">한국사능력검정시험 응시(1~3급 취득 목표)</td></tr>
+                    <tr class="zebra"><td>28-1</td><td>9학점</td><td class="tl text-adaptive">TEPS 시험 응시(268점/600점 이상 목표)</td></tr>
+                    <tr><td rowspan="2" class="font-bold">3학년<br><span class="text-[10px] text-slate-400">(수료)</span></td><td>28-2</td><td>9학점</td><td class="tl text-adaptive">전문연구요원 편입 대기 선발 신청 (9월 접수)</td></tr>
+                    <tr><td>29-1</td><td>9학점</td><td class="tl text-adaptive">대학원 종합자격시험 응시 · 수료 → 수료 14일 전 편입원서 제출 → 전문연구요원 편입</td></tr>
+                    <tr class="zebra"><td rowspan="2" class="font-bold">4학년</td><td>29-2</td><td>논문연구지도 1학기차</td><td class="tl text-adaptive">논문연구지도 개시 · 국내·국외 전문학술지 논문 각 1편 이상 게재(연구계획서 제출 전 요건)</td></tr>
+                    <tr class="zebra"><td>30-1</td><td>논문연구지도 2학기차</td><td class="tl text-adaptive">논문연구지도 2학기 요건 충족</td></tr>
+                    <tr><td rowspan="2" class="font-bold">5학년<br><span class="text-[10px] text-slate-400">(졸업)</span></td><td>30-2</td><td>-</td><td class="tl text-adaptive">학위논문연구계획서 제출</td></tr>
+                    <tr><td>31-1</td><td>-</td><td class="tl text-adaptive">예비심사 → 본심사 진행 → 학위취득 · 졸업</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="space-y-7">
+            <div>
+                <h4 class="subhead"><span class="subbar" style="background:var(--c-green)"></span> 기본 수료 요건</h4>
+                <ul class="info-list">
+                    <li class="text-adaptive">정규 등록: 6학기 이상 (박사/통합과정)</li>
+                    <li class="text-adaptive">이수 학점: 54학점 이상 (전산학과 42학점 필수)</li>
+                    <li class="text-adaptive">총 평량평균: 3.0 이상 / 4.3 만점</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="subhead"><span class="subbar" style="background:var(--c-green)"></span> 외국어 자격 시험</h4>
+                <div class="table-container">
+                    <table style="min-width:400px">
+                        <thead><tr><th>과정</th><th>TOEIC</th><th>TOEFL</th><th>NEW TEPS</th></tr></thead>
+                        <tbody>
+                            <tr><td>석사</td><td>700↑</td><td>80↑</td><td>265↑</td></tr>
+                            <tr class="hi"><td>박사/통합</td><td>750↑</td><td>85↑</td><td>285↑</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <h4 class="subhead"><span class="subbar" style="background:var(--c-green)"></span> 졸업 논문 요건</h4>
+                <ul class="info-list">
+                    <li class="text-adaptive">연구계획서 승인 후 2학기 이상 논문 연구지도 필수</li>
+                    <li class="text-adaptive">심사 전 국내/국외 전문학술지 각 1편 이상 게재 필수 → <b>국내: 방송미디어공학회 저널(2026)</b> / <b>국외: BitAD-RASD, IEEE TCSVT(2027)</b>로 충족 목표</li>
+                    <li class="text-adaptive">본심사 위원회(5인) 구성 및 최종 승인</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="space-y-7">
+            <div>
+                <h4 class="subhead"><span class="subbar" style="background:var(--c-green)"></span> 종합 자격 시험 (종시) — 2029-1학기(29-1, 3학년 2학기) 목표</h4>
+                <ul class="info-list">
+                    <li class="text-adaptive"><strong>응시 자격:</strong> 1학기 이상 이수 및 9학점 이상 취득</li>
+                    <li class="text-adaptive"><strong>시험 방법:</strong> 전공 5과목 선택 (필답/구술) — 영상통신, 컴퓨터비전, 딥러닝, 정보이론, 통신이론 권장</li>
+                    <li class="text-adaptive"><strong>합격 기준:</strong> 과목별 80점 이상 (100점 만점)</li>
+                    <li class="text-adaptive"><strong>재시험:</strong> 과목별 최대 2회 한정 응시 가능</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="subhead"><span class="subbar" style="background:var(--c-green)"></span> 졸업 요건 충족을 위한 논문 파이프라인</h4>
+                <ul class="info-list">
+                    <li class="text-adaptive">2026: 방송미디어공학회 국내 저널 (국내 요건 우선 확보)</li>
+                    <li class="text-adaptive">2027: BitAD-RASD → IEEE TCSVT 게재 (국외 요건 우선 확보)</li>
+                    <li class="text-adaptive">2027-28: BitGraph-VAD → CVPR/TPAMI 급 추가 실적 축적</li>
+                    <li class="text-adaptive">2029-2 (연구계획서 제출 전): 국내·국외 각 1편 이상 게재 요건 최종 충족 확인</li>
+                </ul>
+            </div>
+            <div class="p-5" style="background:var(--c-green-soft);border:1px solid #d7e4dc;border-radius:var(--r-sm)">
+                <p class="text-xs leading-relaxed text-adaptive" style="color:var(--c-green-txt)"><b>Tip.</b> 전문연구요원 편입은 대학원 <b>수료 시점(29-1학기)</b>에 이루어지며, 편입 후 2년 내 학위 취득이 원칙입니다. 국내·국외 논문 게재는 편입 훨씬 이전인 2026~2027년에 앞당겨 확보해두면, 편입 이후에는 종합시험·연구지도·심사 일정에만 집중할 수 있어 전체 졸업 일정의 리스크가 크게 줄어듭니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 전문연구요원 계획 -->
+<section id="special-agent" class="section-card" style="border-top-color:var(--c-red);">
+    <div class="flex items-center gap-4 mb-9">
+        <div class="ico" style="background:var(--c-red)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">전문연구요원 선발 및 복무 계획</h2>
+            <p class="text-xs text-slate-400 mt-1">박사과정 전문연구요원 트랙 · 편입 대기 신청: 2028-2(3학년 1학기) · 편입 완료: 2029-1(수료 시점)</p>
+        </div>
+    </div>
+
+    <div class="mb-11">
+        <h3 class="text-lg font-bold text-slate-700 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-red)"></span> 개인화된 복무 타임라인</h3>
+        <div class="process-flow">
+            <div class="process-step">준비: 한국사 1~3급 · TEPS 268↑<em>2026 ~ 2028</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">편입 대기 선발 신청 (매년 4월·9월 접수)<em>2028-2 (9월)</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">수료 14일 전 편입원서 제출 → 병역지정업체 편입<em>2029-1</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">군사교육소집 수료 (편입 후 6개월 이내)<em>2029</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">의무복무 중 박사학위 취득 (편입 후 2년 원칙, 최대 3년 유예)<em>2029 ~ 2031</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">타 병역지정업체(자대 포닥 or ETRI) 당연전직 · 1년<em>2031-32</em></div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">복무 만료<em>2032</em></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-3 text-adaptive">※ 전직대기 기간은 1·2차로 나뉘나 실질적으로 학위취득 후 약 3개월 내 취업을 마쳐야 하므로, 졸업 수개월 전부터 자대 포닥 또는 ETRI 지원을 병행합니다.</p>
+    </div>
+
+    <div class="mb-11">
+        <h3 class="text-lg font-bold text-slate-700 mb-5 flex items-center gap-2"><span class="hbar" style="background:var(--c-red)"></span> 선발 프로세스 (한국연구재단 주관)</h3>
+        <div class="table-container">
+            <table>
+                <thead><tr><th style="width:80px">절차</th><th>신청</th><th>접수</th><th>평가</th><th>선발</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td class="font-bold" style="background:#f7f9fb">주체</td>
+                        <td>연구자, 대학교</td><td>한국연구재단</td><td>한국연구재단</td><td>한국연구재단</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold" style="background:#f7f9fb">내용</td>
+                        <td class="tl"><ul class="info-list sm"><li class="text-adaptive">온라인 신청</li><li class="text-adaptive">현황표 취합 제출</li></ul></td>
+                        <td class="tl"><ul class="info-list sm"><li class="text-adaptive">접수 확인</li><li class="text-adaptive">신청공문 및 서류 구비</li></ul></td>
+                        <td class="tl"><ul class="info-list sm"><li class="text-adaptive">지원자격 요건 검토</li><li class="text-adaptive">선발기준 검토</li></ul></td>
+                        <td class="tl"><ul class="info-list sm"><li class="text-adaptive">합격자 발표</li></ul></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="panel">
+            <h4 class="font-bold text-slate-800 mb-3">지원 자격 &amp; 신청 기한</h4>
+            <ul class="info-list">
+                <li class="text-adaptive">현역입영대상자 중 의무종사기간(3년)을 35세까지 마칠 수 있는 자</li>
+                <li class="text-adaptive">석사학위 이상 취득 후 자연계 박사학위과정 수학 중인 자</li>
+                <li class="text-adaptive">석·박사통합과정 재학생: 석사·박사 각 2년 이상, 통합과정은 합산 4년 이상 수업연한 이수 조건</li>
+                <li class="text-adaptive"><strong>신청 기한:</strong> 연 2회 (매년 4월, 9월) — 본 계획은 <b>2028년 9월(28-2학기)</b> 신청 목표</li>
+            </ul>
+        </div>
+        <div class="panel">
+            <h4 class="font-bold text-slate-800 mb-3">선발 기준</h4>
+            <ul class="info-list">
+                <li class="text-adaptive"><strong>한국사:</strong> 한국사능력검정시험 1~3급 (Pass/Fail, 별도 배점 없음)</li>
+                <li class="text-adaptive"><strong>영어:</strong> 개정 TEPS 기준 268점 이상 (600점 만점)</li>
+                <li class="text-adaptive"><strong>성적:</strong> 출신대학원 석사과정 성적 반영 (석박사통합과정은 대학원 학칙상 석사과정 수업연한까지의 성적 산출)</li>
+                <li class="text-adaptive"><strong>동점자 우선순위:</strong> 대학원 성적 고득점자 → 영어성적 고득점자 → 연소자 순</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6" style="background:var(--c-red-soft);border:1px solid #e8d6d6;border-radius:var(--r-sm)">
+            <h4 class="font-bold mb-3" style="color:var(--c-red-txt)">편입 · 학위취득 관련 주의사항</h4>
+            <p class="text-xs leading-relaxed text-adaptive" style="color:#7d4d4d">
+                편입은 <b>박사과정 수료 시기(29-1학기)</b>부터 해당되며, 수료하는 날의 14일 전까지 지정업체의 장에게 편입원서를 제출해야 합니다. 편입 후 2년 내(2029→2031) 학위를 취득하는 것이 원칙이며, 미취득 시 3년 범위에서 유예기간을 받을 수 있으나(단, 유예기간은 의무복무기간에 미산입) 신청은 편입일로부터 2년째 되는 날 또는 유예기간 만료일 40일 전까지 해야 합니다. 군사교육소집은 편입 후 가급적 6개월 이내 수료를 목표로 합니다.
+            </p>
+        </div>
+        <div class="p-6" style="background:var(--c-red-soft);border:1px solid #e8d6d6;border-radius:var(--r-sm)">
+            <h4 class="font-bold mb-3" style="color:var(--c-red-txt)">전직 · 복무 만료 주의사항</h4>
+            <p class="text-xs leading-relaxed text-adaptive" style="color:#7d4d4d">
+                학위 취득(2031년 목표) 후에는 반드시 1년간 타 병역지정업체(연구소)로 옮겨 근무해야 하며(병역법 시행령 제85조 등), 전직대기 기간이 1·2차로 나뉘지만 실질적으로 약 3개월 내 취업을 마쳐야 합니다. 따라서 졸업 수개월 전부터 자대 포닥 또는 ETRI 등으로의 취업 준비를 병행해야 합니다. 복무 만료 목표 시점은 <b>2032년</b>이며, 이후 ETRI 잔류 또는 삼성전자 Research 취직을 통해 커리어를 이어갑니다. 최근 정원 개편으로 석사 배정 인원은 감축 추세이나, 박사 배정 인원(연 1,000명 수준)은 유지되고 있습니다.
+            </p>
+        </div>
+    </div>
+</section>
+
+</div><!-- /page-roadmap -->
+
+<footer class="text-center text-xs text-slate-400 pb-8">
+    © 2026–2033 Personal Research &amp; Career Roadmap · 계획은 표준화 일정, 학사 일정 변경에 따라 매년 갱신됩니다.
+</footer>
+
+</div>
+
+<script>
+/* ══════════ TABS ══════════ */
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
+    t.classList.add('active');
+    document.getElementById('page-' + t.dataset.page).classList.add('on');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* ══════════ PAGE 1 — CURRICULUM ══════════ */
+var W = [
+ ["W01","8.17–8.23","P0","MPEG 기술 해설서 <b>5일치 완주</b>","발음 진단(ELSA) · 스픽 설치 · 하루 20분 시작","4트랙 문서 저장소 세팅 (JVET / WG04 / WG02 + Zotero)","운동 3회 시작 · Agent: MCP 개념",
+  ["해설서 1일차 · JVET/WG04/WG02 문서 사이트 북마크","해설서 2일차 · Zotero 컬렉션 4개 생성","해설서 3일차 · ELSA 발음 진단 실시","해설서 4일차 · 기고서 3줄 요약 템플릿 제작","해설서 5일차 완주 · 주간 통합요약 양식 확정","Overview 논문 16편 PDF 수집 · <b>아이디어 로그 파일 개설</b>","OFF"]],
+ ["W02","8.24–8.30","P0","Summer School <b>1–5일차</b>","셰도잉 시작 — ICIP·VCIP 발표 영상","기고서 하루 1건 루틴 첫 주","신기술 Block A 착수 · Overview ①",
+  ["SS 1일차 · 셰도잉 영상 3편 선정","SS 2일차 · 논문영어 교재 입수","SS 3일차 · 신기술 Block A 착수","SS 4일차 · Agent: MCP 개념 정리","SS 5일차 · 첫 통합요약 1p 작성","Overview 01 H.264 · 관심 키워드 20개 나열","OFF"]],
+ ["W03","8.31–9.6","P0","Summer School <b>6–10일차 완주</b> · <mark>26-2 개강</mark>","TEPS 진단 모의고사 1회","최종 CfP(JVET-AQ2021) 정독","프로토콜 M1 착수 · Overview ②",
+  ["SS 6일차 · 프로토콜 M1 착수(TCP 혼잡제어)","SS 7일차 · <b>TEPS 진단 모의고사</b>","SS 8일차 · 개강 시간표 확정","SS 9일차 · 최종 CfP(JVET-AQ2021) 정독","SS 10일차 완주 · 통합요약","Overview 02 HEVC · 키워드 → 5개 축으로 그룹화","OFF"]],
+ ["W04","9.7–9.13","P1","시간표 고정 — 루틴 정착 주간","논문영어 Ch1 Introduction · TEPS 어휘 1주차","4트랙 로테이션 정상 가동","한국사 전근대 1 · Agent: MCP 서버",
+  ["M1: UDP · HTTP/1.1→2→3 진화","논문영어 Ch1 Introduction · TEPS 어휘 Day1","신기술: CNN 복습","Agent: MCP 서버 직접 구축","한국사 전근대 1(선사~삼국) · 통합요약","Overview 03 VVC · 축별 최근 3년 논문 헤드라인 훑기","OFF"]],
+ ["W05","9.14–9.20","P1","연구 블록 사수 — 4시간 무결 유지","논문영어 Ch2 Methodology","프로토콜과 교차: QUIC 관련 기고 확인","Overview ④ RDO 고전",
+  ["M1: TLS 1.3 · QUIC 구조","논문영어 Ch2 Methodology · TEPS 어휘 Day2","신기술: Transformer / ViT","Agent: MCP 서버 마무리","한국사 전근대 2(남북국~고려) · 통합요약","Overview 04 RDO 고전 · <b>후보 축 5→3 압축</b>","OFF"]],
+ ["W06","9.21–9.27","P1","<mark>추석 연휴(9.24–27)</mark> — 경량 주간","회화만 유지 (하루 20분)","밀린 기고서 정리만","<span class='text-slate-400'>휴식 우선 · 나머지 정지</span>",
+  ["회화 20분만","회화 20분만","추석 · 휴식","추석 · 휴식","추석 · 휴식","밀린 기고서 몰아 정리 2h","OFF"]],
+ ["W07","9.28–10.4","P1","프로토콜 <b>M1 정리 노트 2p</b> 완성","논문영어 Ch3 Results","QUIC / TLS 1.3 정독","Overview ⑤ · 한국사 전근대 3",
+  ["<b>M1 정리 노트 2p 작성</b>","논문영어 Ch3 Results · TEPS","신기술: DL 최적화·정규화","Agent: 에이전트 아키텍처 개관","한국사 전근대 3(조선 전기) · 통합요약","Overview 05 BD-rate 원전 · 후보 3개 각각 1문단 정의","OFF"]],
+ ["W08","10.5–10.11","P1","프로토콜 M2 착수 (스트리밍)","논문영어 Ch4 Discussion","DASH / HLS / CMAF 구조 비교","신기술 Block A 마무리",
+  ["M2 착수: RTP / RTCP / RTSP","논문영어 Ch4 Discussion · TEPS","<b>신기술 Block A 마무리 노트</b>","Agent: RAG 개념 정리","한국사 전근대 4(조선 후기) · 통합요약","재독 주간 · 후보별 선행연구 5편씩 수집","OFF"]],
+ ["W09","10.12–10.18","P1","<mark>중간고사 주간 — 부하 60%</mark>","회화·셰도잉만 유지","하루 1건은 유지","<span class='text-slate-400'>그 외 전부 정지</span>",
+  ["시험 · 기고서 1건만","시험 · 회화 20분","시험","시험","시험 · 통합요약 생략","셰도잉 30분만","OFF"]],
+ ["W10","10.19–10.25","P2","<b>발표 원고 v1 작성</b> (1,200단어)","원고 소리내어 낭독 · 논문영어 Ch5","제안 문서 유입 대비 수집 체계 정비","신기술 Block B: GAN 원전",
+  ["M2: MPEG-DASH(ISO/IEC 23009-1)","논문영어 Ch5 · <b>원고 서론 작성</b>","신기술 Block B: GAN 원전(2014)","Agent: RAG 파이프라인 실습","원고 본론 작성 · 통합요약","Overview 06 VCM(TIP 2020) · <b>원고 v1 완성</b>","OFF"]],
+ ["W11","10.26–11.1","P2","제안 문서 유입 시작 — 목록화·분류","원고 v2 다듬기 · 셰도잉 강화","제출 제안 목록 정리 · 크로스체크 문서 추적","프로토콜 M2 마무리",
+  ["M2: HLS(RFC 8216) / CMAF","논문영어 · <b>원고 v2</b> · TEPS","신기술: DCGAN → StyleGAN 예습","Agent: 에이전트 툴 설계","<b>M2 정리 노트 2p</b> · 제안 목록 정리","Overview 07 VCM TPAMI · 후보 3개 실현가능성 평가","OFF"]],
+ ["W12","11.2–11.8","P2","<b>발표 슬라이드 v1</b> 작성","원고 v3 확정 · 셰도잉 집중","프로토콜 M3 착수 (저지연)","신기술: StyleGAN",
+  ["M3 착수: LL-DASH / LL-HLS","<b>슬라이드 구조 설계</b> · TEPS","신기술: StyleGAN 구조","Agent: 실험 스크립트 자동화 설계","슬라이드 v1 초안 · 통합요약","Overview 08 VNVC · <b>원고 v3 확정</b>","OFF"]],
+ ["W13","11.9–11.15","P2","슬라이드 완성 · 그림/표 최종 정리","<b>원고 암기 1/3</b>","WebRTC / SRT / MoQ","Agent: RAG 파이프라인",
+  ["M3: chunked CMAF / WebRTC","슬라이드 그림·표 정리 · TEPS","신기술: GAN 경량화 기법","Agent: RAG 파이프라인 구현","<b>슬라이드 완성</b> · 통합요약","재독 주간 · 원고 암기 1/3 · <b>후보 1개로 수렴</b>","OFF"]],
+ ["W14","11.16–11.22","P2","<b>후속 연구 서베이 착수</b> (경량 GAN 보간)","원고 암기 2/3","프로토콜 M3 마무리","Agent: 서베이 봇 설계",
+  ["M3: SRT / RIST / Media over QUIC","<b>서베이 대상 10편 선정</b> · TEPS","신기술: 보간·초해상 네트워크","Agent: 서베이 봇 설계","서베이 5편 정독 · 통합요약","재독 주간 · 원고 암기 2/3 · 서베이 나머지 5편","OFF"]],
+ ["W15","11.23–11.29","P2","후속 연구 <b>문제 정의 1p</b> · TEPS 중간 모의고사","<b>원고 암기 완료</b>","기고서 누적 요약 재정리","신기술: Diffusion 기초",
+  ["<b>M3 정리 노트 2p</b>","문제 정의 초안 · TEPS 하프 모의고사","신기술: Diffusion 기초(DDPM)","Agent: 서베이 봇 구현","<b>문제 정의 1p 확정</b> · 통합요약","재독 주간 · <b>원고 암기 완료</b> · 지도교수 상의 준비","OFF"]],
+ ["W16","11.30–12.6","P3","<b>예상 질문 30개 + 답변 스크립트</b>","링글·캠블리 세션 시작 (주 2회)","프로토콜 M4 (ABR · QoE)","Agent: 연구 자동화 착수",
+  ["M4 착수: ABR(BOLA / MPC)","예상 질문 1–15 작성 · <b>TEPS 2단계 시작</b>","신기술: Diffusion 응용","Agent: 연구 자동화 착수","예상 질문 16–30 · 통합요약","Overview 09 Ballé 2017 · 답변 스크립트 v1 · 링글 1회","OFF"]],
+ ["W17","12.7–12.13","P3","AI 음성 모의 Q&A 매일 15분","대응 문장 3종 암기 · 답변 스크립트 v2","기고서 유지","기말 대비 시작",
+  ["M4: CDN / Multi-CDN · 모의 Q&A 15분","모의 Q&A · 기말 대비 시작","모의 Q&A · 신기술 정리","모의 Q&A · Agent 자동화 계속","<b>대응 문장 3종 암기 완료</b> · 통합요약","Overview 10 Hyperprior · 답변 스크립트 v2 · 링글 2회","OFF"]],
+ ["W18","12.14–12.20","P3","<mark>기말고사 주간 — 부하 50%</mark>","영어만 유지","최소 유지","<span class='text-slate-400'>그 외 정지</span>",
+  ["시험 · 영어 30분","시험 · 영어 30분","시험","시험","시험","영어 30분만","OFF"]],
+ ["W19","12.21–12.27","P3","<mark>겨울방학 시작</mark> · <b>리허설 1차</b> (연구실)","지도교수 모의 Q&A","프로토콜 M4 마무리","후속 연구 실험 설계",
+  ["M4: CMCD/CMSD · ITU-T P.1203","<b>리허설 1차 (연구실)</b>","후속 연구 실험 설계","Agent 자동화 마무리","<b>M4 정리 노트 2p</b> · 통합요약","Overview 11 DVC · 지도교수 모의 Q&A 요청","OFF"]],
+ ["W20","12.28–1.3","P3","<b>리허설 2·3차</b> · 프로토콜 기고문 초고","답변 스크립트 최종 점검","45차 JVET 사전 문서 확인","연말 회고",
+  ["M5 착수: OTT 아키텍처 · 기고문 초고","<b>리허설 2차</b> · 답변 스크립트 점검","<b>리허설 3차</b> (타이머·노트 없이)","45차 JVET 사전 문서 확인","<b>기고문 초고 완성</b> · 통합요약","Overview 12 DCVC-FM · 연말 회고 · 다음 후보 정리","OFF"]],
+ ["W21","1.4–1.10","P4","<mark>IWAIT 2027 개막 (1.10, 이화여대)</mark>","최종 리허설 · 현장 답사","세션 프로그램 사전 독해","<b>컨디션 관리 최우선</b>",
+  ["세션 프로그램 정독 · 등록 확인","<b>최종 리허설 1</b>","현장(이화여대) 답사 · 동선 확인","<b>최종 리허설 2</b> · 질문 리스트 점검","컨디션 관리 · 슬라이드 백업 3중화","휴식 · 가벼운 낭독 20분","<b>IWAIT Day1 (1.10) 참관</b>"]],
+ ["W22","1.11–1.17","P4","<mark>영어 발표 (1.11–12)</mark> · 직후 회고 기록","실전 Q&A 복기 — 못 알아들은 문장 전부 기록","<b>45차 JVET CfP 평가 트래킹</b>","발표 후 휴식 3일",
+  ["<b>IWAIT Day2 — 발표 (1.11)</b>","IWAIT Day3 (1.12) · 세션 참관","<b>직후 회고 기록</b> — 못 알아들은 문장 전부","휴식","휴식 · 45차 JVET 문서 확인","회고 정리 · 다음 사이클 초안","OFF"]],
+ ["W23","1.18–1.24","P5","IWAIT 회고 문서화 · 후속 연구 실험 착수","영어 루틴 재개 · TEPS 2단계","CfP 평가 결과 정리 · W21–22 밀린 기고서 회수","신기술 Block C",
+  ["M5: OTT 서비스 사례 분석","<b>실험 환경 세팅</b> · TEPS 2단계","신기술 Block C: Detection(YOLO/DETR)","Agent: 실험 자동화 적용","<b>IWAIT 회고 문서 완성</b> · 통합요약","Overview 13–14 DASH·ABR 서베이 · 주제 탐색 재개","OFF"]],
+ ["W24","1.25–1.31","P5","<b>다음 사이클 계획 수립</b> · 24주 전체 회고","TEPS 2단계 본격 전환","학회지 기고문 최종 투고 준비","2월 이후 배치 결정",
+  ["<b>기고문 최종 퇴고</b>","논문영어 재개 · TEPS 2단계","신기술 Block C: Segmentation","Agent: 다음 분기 계획","<b>24주 전체 회고 작성</b>","Overview 15–16 QUIC·DASH 서베이 · <b>주제 탐색 결론</b>","OFF"]]
+];
+
+var DAY = [
+ {n:"월", doc:"beyond-VVC", a:"통신 프로토콜", b:"운동"},
+ {n:"화", doc:"VCM",        a:"논문 영어",     b:"TEPS"},
+ {n:"수", doc:"FCM",        a:"신기술",        b:"운동"},
+ {n:"목", doc:"GSC",        a:"Agent 역량",    b:"TEPS"},
+ {n:"금", doc:"주간 통합요약", a:"한국사",       b:"운동"},
+ {n:"토", doc:"—",          a:"Overview Paper 2–3h", b:"연구 주제 탐색 90m"},
+ {n:"일", doc:"—",          a:"휴무",          b:"예비일"}
+];
+
+var RAP   = {3:1,9:1,18:1,21:1,22:1,24:1};
+var PC    = {P0:'badge-slate',P1:'badge-blue',P2:'badge-purple',P3:'badge-orange',P4:'badge-red',P5:'badge-green'};
+var LIGHT = {6:1,9:1,18:1};
+
+function mode(n){
+  if (n === 21 || n === 22) return {k:'conf',  label:'학회 모드', cls:'badge-red'};
+  if (n <= 2 || n >= 19)    return {k:'break', label:'방학 중',   cls:'badge-green'};
+  return                           {k:'term',  label:'학기 중',   cls:'badge-blue'};
+}
+function fixLine(n){
+  var m = mode(n).k;
+  if (m === 'conf')  return '학회 모드: 연구 09–13만 유지 · 나머지 시간은 리허설·발표·회고';
+  if (m === 'break') return '방학 고정: 연구 09–13 · 저널 14–15 · 기고서 15–15:40 · 영어 16–17:30 · 로테이션 A 17:30–19';
+  return                    '학기 고정: 연구 09–13 · 저널 14–15 · 기고서 15–15:40 · 영어 16–17 · 수업/로테이션 A 17–19';
+}
+
+document.getElementById('ruler').innerHTML = W.map(function(r,i){
+  return '<div class="wcell" data-w="'+(i+1)+'" title="'+r[0]+' · '+r[1]+'">'
+    + (RAP[i+1] ? '<span class="rap"></span>' : '')
+    + '<span class="wn">'+String(i+1).padStart(2,'0')+'</span>'
+    + '<span class="wd">'+r[1].split('–')[0]+'</span></div>';
+}).join('');
+
+document.getElementById('wbody').innerHTML = W.map(function(r,i){
+  return '<tr id="row-'+(i+1)+'" data-w="'+(i+1)+'">'
+    + '<td><b class="text-slate-800">'+r[0]+'</b><br><span class="text-xs text-slate-400 font-semibold">'+r[1]+'</span></td>'
+    + '<td><span class="badge '+PC[r[2]]+'">'+r[2]+'</span></td>'
+    + '<td class="tl font-semibold text-slate-700">'+r[3]+'</td>'
+    + '<td class="tl text-slate-600">'+r[4]+'</td>'
+    + '<td class="tl text-slate-600">'+r[5]+'</td>'
+    + '<td class="tl text-slate-600">'+r[6]+'</td></tr>';
+}).join('');
+
+var panel = document.getElementById('day-panel');
+var openW = null;
+
+function dayCard(week, idx){
+  var d = DAY[idx], task = W[week-1][7][idx], off = (idx === 6), sat = (idx === 5);
+  return '<div class="dcard'+(off?' off':'')+'">'
+   + '<h5>'+d.n+'<span class="badge '+(off?'badge-slate':(sat?'badge-green':'badge-blue'))+'">'+(off?'OFF':(sat?'주말':'평일'))+'</span></h5>'
+   + '<div class="dtask">'+task+'</div>'
+   + (off ? '<div class="drow"><b>원칙</b><span>완전 휴무. 밀린 항목만 이월합니다.</span></div>'
+          : '<div class="drow"><b>기고서</b><span>'+d.doc+'</span></div>'
+            +'<div class="drow"><b>슬롯 A</b><span>'+d.a+'</span></div>'
+            +'<div class="drow"><b>슬롯 B</b><span>'+d.b+'</span></div>')
+   + (off || sat ? '' : '<div class="dfix">'+fixLine(week)+'</div>')
+   + '</div>';
+}
+function closePanel(){
+  openW = null; panel.innerHTML = '';
+  document.querySelectorAll('.wcell').forEach(function(c){ c.classList.remove('active'); });
+  document.querySelectorAll('#wbody tr').forEach(function(t){ t.classList.remove('hit'); });
+}
+function showWeek(n){
+  if (openW === n) { closePanel(); return; }
+  openW = n;
+  var r = W[n-1], m = mode(n), cards = '';
+  for (var i = 0; i < 7; i++) cards += dayCard(n, i);
+  document.querySelectorAll('.wcell').forEach(function(c){ c.classList.toggle('active', +c.dataset.w === n); });
+  document.querySelectorAll('#wbody tr').forEach(function(t){ t.classList.toggle('hit', +t.dataset.w === n); });
+  panel.className = 'fade-in';
+  panel.innerHTML =
+    '<div class="p-5 md:p-6 mt-2" style="background:#f8fafc;border:1px solid #e4e9ef;border-radius:var(--r-sm)">'
+    + '<div class="flex items-center gap-2.5 flex-wrap mb-1">'
+    +   '<span class="text-xl font-extrabold text-slate-800">'+r[0]+' 일차별 계획</span>'
+    +   '<span class="text-sm font-bold text-slate-400">'+r[1]+'</span>'
+    +   '<span class="badge '+PC[r[2]]+'">'+r[2]+'</span>'
+    +   '<span class="badge '+m.cls+'">'+m.label+'</span>'
+    +   (RAP[n]   ? '<span class="badge badge-red">마일스톤</span>' : '')
+    +   (LIGHT[n] ? '<span class="badge badge-orange">부하 감축</span>' : '')
+    +   '<button id="close-btn" class="ml-auto text-xs font-bold text-slate-400 hover:text-slate-700">닫기 ✕</button>'
+    + '</div>'
+    + '<p class="text-xs text-slate-400 mb-4">이번 주 핵심 — '+r[3].replace(/<[^>]+>/g,'')+'</p>'
+    + '<div class="dgrid">'+cards+'</div></div>';
+  document.getElementById('close-btn').addEventListener('click', function(e){ e.stopPropagation(); closePanel(); });
+  panel.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+document.querySelectorAll('#wbody tr').forEach(function(t){
+  t.addEventListener('click', function(){ showWeek(+t.dataset.w); });
+});
+document.querySelectorAll('.wcell').forEach(function(c){
+  c.addEventListener('click', function(){
+    var n = +c.dataset.w;
+    if (openW === n) { closePanel(); return; }
+    document.getElementById('weeks').scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function(){ showWeek(n); }, 260);
+  });
+});
+
+
+/* ══════════ PAGE 2 — ROADMAP ══════════ */
+const timelineData = {
+  2026: {
+    theme: "대학원 입학(26-2) · VCM-VAD 연구 심화 · 첫 국내 논문 게재",
+    tag: "대학원 입학",
+    color: "blue",
+    research: [
+      "VCM-VAD 연구 로드맵 진행: T-DuROC(7월) → Multi-Meta-VAD(8월) → BitGraph-VAD(9월) → BitAD-RASD(10월)",
+      "BitAD-RASD Phase 0(Infra)~Phase 2(Temporal) 진행: VCM NAL 파서(Branch A) 완료, entropy-only VVC 신택스 추출기(Branch B) 검증",
+      "AVC → HEVC → VVC → VCM 순으로 표준 문서 복습, 컴퓨터 비전/생성 AI 스터디 병행"
+    ],
+    publications: [
+      "방송미디어공학회 12월 저널 마무리 게재 (국내 학술지 요건 최대한 조기 확보)",
+      "제33회 삼성휴먼테크논문대상: 초록접수(8-9월) → 논문접수(11월) 목표 지원",
+      "BitGraph-VAD: TPAMI/TCSVT급 국제 저널 초안 작성 착수"
+    ],
+    standardization: [
+      "MPEG 155th/156th 회의 동향 분석 (VCM DIS→FDIS 진행 상황 추적)",
+      "VCM(ISO/IEC 23888-2) FDIS 완료(2026년 말) 대응 준비"
+    ],
+    milestones: [
+      "대학원 1학년 1학기(26-2) 9학점 수강 개시",
+      "TEPS·한국사능력검정시험 공부 시작 (전문연구요원 준비, 편입 목표: 2029-1)"
+    ]
+  },
+  2027: {
+    theme: "1~2학년 · 한국사시험 응시(27-2) · TCSVT 게재",
+    tag: "1~2학년",
+    color: "blue",
+    research: [
+      "BitAD-RASD Phase 3(Analytics)~Phase 4(논문화) 완료",
+      "BitGraph-VAD 확장 실험 및 후속 프로젝트 기획",
+      "NGVC(Beyond-VVC/H.267) Call for Proposals 평가 결과(1월 JVET 회의) 학습 및 대응 방향 수립"
+    ],
+    publications: [
+      "BitAD-RASD → IEEE TCSVT 투고 및 게재 (국외 학술지 요건을 편입 훨씬 이전에 조기 확보)",
+      "관련 후속 연구 CVPR 급 학회 투고",
+      "제34회 삼성휴먼테크논문대상 지원 (전년도 결과 반영해 개선)"
+    ],
+    standardization: [
+      "JVET NGVC 표준화 협업 단계(2027년 1월 개시) 동향 추적, VCM/FCM 대응 연구 방향 설정"
+    ],
+    milestones: [
+      "27-1학기 9학점 수강 (1학년 2학기)",
+      "27-2학기 9학점 수강 (2학년 1학기) · 한국사능력검정시험 응시(1~3급 목표)"
+    ]
+  },
+  2028: {
+    theme: "2~3학년 · TEPS 응시 · 전문연구요원 편입 대기 신청",
+    tag: "2~3학년",
+    color: "indigo",
+    research: [
+      "NGVC(H.267) 표준화 협업 단계 대응: VCM/FCM과 차세대 코딩 도구 통합 연구 착수",
+      "VAD 연구 라인의 백본/데이터셋 확장 (Exp E: full-dataset 평가, Exp F: 백본 비교)",
+      "TPAMI/IJCV급 저널 투고를 위한 심화 실험 설계"
+    ],
+    publications: [
+      "국제 저널(TPAMI/IJCV급) 1편 투고",
+      "MPEG 기고서(contribution) 형태의 표준화 문서 공동저자 참여 시도"
+    ],
+    standardization: [
+      "VCM Part 7 Conformance NWIP 진행 상황 대응",
+      "MPEG/JVET 정기 회의 참가 및 기고서 제출 실습"
+    ],
+    milestones: [
+      "28-1학기 9학점 수강 (2학년 2학기) · TEPS 시험 응시(268점/600점 이상 목표)",
+      "28-2학기 9학점 수강 (3학년 1학기) · 9월 전문연구요원 편입 대기 선발 신청"
+    ]
+  },
+  2029: {
+    theme: "수료 · 종합시험 합격 · 전문연구요원 편입",
+    tag: "수료·편입",
+    color: "indigo",
+    research: [
+      "H.267/NGVC 최종 표준 완성 시점 대응 최종 검증 실험",
+      "박사학위논문 핵심 챕터 실험 착수"
+    ],
+    publications: [
+      "29-2학기(연구계획서 제출 전)까지 국내·국외 전문학술지 논문 각 1편 이상 게재 요건 최종 충족 확인",
+      "표준화 기고 실적 학위논문에 반영"
+    ],
+    standardization: [
+      "H.267(NGVC) 표준 최종 완성(2028-2029년 예상)에 따른 후속 연구 주제 재정의"
+    ],
+    milestones: [
+      "29-1학기 9학점 수강 (3학년 2학기) · 대학원 종합자격시험(5과목) 응시 및 합격 → 수료",
+      "수료 14일 전 지정업체 장에게 편입원서 제출 → 전문연구요원 편입 (하반기)",
+      "편입 후 6개월 이내 군사교육소집 수료",
+      "29-2학기부터 논문연구지도 개시 (4학년 1학기)"
+    ]
+  },
+  2030: {
+    theme: "논문연구지도 · 학위논문연구계획서 제출",
+    tag: "논문연구지도",
+    color: "green",
+    research: [
+      "학위논문 실험 마무리 및 핵심 챕터 완성",
+      "차기 연구 주제(포닥/실무 단계) 스카우팅"
+    ],
+    publications: [
+      "학위논문 기반 요약 논문 국제 학회/저널 추가 게재 시도"
+    ],
+    standardization: [
+      "MPEG/JVET 네트워크를 활용한 전직처(자대 포닥 · ETRI) 탐색"
+    ],
+    milestones: [
+      "30-1학기: 논문연구지도 2학기차 완료 (4학년 2학기, 연구지도 2학기 요건 충족)",
+      "30-2학기: 학위논문연구계획서 제출 (5학년 1학기)",
+      "전문연구요원 의무복무 2년차 (편입 2029 기준)"
+    ]
+  },
+  2031: {
+    theme: "예비·본심사 통과 · 박사학위 취득 · 졸업",
+    tag: "예비·본심사 통과",
+    color: "red",
+    research: [
+      "연구소 실무 환경 전환 대비 NGVC/VCM 관련 응용 연구 정리",
+      "산업 표준화 활동과 연계된 실전 프로젝트 준비"
+    ],
+    publications: [
+      "산학 협력 기반 응용 논문 게재 준비"
+    ],
+    standardization: [
+      "JVET/MPEG 표준화 회의 정기 참가자로서 입지 구축, 기고서 실적 누적"
+    ],
+    milestones: [
+      "31-1학기: 학위논문 예비심사 → 본심사 통과 → 제출 → 학위취득 및 졸업 (5학년 2학기)",
+      "편입(2029) 후 2년 시점 학위취득 목표 달성 (유예기간 미사용)",
+      "학위취득 후 자대 포닥 또는 ETRI로 전직 절차 개시 (전직대기 약 3개월 내 취업)"
+    ]
+  },
+  2032: {
+    theme: "타 병역지정업체 전직 근무 · 복무 만료",
+    tag: "타 병역지정업체 전직 근무",
+    color: "red",
+    research: [
+      "자대 포닥 또는 ETRI에서 NGVC/VCM 응용 연구 실무 수행"
+    ],
+    publications: [
+      "대표 저널 특집호(Special Issue) 논문 게재 도전"
+    ],
+    standardization: [
+      "MPEG/JVET 표준 기고자로서의 실적을 바탕으로 에디터/좌장 후보군 진입 시도"
+    ],
+    milestones: [
+      "자대 포닥 또는 ETRI 1년 전직 근무 (당연전직)",
+      "전문연구요원 복무 만료 (편입 2029 + 2년 학위 + 1년 전직 = 2032)"
+    ]
+  },
+  2033: {
+    theme: "커리어 하이 — ETRI 잔류 또는 삼성전자 Research 취직",
+    tag: "커리어 하이",
+    color: "purple",
+    research: [
+      "독자적 연구 어젠다 주도 (NGVC/H.267 이후 세대 대비 신규 연구 주제 설정)"
+    ],
+    publications: [
+      "누적 출판 실적(국제 저널 다수 + 표준화 기고) 종합",
+      "수상 경력(삼성휴먼테크 등) 종합 및 대외 인지도 확보"
+    ],
+    standardization: [
+      "MPEG/JVET 내 에디터십 또는 그룹 리더십 확보 목표"
+    ],
+    milestones: [
+      "복무 만료 후 ETRI 잔류 또는 삼성전자 Research로 정식 취직",
+      "Video Coding & Compression Standards 분야 커리어 하이 달성"
+    ]
+  }
+};
+
+const colorMap = {
+  blue:   {badge:"badge-blue"},
+  indigo: {badge:"badge-blue"},
+  green:  {badge:"badge-green"},
+  red:    {badge:"badge-red"},
+  purple: {badge:"badge-purple"}
+};
+const iconSvg = {
+  research: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
+  publications: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+  standardization: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-4a4 4 0 100-8 4 4 0 000 8zm6 4a4 4 0 10-3-6.87M5 12a4 4 0 113-6.87"/></svg>',
+  milestones: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>'
+};
+const catLabel = { research:"연구 프로젝트", publications:"논문 · 수상", standardization:"표준화 활동(MPEG/JVET)", milestones:"학위 · 병역 마일스톤" };
+const catColor = { research:"#45688f", publications:"#8f6f3f", standardization:"#6a6191", milestones:"#457a5e" };
+
+let activeYear = 2026;
+
+function buildTimelineNav(){
+    const track = document.getElementById('timeline-track');
+    const years = Object.keys(timelineData).map(Number).sort((a,b)=>a-b);
+    let html = "";
+    years.forEach((y, idx) => {
+        if (idx > 0) html += '<div class="tl-conn"></div>';
+        const d = timelineData[y];
+        const shortTag = d.tag || d.theme.split(/[·—]/)[0].trim();
+        html += '<div class="tl-wrap">'
+              + '<div class="tl-node" data-year="'+y+'" onclick="selectYear('+y+')" title="'+d.theme+'">'
+              + '<div class="tl-dot"></div><div class="tl-year">'+y+'</div><div class="tl-tag">'+shortTag+'</div>'
+              + '</div></div>';
+    });
+    track.innerHTML = html;
+}
+function listBlock(key, items){
+    return '<div class="year-card">'
+      + '<h4><span class="dot-icon" style="background:'+catColor[key]+'"></span><span style="color:'+catColor[key]+'">'+iconSvg[key]+'</span> '+catLabel[key]+'</h4>'
+      + '<ul class="info-list">'+items.map(t=>'<li class="text-adaptive">'+t+'</li>').join('')+'</ul></div>';
+}
+function renderYear(year){
+    const d = timelineData[year];
+    const p = document.getElementById('year-panel');
+    const c = colorMap[d.color];
+    p.innerHTML = '<div class="fade-in mt-4">'
+      + '<div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">'
+      +   '<span class="badge '+c.badge+'" style="width:fit-content">'+year+'</span>'
+      +   '<h3 class="text-xl font-bold text-slate-800 text-adaptive">'+d.theme+'</h3>'
+      + '</div>'
+      + '<div class="grid grid-cols-1 md:grid-cols-2 gap-5">'
+      +   listBlock('research', d.research)
+      +   listBlock('publications', d.publications)
+      +   listBlock('standardization', d.standardization)
+      +   listBlock('milestones', d.milestones)
+      + '</div></div>';
+}
+function selectYear(year){
+    activeYear = year;
+    document.querySelectorAll('.tl-node').forEach(n=>{
+        n.classList.toggle('active', Number(n.dataset.year) === year);
+    });
+    renderYear(year);
+}
+buildTimelineNav();
+selectYear(activeYear);
+</script>
+</body>
+</html>
