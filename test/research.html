@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Research Archive — Hyo-seung Shin</title>
+<meta name="description" content="신효승 연구 실적 전체 목록과 Knowledge Graph.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-name" href="./index.html">Hyo-seung Shin</a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="#graph">Graph</a>
+      <a href="#journal">Journal</a>
+      <a href="#conference">Conference</a>
+      <a href="#patent">Patent</a>
+      <a href="#standard">Standard</a>
+      <a href="#project">Project</a>
+    </nav>
+    <div class="nav-right">
+      <a class="back" href="./index.html">← Home</a>
+      <button class="tbtn" id="themeBtn">Dark</button>
+      <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">≡</button>
+    </div>
+  </div>
+  <nav class="mobile" id="mobileMenu" aria-label="모바일 메뉴">
+    <a href="#graph">Knowledge Graph</a>
+    <a href="#journal">Journal</a>
+    <a href="#conference">Conference</a>
+    <a href="#patent">Patent</a>
+    <a href="#standard">International Standard</a>
+    <a href="#project">Project</a>
+    <a href="./index.html">← Home</a>
+  </nav>
+</header>
+
+<main class="wrap" id="top">
+  <div id="errBox"></div>
+
+  <div class="page-head">
+    <div>
+      <h1>Research Archive</h1>
+      <p class="desc">전체 연구 실적과 공저자 · 발표처 관계망입니다. 노드를 선택하면 아래에 세부 내용이 표시됩니다.</p>
+    </div>
+    <a class="back" href="./index.html">← Home</a>
+  </div>
+
+  <div class="graph-sec" id="graph">
+    <div class="graph-bar" id="graphBar">
+      <button class="chip" data-f="work" aria-pressed="true">연구 실적</button>
+      <button class="chip" data-f="person" aria-pressed="true">공저자</button>
+      <button class="chip" data-f="venue" aria-pressed="true">발표처 · 기관</button>
+      <span class="spacer"></span>
+      <button class="chip" id="gReset">위치 초기화</button>
+      <span class="hint" id="gHint">드래그로 이동 · 스크롤로 확대</span>
+    </div>
+
+    <div class="graph-stage">
+      <svg id="graph-svg" role="img" aria-label="연구 실적 · 공저자 · 발표처 관계 그래프"></svg>
+    </div>
+
+    <div class="legend">
+      <span><i class="work"></i>연구 실적</span>
+      <span><i class="person"></i>공저자</span>
+      <span><i class="venue"></i>발표처 · 기관</span>
+    </div>
+
+    <div class="detail" id="detail">
+      <p class="ph">노드를 선택하면 세부 내용이 표시됩니다.</p>
+    </div>
+  </div>
+
+  <section id="lists">
+    <div class="rail"><h2>All Records</h2><div class="span num" id="totalSpan"></div></div>
+    <div id="archiveBody"></div>
+  </section>
+
+  <footer>
+    <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
+    <button id="toTop">맨 위로</button>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="./app.js"></script>
+<script>
+const { $, $$, esc, pad, byYear, journals, fileLinks, authorList,
+        paperRow, projectRow, emptyRow, load, loadError,
+        initTheme, initNav, initSpy, ME } = APP;
+
+initTheme();
+initNav();
+
+/* ============================================================
+   Full archive — every category is listed, including empty ones
+   ============================================================ */
+function renderArchive(r) {
+  const groups = [
+    ["journal",    "Journal",                byYear(journals(r)).map(p => paperRow(p, "Journal", true))],
+    ["conference", "Conference",             byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
+    ["patent",     "Patent",                 byYear(r.patent || []).map(projectRow)],
+    ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
+    ["project",    "Project",                byYear(r.project || []).map(projectRow)]
+  ];
+  $("#archiveBody").innerHTML = groups.map(([id, label, rows]) =>
+    `<div class="group" id="${id}">
+      <div class="group-h"><h3>${label}</h3><span class="toggle num">${pad(rows.length)}</span></div>
+      ${rows.length ? rows.join("") : emptyRow(label)}
+    </div>`).join("");
+  $("#totalSpan").textContent = groups.reduce((n, g) => n + g[2].length, 0) + " records";
+}
+
+/* ============================================================
+   Knowledge graph
+   ============================================================ */
+const NODE_R = { self: 11, person: 6.5, venue: 6, work: 5.5 };
+
+function buildGraph(r) {
+  const nodes = new Map(), links = [];
+  const add = (id, o) => { if (!nodes.has(id)) nodes.set(id, { id, ...o }); return nodes.get(id); };
+  const shortVenue = v => String(v).replace(/\s*\(.*?\)\s*/g, "").replace(/^The\s+/i, "").trim();
+
+  const works = [
+    ...journals(r).map(p => ({ ...p, kind: "Journal" })),
+    ...(r.conference || []).map(p => ({ ...p, kind: "Conference" })),
+    ...(r.patent || []).map(p => ({ ...p, kind: "Patent" })),
+    ...(r.standard || []).map(p => ({ ...p, kind: "Standard" })),
+    ...(r.project || []).map(p => ({ ...p, kind: "Project" }))
+  ];
+
+  works.forEach((w, i) => {
+    const wid = "w" + (w.id || i);
+    add(wid, { cat: "work", label: w.title, data: w });
+    (w.authors || []).forEach(a => {
+      const pid = "p:" + a;
+      add(pid, { cat: "person", label: a, self: a === ME });
+      links.push({ source: wid, target: pid });
+    });
+    const place = w.venue || w.org;
+    if (place) {
+      const vid = "v:" + shortVenue(place);
+      add(vid, { cat: "venue", label: shortVenue(place) });
+      links.push({ source: wid, target: vid });
+    }
+  });
+
+  const list = [...nodes.values()];
+  list.forEach(n => { n.deg = links.filter(l => l.source === n.id || l.target === n.id).length; });
+  return { nodes: list, links };
+}
+
+function initGraph(r) {
+  const svgEl = $("#graph-svg");
+  const svg = d3.select(svgEl);
+  const full = buildGraph(r);
+  const active = new Set(["work", "person", "venue"]);
+  let sim, selected = null;
+
+  const root = svg.append("g");
+  const gLinks = root.append("g");
+  const gNodes = root.append("g");
+
+  const zoom = d3.zoom().scaleExtent([0.35, 4])
+    .on("zoom", e => root.attr("transform", e.transform));
+  svg.call(zoom);
+
+  function size() {
+    const b = svgEl.getBoundingClientRect();
+    return { w: b.width || 800, h: b.height || 480 };
+  }
+
+  function draw() {
+    const { w, h } = size();
+    const mobile = w < 640;
+    const nodes = full.nodes.filter(n => active.has(n.cat)).map(n => ({ ...n }));
+    const keep = new Set(nodes.map(n => n.id));
+    const links = full.links
+      .filter(l => keep.has(l.source.id || l.source) && keep.has(l.target.id || l.target))
+      .map(l => ({ source: l.source.id || l.source, target: l.target.id || l.target }));
+
+    gLinks.selectAll("*").remove();
+    gNodes.selectAll("*").remove();
+
+    const link = gLinks.selectAll("line").data(links).join("line").attr("class", "gl");
+
+    const node = gNodes.selectAll("g").data(nodes, d => d.id).join("g")
+      .attr("class", d => `gn ${d.cat}${d.self ? " self" : ""}`)
+      .attr("tabindex", 0)
+      .on("click", (e, d) => { e.stopPropagation(); select(d); })
+      .on("keydown", (e, d) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(d); } })
+      .call(d3.drag()
+        .on("start", (e, d) => { if (!e.active) sim.alphaTarget(.25).restart(); d.fx = d.x; d.fy = d.y; })
+        .on("drag",  (e, d) => { d.fx = e.x; d.fy = e.y; })
+        .on("end",   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+    node.each(function (d) {
+      const g = d3.select(this);
+      const rad = d.self ? NODE_R.self : NODE_R[d.cat];
+      if (d.cat === "work") {
+        const s = rad * 1.8;
+        g.append("rect").attr("class", "sh").attr("x", -s / 2).attr("y", -s / 2)
+          .attr("width", s).attr("height", s);
+      } else {
+        g.append("circle").attr("class", "sh")
+          .attr("r", rad + Math.min(d.deg * .7, 4));
+      }
+    });
+
+    /* Work titles are long — label people and venues only, plus the selected node. */
+    node.filter(d => d.cat !== "work" && (!mobile || d.deg > 1 || d.self))
+      .append("text")
+      .attr("x", d => (d.self ? NODE_R.self : NODE_R[d.cat]) + 8)
+      .attr("dy", "0.34em")
+      .text(d => d.label.length > 26 ? d.label.slice(0, 25) + "…" : d.label);
+
+    sim = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(mobile ? 54 : 78).strength(.5))
+      .force("charge", d3.forceManyBody().strength(mobile ? -160 : -280))
+      .force("center", d3.forceCenter(w / 2, h / 2))
+      .force("collide", d3.forceCollide(mobile ? 20 : 28))
+      .on("tick", () => {
+        link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+
+    function select(d) {
+      selected = d.id;
+      const near = new Set([d.id]);
+      links.forEach(l => {
+        if (l.source.id === d.id) near.add(l.target.id);
+        if (l.target.id === d.id) near.add(l.source.id);
+      });
+      node.classed("hot", n => n.id === d.id)
+          .classed("dim", n => !near.has(n.id));
+      link.classed("hot", l => l.source.id === d.id || l.target.id === d.id);
+      node.filter(n => n.cat === "work" && near.has(n.id)).selectAll("text").remove();
+      node.filter(n => n.cat === "work" && near.has(n.id)).append("text")
+        .attr("x", 12).attr("dy", "0.34em")
+        .text(n => n.label.length > 30 ? n.label.slice(0, 29) + "…" : n.label);
+      showDetail(d, links, nodes);
+    }
+
+    svg.on("click", () => {
+      selected = null;
+      node.classed("hot", false).classed("dim", false);
+      link.classed("hot", false);
+      node.filter(n => n.cat === "work").selectAll("text").remove();
+      $("#detail").innerHTML = `<p class="ph">노드를 선택하면 세부 내용이 표시됩니다.</p>`;
+    });
+
+    svg.call(zoom.transform, d3.zoomIdentity);
+  }
+
+  function showDetail(d, links, nodes) {
+    const box = $("#detail");
+    if (d.cat === "work") {
+      const w = d.data;
+      box.innerHTML = `<div class="dh">${esc(w.title)}</div>
+        <div class="dm">${esc(w.venue || w.org || "")}${w.year ? " · " + w.year : ""}${w.period ? " · " + esc(w.period) : ""}</div>
+        ${w.authors ? `<ul><li>${authorList(w.authors)}</li></ul>` : ""}
+        ${fileLinks(w.links)}`;
+      return;
+    }
+    const ids = new Set();
+    links.forEach(l => {
+      if (l.source.id === d.id) ids.add(l.target.id);
+      if (l.target.id === d.id) ids.add(l.source.id);
+    });
+    const related = nodes.filter(n => ids.has(n.id) && n.cat === "work");
+    const kindLabel = d.cat === "person" ? (d.self ? "본인" : "공저자") : "발표처 · 기관";
+    box.innerHTML = `<div class="dh">${esc(d.label)}</div>
+      <div class="dm">${kindLabel} · 연결된 실적 ${pad(related.length)}건</div>
+      <ul>${related.map(n => `<li>${esc(n.label)}</li>`).join("")}</ul>`;
+  }
+
+  $$("#graphBar .chip[data-f]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const f = btn.dataset.f;
+      const on = btn.getAttribute("aria-pressed") === "true";
+      if (on && active.size === 1) return;
+      on ? active.delete(f) : active.add(f);
+      btn.setAttribute("aria-pressed", String(!on));
+      draw();
+    });
+  });
+  $("#gReset").addEventListener("click", draw);
+  document.addEventListener("themechange", () => sim && sim.alpha(.05).restart());
+
+  let t;
+  window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(draw, 220); });
+  if (matchMedia("(hover:none)").matches) $("#gHint").textContent = "드래그로 이동 · 두 손가락으로 확대";
+
+  draw();
+}
+
+load().then(({ research }) => {
+  renderArchive(research);
+  initGraph(research);
+  initSpy({
+    graph:      '.nav-links a[href="#graph"]',
+    journal:    '.nav-links a[href="#journal"]',
+    conference: '.nav-links a[href="#conference"]',
+    patent:     '.nav-links a[href="#patent"]',
+    standard:   '.nav-links a[href="#standard"]',
+    project:    '.nav-links a[href="#project"]'
+  });
+}).catch(e => { loadError($("#errBox")); console.error(e); });
+</script>
+</body>
+</html>

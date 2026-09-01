@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hyo-seung Shin — Portfolio</title>
+<meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-name" href="#top">Hyo-seung Shin</a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <div class="dd" id="ddResearch">
+        <button aria-haspopup="true" aria-expanded="false">Research <span class="car" aria-hidden="true">▼</span></button>
+        <div class="dd-menu">
+          <a href="#journal">Journal<span class="c num" id="ddJ"></span></a>
+          <a href="#conference">Conference<span class="c num" id="ddC"></span></a>
+          <a href="#project">Project<span class="c num" id="ddP"></span></a>
+          <div class="sep"></div>
+          <a href="./research.html">전체 목록 · Knowledge Graph</a>
+        </div>
+      </div>
+      <a href="#education">Education</a>
+      <a href="#activities">Activities</a>
+      <a href="#awards">Awards</a>
+      <a href="#beyond">Beyond</a>
+    </nav>
+    <div class="nav-right">
+      <button class="tbtn" id="themeBtn">Dark</button>
+      <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">≡</button>
+    </div>
+  </div>
+  <nav class="mobile" id="mobileMenu" aria-label="모바일 메뉴">
+    <a href="#research">Research</a>
+    <a class="ind" href="#journal">Journal</a>
+    <a class="ind" href="#conference">Conference</a>
+    <a class="ind" href="#project">Project</a>
+    <a href="#education">Education</a>
+    <a href="#activities">Activities</a>
+    <a href="#awards">Honors &amp; Awards</a>
+    <a href="#beyond">Beyond Research</a>
+    <a href="./research.html">전체 목록 · Knowledge Graph</a>
+  </nav>
+</header>
+
+<main class="wrap" id="top">
+  <div id="errBox"></div>
+
+  <div class="hero">
+    <div>
+      <h1 id="heroName"></h1>
+      <p class="lead" id="heroLead"></p>
+      <p class="sub" id="heroSub"></p>
+    </div>
+    <div class="photo"><img id="heroImg" alt="" width="172" height="200"></div>
+  </div>
+
+  <div class="strip" id="metrics"></div>
+  <div class="links" id="links"></div>
+
+  <section id="research">
+    <div class="rail"><h2>Research</h2><div class="span num" id="researchSpan"></div></div>
+    <div id="researchBody"></div>
+  </section>
+
+  <section id="education">
+    <div class="rail"><h2>Education</h2><div class="span" id="eduSpan"></div></div>
+    <div id="eduBody"></div>
+  </section>
+
+  <section id="activities">
+    <div class="rail"><h2>Activities</h2><div class="span">교육 · 연수 이수</div></div>
+    <div id="actBody"></div>
+  </section>
+
+  <section id="awards">
+    <div class="rail"><h2>Honors &amp; Awards</h2><div class="span" id="awardSpan"></div></div>
+    <div id="awardBody"></div>
+  </section>
+
+  <section id="beyond">
+    <div class="rail"><h2>Beyond Research</h2><div class="span">학생자치 · 봉사 활동</div></div>
+    <div id="beyondBody"></div>
+  </section>
+
+  <footer>
+    <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
+    <button id="toTop">맨 위로</button>
+  </footer>
+</main>
+
+<script src="./app.js"></script>
+<script>
+const { $, esc, pad, byYear, journals, fileLinks, paperRow, projectRow,
+        load, loadError, initTheme, initNav, initSpy, initToggle } = APP;
+
+initTheme();
+initNav();
+
+function renderHero(p) {
+  document.title = `${p.name} — Portfolio`;
+  $("#heroName").innerHTML = `${esc(p.name)}<span class="ko">${esc(p.nameKo || "")}</span>`;
+  const img = $("#heroImg");
+  img.src = p.avatar || "";
+  img.alt = p.name;
+
+  const aff = p.affiliation
+    ? `<a href="${esc(p.affiliation.url)}" target="_blank" rel="noopener">${esc(p.affiliation.name)}</a>`
+    : "";
+  const bio = (p.bio || []).map(t => t.replace("{affiliation}", aff));
+  $("#heroLead").innerHTML = bio[0] || "";
+  $("#heroSub").innerHTML  = bio.slice(1).join(" ");
+}
+
+function renderLinks(p) {
+  const L = p.links || {};
+  const order = [
+    ["Email", L.email ? "mailto:" + L.email : ""],
+    ["Google Scholar", L.scholar],
+    ["GitHub", L.github],
+    ["ORCID", L.orcid],
+    ["LinkedIn", L.linkedin],
+    ["Curriculum Vitae", L.cv]
+  ].filter(([, u]) => u);
+  $("#links").innerHTML = order
+    .map(([n, u]) => `<a href="${esc(u)}" ${u.startsWith("mailto") ? "" : 'target="_blank" rel="noopener"'}>${n}</a>`)
+    .join("");
+}
+
+function renderMetrics(r) {
+  const j = journals(r).length, c = (r.conference || []).length;
+  const pr = (r.project || []).length;
+  const pt = (r.patent || []).length, st = (r.standard || []).length;
+  const rows = [["Publications", j + c], ["Journal", j], ["Conference", c], ["Research projects", pr]];
+  if (pt) rows.push(["Patents", pt]);
+  if (st) rows.push(["Standards", st]);
+  $("#metrics").innerHTML = rows
+    .map(([k, v]) => `<div class="metric"><div class="v num">${pad(v)}</div><div class="k">${k}</div></div>`)
+    .join("");
+  $("#ddJ").textContent = pad(j);
+  $("#ddC").textContent = pad(c);
+  $("#ddP").textContent = pad(pr);
+
+  const years = [...journals(r), ...(r.conference || []), ...(r.project || [])]
+    .map(x => x.year).filter(Boolean);
+  $("#researchSpan").textContent = years.length
+    ? `${Math.min(...years)} — ${Math.max(...years)}` : "";
+}
+
+/* Each category keeps its own group; only non-empty ones appear here.
+   The complete archive, including empty categories, lives in research.html. */
+function renderResearch(r) {
+  const groups = [
+    ["journal",    "Journal",    byYear(journals(r)).map(p => paperRow(p, "Journal"))],
+    ["conference", "Conference", byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
+    ["patent",     "Patent",     byYear(r.patent || []).map(projectRow)],
+    ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
+    ["project",    "Project",    byYear(r.project || []).map(projectRow)]
+  ].filter(([, , rows]) => rows.length);
+
+  $("#researchBody").innerHTML = groups.map(([id, label, rows]) => {
+    const more = rows.length > 3
+      ? `<button class="toggle" id="tg-${id}" aria-expanded="false">전체 ${pad(rows.length)}건 보기</button>`
+      : `<a class="toggle" href="./research.html#${id}">아카이브에서 보기</a>`;
+    return `<div class="group" id="${id}">
+      <div class="group-h"><h3>${label}</h3>${more}</div>
+      <div class="rows">${rows.slice(0, 3).join("")}</div>
+    </div>`;
+  }).join("");
+
+  groups.forEach(([id, , rows]) => {
+    if (rows.length <= 3) return;
+    const host = document.querySelector(`#${id} .rows`);
+    initToggle($(`#tg-${id}`), host, rows.slice(0, 3).join(""), rows.join(""), rows.length);
+  });
+}
+
+function renderEducation(p) {
+  const ed = p.education || [];
+  $("#eduSpan").textContent = ed.length ? `${ed.length} degrees` : "";
+  $("#eduBody").innerHTML = ed.map(e => `<article class="item">
+    <div><h4 class="t">${esc(e.degree)}</h4><div class="v">${esc(e.univ)}</div></div>
+    <div class="side"><span class="y num">${esc(e.period)}</span></div>
+  </article>`).join("");
+}
+
+function renderActivities(p) {
+  $("#actBody").innerHTML = (p.activities || []).map(a => `<article class="item">
+    <div>
+      <h4 class="t">${esc(a.title)}</h4>
+      <div class="v">${esc(a.org)}</div>
+      ${fileLinks([{ name: "증명서", url: a.link }])}
+    </div>
+    <div class="side"><span class="y num">${esc(a.period)}</span></div>
+  </article>`).join("");
+}
+
+function renderAwards(p) {
+  const aw = p.awards || [];
+  $("#awardSpan").textContent = aw.length ? `${aw.length} awards` : "";
+  $("#awardBody").innerHTML = aw.map(a => {
+    const m = /(\d{4})/.exec(a.desc || "");
+    return `<article class="item">
+      <div>
+        <h4 class="t">${esc(a.title)}</h4>
+        <div class="v">${esc((a.desc || "").replace(/\s*\|\s*/g, " · "))}</div>
+        ${fileLinks([{ name: "상장", url: a.link }])}
+      </div>
+      <div class="side"><span class="y num">${m ? m[1] : ""}</span></div>
+    </article>`;
+  }).join("");
+}
+
+const ROLE_HEAD = 4;
+function renderBeyond(p) {
+  $("#beyondBody").innerHTML = (p.others || []).map((o, i) => {
+    let block = "";
+    const d = o.details || [];
+    if (d.length) {
+      const head = d.slice(0, ROLE_HEAD).map(x => `<li>${x}</li>`).join("");
+      block = `<ul class="roles" id="roles-${i}">${head}</ul>`;
+      if (d.length > ROLE_HEAD) {
+        block += `<button class="more-roles" data-i="${i}" aria-expanded="false">외 ${d.length - ROLE_HEAD}개 보기</button>`;
+      }
+    }
+    return `<article class="item">
+      <div><h4 class="t">${o.title}</h4><div class="v">${esc(o.org)}</div>${block}</div>
+      <div class="side"><span class="y num">${esc(o.period)}</span></div>
+    </article>`;
+  }).join("");
+
+  document.querySelectorAll(".more-roles").forEach(btn => {
+    const i = +btn.dataset.i, d = p.others[i].details;
+    const ul = document.getElementById(`roles-${i}`);
+    let open = false;
+    btn.addEventListener("click", () => {
+      open = !open;
+      ul.innerHTML = (open ? d : d.slice(0, ROLE_HEAD)).map(x => `<li>${x}</li>`).join("");
+      btn.textContent = open ? "접기" : `외 ${d.length - ROLE_HEAD}개 보기`;
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+}
+
+load().then(({ profile, research }) => {
+  renderHero(profile);
+  renderLinks(profile);
+  renderMetrics(research);
+  renderResearch(research);
+  renderEducation(profile);
+  renderActivities(profile);
+  renderAwards(profile);
+  renderBeyond(profile);
+
+  initSpy({
+    research:   "#ddResearch",
+    education:  '.nav-links a[href="#education"]',
+    activities: '.nav-links a[href="#activities"]',
+    awards:     '.nav-links a[href="#awards"]',
+    beyond:     '.nav-links a[href="#beyond"]'
+  });
+}).catch(e => { loadError($("#errBox")); console.error(e); });
+</script>
+</body>
+</html>
