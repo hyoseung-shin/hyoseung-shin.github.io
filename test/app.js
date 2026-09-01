@@ -71,11 +71,15 @@ const APP = (() => {
   }
 
   function loadError(el) {
+    const local = location.protocol === "file:";
     el.innerHTML = `<div class="err">데이터를 불러오지 못했습니다.
-      로컬에서 확인할 때는 <code>file://</code>이 아니라 서버로 열어야 합니다 —
-      <code>python3 -m http.server 8000</code> 실행 후
-      <code>http://localhost:8000</code> 으로 접속하세요.
-      GitHub Pages 배포 환경에서는 정상 동작합니다.</div>`;
+      ${local
+        ? `브라우저가 <code>file://</code>에서는 JSON 요청을 차단합니다.
+           배포된 주소에서는 정상 동작하므로, 이 화면은 로컬에서 파일을
+           직접 열었을 때만 나타납니다.`
+        : `<code>profile.json</code>과 <code>research.json</code>이
+           HTML 파일과 같은 위치에 있는지, 파일명 대소문자가 맞는지 확인하세요.`}
+    </div>`;
   }
 
   /* ---------- theme ---------- */
