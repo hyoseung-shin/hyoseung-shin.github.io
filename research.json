@@ -89,8 +89,16 @@
   "standard": [],
   "project": [
     {
+      "id": "p-2026-gscrp",
+      "title": "2026 Graduate Student Convergence Research Program",
+      "org": "Yonsei University Graduate School Future Innovation Support Center",
+      "period": "2026.9 - 2027.01",
+      "year": 2025,
+      "links": [ { "name": "document", "url": "https://to.be.continue/" } ]
+    },
+    {
       "id": "p-2025-gscrp",
-      "title": "Graduate Student Convergence Research Program",
+      "title": "2025 Graduate Student Convergence Research Program",
       "org": "Yonsei University Graduate School Future Innovation Support Center",
       "period": "2025.11 - 2026.01",
       "year": 2025,
