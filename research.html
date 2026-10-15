@@ -7,87 +7,95 @@
 <meta name="description" content="신효승 연구 실적 전체 목록과 Knowledge Graph.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-09-01b">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15g">
 </head>
-<body>
+<body class="site">
 
-<header class="nav">
-  <div class="wrap nav-in">
-    <a class="nav-name" href="./index.html">Hyo-seung Shin</a>
+<header class="topnav">
+  <div class="wrap topnav-in">
+    <a class="logo" href="./index.html">Hyo-seung Shin</a>
     <nav class="nav-links" aria-label="주요 메뉴">
-      <a href="#graph">Graph</a>
-      <a href="#journal">Journal</a>
-      <a href="#conference">Conference</a>
-      <a href="#patent">Patent</a>
-      <a href="#standard">Standard</a>
-      <a href="#project">Project</a>
+      <a data-spy href="#graph">Graph</a>
+      <a data-spy href="#journal">Journal</a>
+      <a data-spy href="#conference">Conference</a>
+      <a data-spy href="#patent">Patent</a>
+      <a data-spy href="#standard">Standard</a>
+      <a data-spy href="#project">Project</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a class="nav-admin" href="./admin.html">Admin</a>
     </nav>
-    <div class="nav-right">
-      <a class="back" href="./index.html">← Home</a>
-      <button class="tbtn" id="themeBtn">Dark</button>
-      <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">≡</button>
+    <div class="nav-acts">
+      <a class="pill sm" href="./index.html">← Home</a>
+      <button class="theme-sw" type="button" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
+        <span class="ts-knob" aria-hidden="true"></span>
+        <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
+      </button>
+      <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
     </div>
   </div>
-  <nav class="mobile" id="mobileMenu" aria-label="모바일 메뉴">
-    <a href="#graph">Knowledge Graph</a>
-    <a href="#journal">Journal</a>
-    <a href="#conference">Conference</a>
-    <a href="#patent">Patent</a>
-    <a href="#standard">International Standard</a>
-    <a href="#project">Project</a>
-    <a href="./index.html">← Home</a>
-  </nav>
 </header>
+<nav class="sheet" id="sheet" aria-label="모바일 메뉴">
+  <a href="#graph">Knowledge Graph</a>
+  <a href="#journal">Journal</a>
+  <a href="#conference">Conference</a>
+  <a href="#patent">Patent</a>
+  <a href="#standard">International Standard</a>
+  <a href="#project">Project</a>
+  <a href="./index.html">← Home</a>
+  <span class="sheet-sep" aria-hidden="true"></span>
+  <a href="./admin.html">Admin</a>
+</nav>
 
-<main class="wrap" id="top">
-  <div id="errBox"></div>
+  <main class="wrap" id="top">
+    <div id="errBox"></div>
 
-  <div class="page-head">
-    <div>
-      <h1>Research Archive</h1>
-      <p class="desc">전체 연구 실적과 공저자 · 발표처 관계망입니다. 노드를 선택하면 아래에 세부 내용이 표시됩니다.</p>
-    </div>
-    <a class="back" href="./index.html">← Home</a>
-  </div>
-
-  <div class="graph-sec" id="graph">
-    <div class="graph-bar" id="graphBar">
-      <button class="sw" role="switch" aria-checked="true" data-f="work"><span class="track"><span class="knob"></span></span>연구 실적</button>
-      <button class="sw" role="switch" aria-checked="true" data-f="person"><span class="track"><span class="knob"></span></span>공저자</button>
-      <button class="sw" role="switch" aria-checked="true" data-f="venue"><span class="track"><span class="knob"></span></span>발표처 · 기관</button>
-      <span class="spacer"></span>
-      <button class="chip" id="gReset">위치 초기화</button>
-      <span class="hint" id="gHint">드래그로 이동 · 스크롤로 확대</span>
-    </div>
-
-    <div class="graph-stage">
-      <svg id="graph-svg" role="img" aria-label="연구 실적 · 공저자 · 발표처 관계 그래프"></svg>
+    <div class="page-head">
+      <div>
+        <h1>Research Archive</h1>
+        <p class="desc">전체 연구 실적과 공저자 · 발표처 관계망입니다. 노드를 선택하면 아래에 세부 내용이 표시됩니다.</p>
+      </div>
+      <a class="pill" href="./index.html">← Home</a>
     </div>
 
-    <div class="legend">
-      <span><i class="work"></i>연구 실적</span>
-      <span><i class="person"></i>공저자</span>
-      <span><i class="venue"></i>발표처 · 기관</span>
+    <div class="graph-sec" id="graph">
+      <div class="graph-bar" id="graphBar">
+        <button class="sw" role="switch" aria-checked="true" data-f="work">연구 실적</button>
+        <button class="sw" role="switch" aria-checked="true" data-f="person">공저자</button>
+        <button class="sw" role="switch" aria-checked="true" data-f="venue">발표처 · 기관</button>
+        <span class="spacer"></span>
+        <button class="chip" id="gReset">위치 초기화</button>
+        <span class="hint" id="gHint">드래그로 이동 · 스크롤로 확대</span>
+      </div>
+
+      <div class="graph-stage">
+        <svg id="graph-svg" role="img" aria-label="연구 실적 · 공저자 · 발표처 관계 그래프"></svg>
+      </div>
+
+      <div class="legend">
+        <span><i class="work"></i>연구 실적</span>
+        <span><i class="person"></i>공저자</span>
+        <span><i class="venue"></i>발표처 · 기관</span>
+      </div>
+
+      <div class="detail" id="detail">
+        <p class="ph">노드를 선택하면 세부 내용이 표시됩니다.</p>
+      </div>
     </div>
 
-    <div class="detail" id="detail">
-      <p class="ph">노드를 선택하면 세부 내용이 표시됩니다.</p>
-    </div>
-  </div>
+    <section class="sec" id="lists">
+      <div class="sec-h"><span class="eyebrow num" id="totalSpan"></span><h2>All Records</h2></div>
+      <div id="archiveBody"></div>
+    </section>
 
-  <section id="lists">
-    <div class="rail"><h2>All Records</h2><div class="span num" id="totalSpan"></div></div>
-    <div id="archiveBody"></div>
-  </section>
-
-  <footer>
-    <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
-    <button id="toTop">맨 위로</button>
-  </footer>
-</main>
+    <footer>
+      <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
+      <button class="pill sm ghost" id="toTop">맨 위로</button>
+    </footer>
+  </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="./app.js?v=2026-09-01b"></script>
+<script src="./app.js?v=2026-10-15g"></script>
 <script>
 const { $, $$, esc, pad, byYear, journals, fileLinks, authorList,
         paperRow, projectRow, emptyRow, load, loadError,
@@ -102,14 +110,14 @@ initNav();
 function renderArchive(r) {
   const groups = [
     ["journal",    "Journal",                byYear(journals(r)).map(p => paperRow(p, "Journal", true))],
-    ["conference", "Conference",             byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
+    ["conference", "Conference",             byYear(r.conference || []).map(p => paperRow(p, "Conference", true))],
     ["patent",     "Patent",                 byYear(r.patent || []).map(projectRow)],
     ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
     ["project",    "Project",                byYear(r.project || []).map(projectRow)]
   ];
   $("#archiveBody").innerHTML = groups.map(([id, label, rows]) =>
     `<div class="group" id="${id}">
-      <div class="group-h"><h3>${label}</h3><span class="toggle num">${pad(rows.length)}</span></div>
+      <div class="group-h"><h3>${label}</h3><span class="pill sm off num">${pad(rows.length)}</span></div>
       ${rows.length ? rows.join("") : emptyRow(label)}
     </div>`).join("");
   $("#totalSpan").textContent = groups.reduce((n, g) => n + g[2].length, 0) + " records";
@@ -223,11 +231,30 @@ function initGraph(r) {
       .force("charge", d3.forceManyBody().strength(mobile ? -160 : -280))
       .force("center", d3.forceCenter(w / 2, h / 2))
       .force("collide", d3.forceCollide(mobile ? 20 : 28))
+      .force("x", d3.forceX(w / 2).strength(mobile ? .14 : .06))
+      .force("y", d3.forceY(h / 2).strength(mobile ? .14 : .1))
       .on("tick", () => {
         link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
         node.attr("transform", d => `translate(${d.x},${d.y})`);
       });
+
+    /* Once the layout first settles, zoom so every node is in view.
+       Later drags restart the simulation but do not re-fit. */
+    let fitted = false;
+    sim.on("end", () => {
+      if (fitted || !nodes.length) return;
+      fitted = true;
+      const xs = nodes.map(n => n.x), ys = nodes.map(n => n.y);
+      const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+      const padL = 28, padR = mobile ? 80 : 130, padY = 32;   /* labels run to the right */
+      const k = Math.min(1.3, (w - padL - padR) / Math.max(1, x1 - x0), (h - padY * 2) / Math.max(1, y1 - y0));
+      const tx = padL + ((w - padL - padR) - k * (x1 - x0)) / 2 - k * x0;
+      const ty = h / 2 - k * (y0 + y1) / 2;
+      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      svg.transition().duration(still ? 0 : 600)
+        .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+    });
 
     function select(d) {
       selected = d.id;

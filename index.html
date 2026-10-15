@@ -7,100 +7,115 @@
 <meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-09-01g">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15g">
 </head>
-<body>
+<body class="site">
 
-<header class="nav">
-  <div class="wrap nav-in">
-    <a class="nav-name" href="#top">Hyo-seung Shin</a>
+<header class="topnav">
+  <div class="wrap topnav-in">
+    <a class="logo" href="#top">Hyo-seung Shin</a>
     <nav class="nav-links" aria-label="주요 메뉴">
       <div class="dd" id="ddResearch">
-        <button aria-haspopup="true" aria-expanded="false">Research <span class="car" aria-hidden="true">▼</span></button>
+        <button data-spy aria-haspopup="true" aria-expanded="false">Research <span class="car" aria-hidden="true">▼</span></button>
         <div class="dd-menu">
           <a href="#journal">Journal<span class="c num" id="ddJ"></span></a>
           <a href="#conference">Conference<span class="c num" id="ddC"></span></a>
           <a href="#project">Project<span class="c num" id="ddP"></span></a>
-          <div class="sep"></div>
           <a href="./research.html">전체 목록 · Knowledge Graph</a>
         </div>
       </div>
-      <a href="#education">Education</a>
-      <a href="#activities">Activities</a>
-      <a href="#awards">Awards</a>
-      <a href="#beyond">Beyond</a>
+      <a data-spy href="#education">Education</a>
+      <a data-spy href="#activities">Activities</a>
+      <a data-spy href="#awards">Awards</a>
+      <a data-spy href="#beyond">Beyond</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a class="nav-admin" href="./admin.html">Admin</a>
     </nav>
-    <div class="nav-right">
-      <button class="tbtn" id="themeBtn">Dark</button>
-      <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">≡</button>
+    <div class="nav-acts">
+      <button class="theme-sw" type="button" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
+        <span class="ts-knob" aria-hidden="true"></span>
+        <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
+      </button>
+      <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
     </div>
   </div>
-  <nav class="mobile" id="mobileMenu" aria-label="모바일 메뉴">
-    <a href="#research">Research</a>
-    <a class="ind" href="#journal">Journal</a>
-    <a class="ind" href="#conference">Conference</a>
-    <a class="ind" href="#project">Project</a>
-    <a href="#education">Education</a>
-    <a href="#activities">Activities</a>
-    <a href="#awards">Honors &amp; Awards</a>
-    <a href="#beyond">Beyond Research</a>
-    <a href="./research.html">전체 목록 · Knowledge Graph</a>
-  </nav>
 </header>
+<nav class="sheet" id="sheet" aria-label="모바일 메뉴">
+  <a href="#research">Research</a>
+  <a class="sub" href="#journal">Journal</a>
+  <a class="sub" href="#conference">Conference</a>
+  <a class="sub" href="#project">Project</a>
+  <a href="#education">Education</a>
+  <a href="#activities">Activities</a>
+  <a href="#awards">Honors &amp; Awards</a>
+  <a href="#beyond">Beyond Research</a>
+  <a href="./research.html">전체 목록 · Knowledge Graph</a>
+  <span class="sheet-sep" aria-hidden="true"></span>
+  <a href="./admin.html">Admin</a>
+</nav>
 
-<main class="wrap" id="top">
-  <div id="errBox"></div>
+  <main class="wrap" id="top">
+    <div id="errBox"></div>
 
-  <div class="hero">
-    <div>
-      <h1 id="heroName"></h1>
-      <p class="lead" id="heroLead"></p>
-      <p class="sub" id="heroSub"></p>
+    <div class="hero">
+      <div class="portrait-col">
+        <a class="portrait" href="./graduate_plan.html" aria-label="대학원 계획 보기">
+          <span class="frame">
+            <canvas aria-hidden="true"></canvas>
+            <img id="heroImg" alt="" width="172" height="200">
+          </span>
+          <span class="cap">Study plan ↗</span>
+        </a>
+        <!-- the "bitstream" that decodes the photo: one segment lights per
+             decode pass — grey for the luma-only passes, blue once chroma arrives -->
+        <div class="bits" aria-hidden="true"><i class="y"></i><i class="y"></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div>
+        <p class="eyebrow">Visual Communication Lab · Yonsei University</p>
+        <h1 id="heroName"></h1>
+        <p class="lead" id="heroLead"></p>
+        <p class="sub" id="heroSub"></p>
+        <div class="links" id="links"></div>
+      </div>
     </div>
-    <a class="photo" href="./graduate_plan.html" aria-label="대학원 계획 보기">
-      <img id="heroImg" alt="" width="172" height="200">
-      <span class="photo-cap">Study plan ↗</span>
-    </a>
-  </div>
+    <div class="strip" id="metrics"></div>
 
-  <div class="strip" id="metrics"></div>
-  <div class="links" id="links"></div>
+    <section class="sec" id="research">
+      <div class="sec-h"><span class="eyebrow">Selected 3 cases</span><h2>Research</h2></div>
+      <div id="researchBody"></div>
+    </section>
 
-  <section id="research">
-    <div class="rail"><h2>Research</h2><div class="span">Recent 3 cases</div></div>
-    <div id="researchBody"></div>
-  </section>
+    <section class="sec" id="education">
+      <div class="sec-h"><span class="eyebrow" id="eduSpan"></span><h2>Education</h2></div>
+      <div id="eduBody"></div>
+    </section>
 
-  <section id="education">
-    <div class="rail"><h2>Education</h2><div class="span" id="eduSpan"></div></div>
-    <div id="eduBody"></div>
-  </section>
+    <section class="sec" id="activities">
+      <div class="sec-h"><span class="eyebrow">교육 · 연수 이수</span><h2>Activities</h2></div>
+      <div id="actBody"></div>
+    </section>
 
-  <section id="activities">
-    <div class="rail"><h2>Activities</h2><div class="span">교육 · 연수 이수</div></div>
-    <div id="actBody"></div>
-  </section>
+    <section class="sec" id="awards">
+      <div class="sec-h"><span class="eyebrow" id="awardSpan"></span><h2>Honors &amp; Awards</h2></div>
+      <div id="awardBody"></div>
+    </section>
 
-  <section id="awards">
-    <div class="rail"><h2>Honors &amp; Awards</h2><div class="span" id="awardSpan"></div></div>
-    <div id="awardBody"></div>
-  </section>
+    <section class="sec" id="beyond">
+      <div class="sec-h"><span class="eyebrow">학생자치 · 봉사 활동</span><h2>Beyond Research</h2></div>
+      <div id="beyondBody"></div>
+    </section>
 
-  <section id="beyond">
-    <div class="rail"><h2>Beyond Research</h2><div class="span">학생자치 · 봉사 활동</div></div>
-    <div id="beyondBody"></div>
-  </section>
+    <footer>
+      <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
+      <button class="pill sm ghost" id="toTop">맨 위로</button>
+    </footer>
+  </main>
 
-  <footer>
-    <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
-    <button id="toTop">맨 위로</button>
-  </footer>
-</main>
-
-<script src="./app.js?v=2026-09-01g"></script>
+<script src="./app.js?v=2026-10-15g"></script>
 <script>
-const { $, esc, pad, byYear, journals, fileLinks, paperRow, projectRow,
-        load, loadError, initTheme, initNav, initSpy, initToggle } = APP;
+const { $, esc, pad, byYear, featured, journals, fileLinks, paperRow, projectRow,
+        load, loadError, initTheme, initNav, initSpy, decodePortrait } = APP;
 
 initTheme();
 initNav();
@@ -109,8 +124,9 @@ function renderHero(p) {
   document.title = `${p.name} — Portfolio`;
   $("#heroName").innerHTML = `${esc(p.name)}<span class="ko">${esc(p.nameKo || "")}</span>`;
   const img = $("#heroImg");
-  img.src = p.avatar || "";
   img.alt = p.name;
+  img.src = p.avatar || "";
+  decodePortrait($(".portrait"));
 
   const aff = p.affiliation
     ? `<a href="${esc(p.affiliation.url)}" target="_blank" rel="noopener">${esc(p.affiliation.name)}</a>`
@@ -125,12 +141,12 @@ function renderLinks(p) {
   const out = [];
 
   if (L.email) {
-    out.push(`<a href="mailto:${L.email}" id="mailLink" data-addr="${L.email}">Email</a>`);
+    out.push(`<a class="pill" href="mailto:${esc(L.email)}" id="mailLink" data-addr="${esc(L.email)}">Email</a>`);
   }
   [["Google Scholar", L.scholar], ["GitHub", L.github], ["ORCID", L.orcid],
    ["LinkedIn", L.linkedin], ["Curriculum Vitae", L.cv]]
     .filter(([, u]) => u)
-    .forEach(([n, u]) => out.push(`<a href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`));
+    .forEach(([n, u]) => out.push(`<a class="pill" href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`));
 
   $("#links").innerHTML = out.join("");
 
@@ -171,41 +187,43 @@ function renderMetrics(r) {
    in research.html under the matching anchor. Empty categories are hidden
    here but kept in the archive. */
 function renderResearch(r) {
-  const groups = [
-    ["journal",    "Journal",    byYear(journals(r)).map(p => paperRow(p, "Journal"))],
-    ["conference", "Conference", byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
-    ["patent",     "Patent",     byYear(r.patent || []).map(projectRow)],
-    ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
-    ["project",    "Project",    byYear(r.project || []).map(projectRow)]
-  ].filter(([, , rows]) => rows.length);
+  const cats = [
+    ["journal",    "Journal",    journals(r),     p => paperRow(p, "Journal", true)],
+    ["conference", "Conference", r.conference || [], p => paperRow(p, "Conference", true)],
+    ["patent",     "Patent",     r.patent || [],  projectRow],
+    ["standard",   "International Standard", r.standard || [], projectRow],
+    ["project",    "Project",    r.project || [], projectRow]
+  ].filter(([, , list]) => list.length);
 
-  $("#researchBody").innerHTML = groups.map(([id, label, rows]) =>
+  /* Only entries marked "selected": true in research.json are shown here
+     (max 3 each); the full list always lives in research.html. */
+  $("#researchBody").innerHTML = cats.map(([id, label, list, row]) =>
     `<div class="group" id="${id}">
       <div class="group-h">
         <h3>${label}</h3>
-        <a class="toggle" href="./research.html#${id}">전체 ${pad(rows.length)}건 보기</a>
+        <a class="pill sm" href="./research.html#${id}">전체 ${pad(list.length)}건 보기</a>
       </div>
-      <div class="rows">${rows.slice(0, 3).join("")}</div>
+      ${featured(list).map(row).join("")}
     </div>`).join("");
+  return cats.map(([id]) => id);
 }
 
 function renderEducation(p) {
   const ed = p.education || [];
   $("#eduSpan").textContent = ed.length ? `${ed.length} degrees` : "";
   $("#eduBody").innerHTML = ed.map(e => `<article class="item">
-    <div><h4 class="t">${esc(e.degree)}</h4><div class="v">${esc(e.univ)}</div></div>
-    <div class="side"><span class="y num">${esc(e.period)}</span></div>
+    <div class="meta num"><span class="y">${esc(e.period)}</span></div>
+    <h4 class="t">${esc(e.degree)}</h4>
+    <div class="v">${esc(e.univ)}</div>
   </article>`).join("");
 }
 
 function renderActivities(p) {
   $("#actBody").innerHTML = (p.activities || []).map(a => `<article class="item">
-    <div>
-      <h4 class="t">${esc(a.title)}</h4>
-      <div class="v">${esc(a.org)}</div>
-      ${fileLinks([{ name: "증명서", url: a.link }])}
-    </div>
-    <div class="side"><span class="y num">${esc(a.period)}</span></div>
+    <div class="meta num"><span class="y">${esc(a.period)}</span></div>
+    <h4 class="t">${esc(a.title)}</h4>
+    <div class="v">${esc(a.org)}</div>
+    ${fileLinks([{ name: "증명서", url: a.link }])}
   </article>`).join("");
 }
 
@@ -213,14 +231,12 @@ function renderAwards(p) {
   const aw = p.awards || [];
   $("#awardSpan").textContent = aw.length ? `${aw.length} awards` : "";
   $("#awardBody").innerHTML = aw.map(a => {
-    const m = /(\d{4})/.exec(a.desc || "");
+    const m = /(\d{4})/.exec(a.desc || "") || /(\d{4})/.exec(a.title || "");
     return `<article class="item">
-      <div>
-        <h4 class="t">${esc(a.title)}</h4>
-        <div class="v">${esc((a.desc || "").replace(/\s*\|\s*/g, " · "))}</div>
-        ${fileLinks([{ name: "상장", url: a.link }])}
-      </div>
-      <div class="side"><span class="y num">${m ? m[1] : ""}</span></div>
+      ${m ? `<div class="meta num"><span class="y">${m[1]}</span></div>` : ""}
+      <h4 class="t">${esc(a.title)}</h4>
+      <div class="v">${esc((a.desc || "").replace(/\s*\|\s*/g, " · "))}</div>
+      ${fileLinks([{ name: "상장", url: a.link }])}
     </article>`;
   }).join("");
 }
@@ -234,12 +250,14 @@ function renderBeyond(p) {
       const head = d.slice(0, ROLE_HEAD).map(x => `<li>${x}</li>`).join("");
       block = `<ul class="roles" id="roles-${i}">${head}</ul>`;
       if (d.length > ROLE_HEAD) {
-        block += `<button class="more-roles" data-i="${i}" aria-expanded="false">외 ${d.length - ROLE_HEAD}개 보기</button>`;
+        block += `<button class="pill sm more-roles" data-i="${i}" aria-expanded="false">외 ${d.length - ROLE_HEAD}개 보기</button>`;
       }
     }
     return `<article class="item">
-      <div><h4 class="t">${o.title}</h4><div class="v">${esc(o.org)}</div>${block}</div>
-      <div class="side"><span class="y num">${esc(o.period)}</span></div>
+      <div class="meta num"><span class="y">${esc(o.period)}</span></div>
+      <h4 class="t">${o.title}</h4>
+      <div class="v">${esc(o.org)}</div>
+      ${block}
     </article>`;
   }).join("");
 
@@ -260,19 +278,24 @@ load().then(({ profile, research }) => {
   renderHero(profile);
   renderLinks(profile);
   renderMetrics(research);
-  renderResearch(research);
+  const groups = renderResearch(research);
   renderEducation(profile);
   renderActivities(profile);
   renderAwards(profile);
   renderBeyond(profile);
 
-  initSpy({
-    research:   "#ddResearch",
-    education:  '.nav-links a[href="#education"]',
-    activities: '.nav-links a[href="#activities"]',
-    awards:     '.nav-links a[href="#awards"]',
-    beyond:     '.nav-links a[href="#beyond"]'
-  });
+  const spy = { research: "#ddResearch > button" };
+  groups.forEach(id => { spy[id] = "#ddResearch > button"; });
+  ["education", "activities", "awards", "beyond"].forEach(id => { spy[id] = `.nav-links a[href="#${id}"]`; });
+  const parents = {};
+  initSpy(spy, parents);
+
+  /* Content renders after load, so a deep link (#journal, #beyond …)
+     lands before its target exists. Jump again once it does. */
+  if (location.hash.length > 1) {
+    const t = document.getElementById(location.hash.slice(1));
+    if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" }));
+  }
 }).catch(e => { loadError($("#errBox")); console.error(e); });
 </script>
 </body>

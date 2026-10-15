@@ -6,7 +6,7 @@
 <title>Study Plan — Hyo-seung Shin</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-09-01g">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15g">
 <style>
 /* ===== grayscale ramp — every former hue maps onto this ===== */
 :root[data-theme="light"]{
@@ -382,7 +382,11 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
 <main class="plan">
 
 <div class="plan-topbar">
-    <button class="tbtn" id="themeBtn">Dark</button>
+    <button class="theme-sw" type="button" id="themeBtn" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
+      <span class="ts-knob" aria-hidden="true"></span>
+      <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
+    </button>
 </div>
 
 <div class="plan-head">
@@ -1602,7 +1606,7 @@ function selectYear(year){
 buildTimelineNav();
 selectYear(activeYear);
 </script>
-<script src="./app.js?v=2026-09-01g"></script>
+<script src="./app.js?v=2026-10-15g"></script>
 <script>APP.initTheme();</script>
 </body>
 </html>
