@@ -7,7 +7,7 @@
 <meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-15f">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15g">
 </head>
 <body class="site">
 
@@ -32,7 +32,11 @@
       <a class="nav-admin" href="./admin.html">Admin</a>
     </nav>
     <div class="nav-acts">
-      <button class="pill sm" data-theme-btn>Dark</button>
+      <button class="theme-sw" type="button" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
+        <span class="ts-knob" aria-hidden="true"></span>
+        <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
+      </button>
       <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
     </div>
   </div>
@@ -108,7 +112,7 @@
     </footer>
   </main>
 
-<script src="./app.js?v=2026-10-15f"></script>
+<script src="./app.js?v=2026-10-15g"></script>
 <script>
 const { $, esc, pad, byYear, featured, journals, fileLinks, paperRow, projectRow,
         load, loadError, initTheme, initNav, initSpy, decodePortrait } = APP;

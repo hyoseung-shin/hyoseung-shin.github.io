@@ -143,7 +143,15 @@ const APP = (() => {
     document.documentElement.setAttribute("data-theme", mode);
     /* every theme button on the page (rail, mobile bar, graduate_plan's #themeBtn) */
     const btns = $$("#themeBtn, [data-theme-btn]");
-    const paint = m => btns.forEach(b => { b.textContent = m === "dark" ? "Light" : "Dark"; });
+    const paint = m => btns.forEach(b => {
+      if (b.classList.contains("theme-sw")) {
+        /* sun / moon switch: the knob slides to the active mode */
+        b.setAttribute("aria-checked", String(m === "dark"));
+        b.title = m === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환";
+      } else {
+        b.textContent = m === "dark" ? "Light" : "Dark";
+      }
+    });
     paint(mode);
     btns.forEach(btn => btn.addEventListener("click", () => {
       const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";

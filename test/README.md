@@ -27,6 +27,7 @@ GitHub Pages · Vanilla JS · D3.js · JSON-driven
 | 메인 페이지 | Introduction · Research(최신 3건) · Education · Activities · Honors & Awards · Beyond Research |
 | 리서치 페이지 | 전체 연구 실적 + Knowledge Graph(D3.js)                                                               |
 | 데이터    | `profile.json`(개인정보) · `research.json`(연구실적) — 2개 JSON으로 전체 콘텐츠 관리                           |
+| 테마      | 해·달 슬라이드 스위치 (라이트: 흰 손잡이 + 해 / 다크: 남색 손잡이 + 별 달린 달), 선택은 브라우저에 기억 |
 | 디자인    | 3단계 구분선(섹션 2px · 카테고리 1px · 실적 사이 옅은 1px) · 상단 바 + Research 드롭다운 · 큰 프로필 사진 + 디코딩 막대 · 저널 논문 그림 썸네일 · 알약형 링크 · 디코딩되는 프로필 사진 · 다크/라이트 토글 |
 | 기술     | HTML5 · CSS(커스텀 디자인 시스템) · Vanilla JavaScript · D3.js · Pretendard                          |
 | 반응형    | 모바일 · 태블릿 · 데스크톱 최적화                                                                         |

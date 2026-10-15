@@ -119,6 +119,33 @@ a.pill:hover,button.pill:hover{background:var(--panel-2)}
 .nav-links .dd-menu a{display:flex;justify-content:space-between;border-radius:12px;min-height:40px;font-size:14.5px}
 .nav-links .dd-menu a:hover{background:var(--panel-2)}
 .dd-menu .c{font-size:13px;color:var(--accent);font-weight:600}
+/* light / dark switch — pill track, both icons, a knob that slides under the active one */
+:root[data-theme="light"]{--ts-track:#e6eaf0;--ts-knob:#ffffff;--ts-on:#12161c;--ts-off:#8a919d;--ts-shadow:0 1px 2px rgba(18,22,28,.10),0 2px 6px rgba(18,22,28,.10)}
+:root[data-theme="dark"]{--ts-track:#1d222a;--ts-knob:#2b3d60;--ts-on:#ffffff;--ts-off:#69727f;--ts-shadow:0 1px 2px rgba(0,0,0,.4),inset 0 0 0 1px rgba(143,176,236,.25)}
+.theme-sw{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:space-between;
+  width:72px;height:36px;padding:0 4px;border-radius:999px;background:var(--ts-track);cursor:pointer;
+  transition:background-color .25s}
+.theme-sw .ts-knob{position:absolute;top:4px;left:4px;width:32px;height:28px;border-radius:999px;
+  background:var(--ts-knob);box-shadow:var(--ts-shadow);
+  transition:transform .3s cubic-bezier(.3,1.3,.5,1),background-color .25s}
+.theme-sw[aria-checked="true"] .ts-knob{transform:translateX(32px)}
+.theme-sw .ts-ic{position:relative;z-index:1;width:32px;height:18px;fill:none;stroke:var(--ts-off);stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s,fill .25s}
+.theme-sw[aria-checked="false"] .ts-sun{stroke:var(--ts-on)}
+.theme-sw[aria-checked="true"] .ts-moon{stroke:var(--ts-on)}
+.theme-sw .ts-star{stroke-width:1.4;opacity:0;transition:opacity .25s}
+.theme-sw[aria-checked="true"] .ts-star{opacity:1}
+.theme-sw:hover .ts-ic{stroke:var(--ts-on)}
+.theme-sw:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* the study plan page keeps its own small top bar */
+.plan-topbar .theme-sw{margin-left:auto}
+@media(max-width:699px){
+  .theme-sw{width:64px;height:32px}
+  .theme-sw .ts-knob{width:28px;height:24px}
+  .theme-sw[aria-checked="true"] .ts-knob{transform:translateX(28px)}
+  .theme-sw .ts-ic{width:28px;height:16px}
+}
+
 .nav-sep{width:1px;height:22px;margin:0 10px;background:var(--rule-strong)}
 .nav-acts{display:flex;align-items:center;gap:6px;margin-left:8px}
 .menu-btn{display:none}
