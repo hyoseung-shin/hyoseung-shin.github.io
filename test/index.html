@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hyo-seung Shin — Portfolio</title>
+<meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15b">
+</head>
+<body class="site">
+
+<!-- mobile / tablet: floating bar + menu sheet -->
+<header class="topbar">
+  <a class="me" href="#top">Hyo-seung Shin</a>
+  <div class="acts">
+    <button class="pill sm" data-theme-btn>Dark</button>
+    <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
+  </div>
+</header>
+<nav class="sheet" id="sheet" aria-label="모바일 메뉴">
+  <a href="#research">Research</a>
+  <a class="sub" href="#journal">Journal</a>
+  <a class="sub" href="#conference">Conference</a>
+  <a class="sub" href="#project">Project</a>
+  <a href="#education">Education</a>
+  <a href="#activities">Activities</a>
+  <a href="#awards">Honors &amp; Awards</a>
+  <a href="#beyond">Beyond Research</a>
+  <a href="./research.html">전체 목록 · Knowledge Graph</a>
+</nav>
+
+<div class="shell">
+
+  <!-- desktop: sticky rail -->
+  <aside class="rail">
+    <a class="me" href="#top">Hyo-seung Shin</a>
+    <nav aria-label="주요 메뉴">
+      <a href="#research">Research</a>
+      <a class="sub" href="#journal">Journal<span class="c num" id="ddJ"></span></a>
+      <a class="sub" href="#conference">Conference<span class="c num" id="ddC"></span></a>
+      <a class="sub" href="#project">Project<span class="c num" id="ddP"></span></a>
+      <a class="sub" href="./research.html">전체 목록 · Knowledge Graph</a>
+      <span class="gap" aria-hidden="true"></span>
+      <a href="#education">Education</a>
+      <a href="#activities">Activities</a>
+      <a href="#awards">Awards</a>
+      <a href="#beyond">Beyond</a>
+    </nav>
+    <div class="rail-foot">
+      <button class="pill sm" data-theme-btn>Dark</button>
+    </div>
+  </aside>
+
+  <main class="main" id="top">
+    <div id="errBox"></div>
+
+    <div class="hero">
+      <a class="portrait" href="./graduate_plan.html" aria-label="대학원 계획 보기">
+        <canvas aria-hidden="true"></canvas>
+        <img id="heroImg" alt="" width="172" height="200">
+        <span class="cap">Study plan ↗</span>
+      </a>
+      <h1 id="heroName"></h1>
+      <p class="lead" id="heroLead"></p>
+      <p class="sub" id="heroSub"></p>
+      <div class="strip" id="metrics"></div>
+      <div class="links" id="links"></div>
+    </div>
+
+    <section class="sec" id="research">
+      <div class="sec-h"><h2>Research</h2><span class="span">Recent 3 cases</span></div>
+      <div id="researchBody"></div>
+    </section>
+
+    <section class="sec" id="education">
+      <div class="sec-h"><h2>Education</h2><span class="span" id="eduSpan"></span></div>
+      <div id="eduBody"></div>
+    </section>
+
+    <section class="sec" id="activities">
+      <div class="sec-h"><h2>Activities</h2><span class="span">교육 · 연수 이수</span></div>
+      <div id="actBody"></div>
+    </section>
+
+    <section class="sec" id="awards">
+      <div class="sec-h"><h2>Honors &amp; Awards</h2><span class="span" id="awardSpan"></span></div>
+      <div id="awardBody"></div>
+    </section>
+
+    <section class="sec" id="beyond">
+      <div class="sec-h"><h2>Beyond Research</h2><span class="span">학생자치 · 봉사 활동</span></div>
+      <div id="beyondBody"></div>
+    </section>
+
+    <footer>
+      <div>© 2026 Hyo-seung Shin · VISCOM Lab, Yonsei University Mirae Campus</div>
+      <button class="pill sm ghost" id="toTop">맨 위로</button>
+    </footer>
+  </main>
+</div>
+
+<script src="./app.js?v=2026-10-15b"></script>
+<script>
+const { $, esc, pad, byYear, journals, fileLinks, paperRow, projectRow,
+        load, loadError, initTheme, initNav, initSpy, decodePortrait } = APP;
+
+initTheme();
+initNav();
+
+function renderHero(p) {
+  document.title = `${p.name} — Portfolio`;
+  $("#heroName").innerHTML = `${esc(p.name)}<span class="ko">${esc(p.nameKo || "")}</span>`;
+  const img = $("#heroImg");
+  img.alt = p.name;
+  img.src = p.avatar || "";
+  decodePortrait($(".portrait"));
+
+  const aff = p.affiliation
+    ? `<a href="${esc(p.affiliation.url)}" target="_blank" rel="noopener">${esc(p.affiliation.name)}</a>`
+    : "";
+  const bio = (p.bio || []).map(t => t.replace("{affiliation}", aff));
+  $("#heroLead").innerHTML = bio[0] || "";
+  $("#heroSub").innerHTML  = bio.slice(1).join(" ");
+}
+
+function renderLinks(p) {
+  const L = p.links || {};
+  const out = [];
+
+  if (L.email) {
+    out.push(`<a class="pill" href="mailto:${esc(L.email)}" id="mailLink" data-addr="${esc(L.email)}">Email</a>`);
+  }
+  [["Google Scholar", L.scholar], ["GitHub", L.github], ["ORCID", L.orcid],
+   ["LinkedIn", L.linkedin], ["Curriculum Vitae", L.cv]]
+    .filter(([, u]) => u)
+    .forEach(([n, u]) => out.push(`<a class="pill" href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`));
+
+  $("#links").innerHTML = out.join("");
+
+  /* Some browsers and desktops have no mail handler registered, so the
+     mailto simply does nothing. Copy the address as a fallback. */
+  const mail = $("#mailLink");
+  if (mail && navigator.clipboard) {
+    mail.addEventListener("click", () => {
+      const before = Date.now();
+      setTimeout(() => {
+        if (document.hidden || Date.now() - before > 1200) return;
+        navigator.clipboard.writeText(mail.dataset.addr).then(() => {
+          const old = mail.textContent;
+          mail.textContent = "주소 복사됨";
+          setTimeout(() => { mail.textContent = old; }, 1600);
+        }).catch(() => {});
+      }, 700);
+    });
+  }
+}
+
+function renderMetrics(r) {
+  const j = journals(r).length, c = (r.conference || []).length;
+  const pr = (r.project || []).length;
+  const pt = (r.patent || []).length, st = (r.standard || []).length;
+  const rows = [["Publications", j + c], ["Journal", j], ["Conference", c], ["Research projects", pr]];
+  if (pt) rows.push(["Patents", pt]);
+  if (st) rows.push(["Standards", st]);
+  $("#metrics").innerHTML = rows
+    .map(([k, v]) => `<div class="metric"><div class="v num">${pad(v)}</div><div class="k">${k}</div></div>`)
+    .join("");
+  $("#ddJ").textContent = pad(j);
+  $("#ddC").textContent = pad(c);
+  $("#ddP").textContent = pad(pr);
+}
+
+/* Each category shows its 3 most recent entries; the full list always lives
+   in research.html under the matching anchor. Empty categories are hidden
+   here but kept in the archive. */
+function renderResearch(r) {
+  const groups = [
+    ["journal",    "Journal",    byYear(journals(r)).map(p => paperRow(p, "Journal"))],
+    ["conference", "Conference", byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
+    ["patent",     "Patent",     byYear(r.patent || []).map(projectRow)],
+    ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
+    ["project",    "Project",    byYear(r.project || []).map(projectRow)]
+  ].filter(([, , rows]) => rows.length);
+
+  $("#researchBody").innerHTML = groups.map(([id, label, rows]) =>
+    `<div class="group" id="${id}">
+      <div class="group-h">
+        <h3>${label}</h3>
+        <a class="pill sm" href="./research.html#${id}">전체 ${pad(rows.length)}건 보기</a>
+      </div>
+      ${rows.slice(0, 3).join("")}
+    </div>`).join("");
+  return groups.map(([id]) => id);
+}
+
+function renderEducation(p) {
+  const ed = p.education || [];
+  $("#eduSpan").textContent = ed.length ? `${ed.length} degrees` : "";
+  $("#eduBody").innerHTML = ed.map(e => `<article class="item">
+    <div class="meta num"><span class="y">${esc(e.period)}</span></div>
+    <h4 class="t">${esc(e.degree)}</h4>
+    <div class="v">${esc(e.univ)}</div>
+  </article>`).join("");
+}
+
+function renderActivities(p) {
+  $("#actBody").innerHTML = (p.activities || []).map(a => `<article class="item">
+    <div class="meta num"><span class="y">${esc(a.period)}</span></div>
+    <h4 class="t">${esc(a.title)}</h4>
+    <div class="v">${esc(a.org)}</div>
+    ${fileLinks([{ name: "증명서", url: a.link }])}
+  </article>`).join("");
+}
+
+function renderAwards(p) {
+  const aw = p.awards || [];
+  $("#awardSpan").textContent = aw.length ? `${aw.length} awards` : "";
+  $("#awardBody").innerHTML = aw.map(a => {
+    const m = /(\d{4})/.exec(a.desc || "") || /(\d{4})/.exec(a.title || "");
+    return `<article class="item">
+      ${m ? `<div class="meta num"><span class="y">${m[1]}</span></div>` : ""}
+      <h4 class="t">${esc(a.title)}</h4>
+      <div class="v">${esc((a.desc || "").replace(/\s*\|\s*/g, " · "))}</div>
+      ${fileLinks([{ name: "상장", url: a.link }])}
+    </article>`;
+  }).join("");
+}
+
+const ROLE_HEAD = 4;
+function renderBeyond(p) {
+  $("#beyondBody").innerHTML = (p.others || []).map((o, i) => {
+    let block = "";
+    const d = o.details || [];
+    if (d.length) {
+      const head = d.slice(0, ROLE_HEAD).map(x => `<li>${x}</li>`).join("");
+      block = `<ul class="roles" id="roles-${i}">${head}</ul>`;
+      if (d.length > ROLE_HEAD) {
+        block += `<button class="pill sm more-roles" data-i="${i}" aria-expanded="false">외 ${d.length - ROLE_HEAD}개 보기</button>`;
+      }
+    }
+    return `<article class="item">
+      <div class="meta num"><span class="y">${esc(o.period)}</span></div>
+      <h4 class="t">${o.title}</h4>
+      <div class="v">${esc(o.org)}</div>
+      ${block}
+    </article>`;
+  }).join("");
+
+  document.querySelectorAll(".more-roles").forEach(btn => {
+    const i = +btn.dataset.i, d = p.others[i].details;
+    const ul = document.getElementById(`roles-${i}`);
+    let open = false;
+    btn.addEventListener("click", () => {
+      open = !open;
+      ul.innerHTML = (open ? d : d.slice(0, ROLE_HEAD)).map(x => `<li>${x}</li>`).join("");
+      btn.textContent = open ? "접기" : `외 ${d.length - ROLE_HEAD}개 보기`;
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+}
+
+load().then(({ profile, research }) => {
+  renderHero(profile);
+  renderLinks(profile);
+  renderMetrics(research);
+  const groups = renderResearch(research);
+  renderEducation(profile);
+  renderActivities(profile);
+  renderAwards(profile);
+  renderBeyond(profile);
+
+  const spy = { research: '.rail a[href="#research"]' };
+  groups.forEach(id => { spy[id] = `.rail a[href="#${id}"]`; });
+  ["education", "activities", "awards", "beyond"].forEach(id => { spy[id] = `.rail a[href="#${id}"]`; });
+  const parents = Object.fromEntries(groups.map(id => [id, "research"]));
+  initSpy(spy, parents);
+
+  /* Content renders after load, so a deep link (#journal, #beyond …)
+     lands before its target exists. Jump again once it does. */
+  if (location.hash.length > 1) {
+    const t = document.getElementById(location.hash.slice(1));
+    if (t) requestAnimationFrame(() => t.scrollIntoView({ block: "start" }));
+  }
+}).catch(e => { loadError($("#errBox")); console.error(e); });
+</script>
+</body>
+</html>
