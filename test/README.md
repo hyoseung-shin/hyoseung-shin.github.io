@@ -103,6 +103,10 @@ hyoseung-shin.github.io/
 ├── styles.css          공용 스타일시트 (디자인 시스템 · 다크/라이트 · 반응형)
 ├── profile.json        개인정보 전용 데이터 (이름 · 소개 · 링크 · 학력 · 수상 · 활동 · 기타)
 ├── research.json       연구실적 전용 데이터 (journal · conference · patent · standard · project)
+├── admin.html          관리자 비밀번호 확인
+├── admin-edit.html     콘텐츠 편집 페이지 (admin-edit.js)
+├── admin.js            비밀번호 확인 · 세션
+├── admin-config.json   비밀번호 해시 · 저장소 · 브랜치
 │
 ├── avatar/             프로필 이미지 및 CV PDF
 ├── journal/            저널 논문 PDF 및 썸네일 이미지
@@ -196,6 +200,31 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
   ]
 }
 ```
+
+---
+
+## 🔐 Admin (콘텐츠 편집)
+
+메뉴바의 **Admin** → `admin.html`(비밀번호 확인) → `admin-edit.html`(편집).
+
+| 기능 | 내용 |
+| --- | --- |
+| 편집 대상 | 소개(이름 · 사진 · 소개 문단 · 소속 · 링크 · CV), Journal · Conference · Patent · Standard · Project, Education · Activities · Awards · Beyond |
+| 항목 조작 | 수정, 새 항목 추가, 삭제(두 번 눌러 확인), 순서 변경(↑ ↓) |
+| 메인 노출 | 연구 실적의 **메인** 체크 = `"selected": true`. 카테고리별 최대 3건 |
+| 이미지 · 파일 | 대표 이미지, 링크용 PDF, 증명서 · 상장 PDF를 선택하면 저장할 때 함께 올라감 |
+| 저장 | **GitHub에 저장**: GitHub API로 `research.json` · `profile.json` · 올린 파일을 바로 커밋 (1–2분 뒤 사이트 반영) / **JSON 내려받기**: 파일로 받아 직접 교체 |
+
+**처음 설정**
+
+1. 임시 비밀번호는 `changeme-viscom` 입니다. 편집 페이지 **설정** 탭에서 바로 바꾸세요.
+2. GitHub → Settings → Developer settings → **Fine-grained tokens** 에서 토큰을 만듭니다.
+   Repository access: 이 저장소만 · Permissions: **Contents: Read and write** 만.
+3. 편집 페이지 **설정** 탭에 토큰을 넣고 **연결 확인**.
+
+> 정적 사이트라 비밀번호 확인은 브라우저에서 이뤄지며, 편집 화면을 가리는 역할입니다.
+> 실제로 내용을 바꿀 수 있는지는 GitHub 토큰(본인만 보유)이 결정합니다. 토큰은 저장소에 올리지 마세요.
+> 비밀번호는 `admin-config.json`에 SHA-256 해시로만 저장됩니다.
 
 ---
 
