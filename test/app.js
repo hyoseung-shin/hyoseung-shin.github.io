@@ -19,9 +19,12 @@ const APP = (() => {
 
   /* research.json keeps journal split into international / domestic */
   const journals = r => [
-    ...(r.journal?.international || []),
-    ...(r.journal?.domestic || [])
+    ...(r.journal?.international || []).map(p => ({ ...p, _scope: "Int." })),
+    ...(r.journal?.domestic || []).map(p => ({ ...p, _scope: "국내" }))
   ];
+  /* Int. / 국내 marker — journals carry it from research.json's split,
+     conferences are read from their location line */
+  const scopeOf = p => p._scope || (/korea|한국/i.test(`${p.info || ""} ${p.venue || ""}`) ? "국내" : "Int.");
 
   /* Newest first: start of `period` ("2025.11 - 2026.01") when present, else `year`. */
   const startKey = x => {
@@ -29,6 +32,13 @@ const APP = (() => {
     return m ? +m[1] * 100 + +m[2] : (+x.year || 0) * 100;
   };
   const byYear = a => a.slice().sort((x, y) => startKey(y) - startKey(x));
+
+  /* Main page shows only entries marked `"selected": true` (max 3, newest
+     first). A category with nothing marked falls back to its newest 3. */
+  const featured = (a, n = 3) => {
+    const picked = a.filter(x => x.selected === true);
+    return byYear(picked.length ? picked : a).slice(0, n);
+  };
 
   /* ---------- markup fragments ---------- */
   /* Links whose file is not ready yet are left out. */
@@ -52,15 +62,38 @@ const APP = (() => {
       : "";
   };
 
+  /* Image slot for a paper with no figure yet: a coarse block mosaic
+     (the same "decoding" language as the portrait) with the venue's
+     short name. Deterministic per paper, so it never reshuffles. */
+  function mosaic(p) {
+    const key = String(p.id || p.title || "");
+    let h = 2166136261;
+    for (const ch of key) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    const rnd = () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0) / 4294967296);
+    const cols = 8, rows = 6, hot = Math.floor(rnd() * cols * rows);
+    let cells = "";
+    for (let i = 0; i < cols * rows; i++) {
+      const cls = i === hot ? "ma" : "m" + Math.min(3, Math.floor(rnd() * 4.4));
+      cells += `<rect class="${cls}" x="${i % cols}" y="${Math.floor(i / cols)}" width="1" height="1"/>`;
+    }
+    const short = (/\(([A-Za-z]{2,10})\)/.exec(p.venue || "") || [])[1] || "";
+    return `<figure class="pthumb ph" aria-hidden="true">
+      <svg viewBox="0 0 ${cols} ${rows}" preserveAspectRatio="none" shape-rendering="crispEdges">${cells}</svg>
+      ${short ? `<span class="ph-tag num">${esc(short)}${p.year ? " " + esc(p.year) : ""}</span>` : ""}
+    </figure>`;
+  }
+
   /* withThumb: the figure sits left of the text on tablet/desktop
      and is dropped on phones (CSS). */
   function paperRow(p, kind, withThumb = false) {
     const info = noEmoji(p.info);
-    const thumb = withThumb && p.image;
-    return `<article class="item${thumb ? " has-thumb" : ""}">
-      ${thumb ? `<figure class="pthumb"><img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.parentNode.remove()"></figure>` : ""}
+    const fig = !withThumb ? ""
+      : p.image ? `<figure class="pthumb"><img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.parentNode.outerHTML=''"></figure>`
+      : mosaic(p);
+    return `<article class="item${withThumb ? " has-thumb" : ""}">
+      ${fig}
       <div class="body">
-        ${meta(p.year, kind)}
+        ${meta(p.year, kind).replace("</div>", `<span class="badge">${scopeOf(p)}</span></div>`)}
         <h4 class="t">${esc(p.title)}</h4>
         <div class="a">${authorList(p.authors)}</div>
         <div class="v">${esc(p.venue)}${info ? " · " + esc(info) : ""}</div>
@@ -244,7 +277,7 @@ const APP = (() => {
     }
   }
 
-  return { ME, $, $$, esc, pad, dead, byYear, journals, fileLinks, authorList,
+  return { ME, $, $$, esc, pad, dead, byYear, featured, journals, fileLinks, authorList,
            paperRow, projectRow, emptyRow, load, loadError,
            initTheme, initNav, initSpy, initToggle, decodePortrait };
 })();

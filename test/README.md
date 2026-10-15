@@ -27,7 +27,7 @@ GitHub Pages · Vanilla JS · D3.js · JSON-driven
 | 메인 페이지 | Introduction · Research(최신 3건) · Education · Activities · Honors & Awards · Beyond Research |
 | 리서치 페이지 | 전체 연구 실적 + Knowledge Graph(D3.js)                                                               |
 | 데이터    | `profile.json`(개인정보) · `research.json`(연구실적) — 2개 JSON으로 전체 콘텐츠 관리                           |
-| 디자인    | 구분선 없이 여백과 면(surface)으로 구분 · 좌측 고정 레일 내비게이션 · 알약형 링크 · 디코딩되는 프로필 사진 · 다크/라이트 토글 |
+| 디자인    | 구분선 없이 여백과 면(surface)으로 구분 · 상단 바 + Research 드롭다운 · 큰 프로필 사진(오프셋 블록) · 저널 논문 그림 썸네일 · 알약형 링크 · 디코딩되는 프로필 사진 · 다크/라이트 토글 |
 | 기술     | HTML5 · CSS(커스텀 디자인 시스템) · Vanilla JavaScript · D3.js · Pretendard                          |
 | 반응형    | 모바일 · 태블릿 · 데스크톱 최적화                                                                         |
 | 빌드     | 무빌드(no build step) — 정적 파일만으로 동작                                                             |
@@ -49,9 +49,11 @@ GitHub Pages에 그대로 배포됩니다.
 - 데이터(JSON)와 표현(HTML/CSS) 완전 분리 — 손쉬운 콘텐츠 갱신
 - 항목이 없는 카테고리와 준비되지 않은 링크는 화면에 표시하지 않음
 - D3.js 기반 인터랙티브 **Knowledge Graph** — `research.json`에서 노드 자동 파생, 첫 배치 후 화면에 맞춰 자동 확대
-- 메인 카테고리별 최신 3건 미리보기 + **전체 0N건 보기** 로 전체 실적 페이지 이동
+- 메인에는 `research.json`에서 `"selected": true`로 표시한 항목만 카테고리별 최대 3건 표시 (표시한 항목이 없으면 최신 3건) + **전체 0N건 보기** 로 전체 실적 페이지 이동
+- 학회 논문도 그림 자리가 있으며, `image`가 없으면 학회 약칭과 연도가 들어간 블록 모자이크가 자동으로 채워짐
+- 논문마다 `Int.` / `국내` 표시 (저널은 `international`/`domestic` 구분, 학회는 장소에 Korea가 있으면 국내)
 - 디자인 포인트: 프로필 사진이 로드될 때 **큰 블록의 휘도(Y)만 → 색(Cb·Cr) 추가 → 블록이 작아지며 원본**으로 디코딩되듯 나타남 (`prefers-reduced-motion`이면 바로 표시)
-- 다크/라이트 토글, 좌측 고정 레일(데스크톱) / 떠 있는 상단 바 + 메뉴 시트(태블릿·모바일)
+- 기기별 레이아웃: 데스크톱(≥1100px) 상단 메뉴 + 사진 340px · 태블릿(700–1099px) Menu 시트 + 사진 240px · 휴대폰(<700px) 1단, 논문 썸네일 숨김
 
 ### 사이트 구성
 
@@ -59,10 +61,10 @@ GitHub Pages에 그대로 배포됩니다.
 메인 페이지 (index.html)
     │
     ├─ Introduction (사진 · 소개 · 실적 수 · 링크)
-    ├─ Research ─ Journal · Conference · Patent · International Standard · Project (각 최신 3건)
+    ├─ Research ─ Journal · Conference · Patent · International Standard · Project (각 선정 3건)
     ├─ Education / Activities / Honors & Awards / Beyond Research
     │
-    └─ "전체 0N건 보기" · 레일의 "전체 목록 · Knowledge Graph"
+    └─ "전체 0N건 보기" · Research 드롭다운의 "전체 목록 · Knowledge Graph"
             ↓
 리서치 페이지 (research.html)
     ├─ Knowledge Graph (D3.js) — 논문 · 프로젝트 · 공동연구자
@@ -161,6 +163,7 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
 | 필드        | 설명                                                                  |
 | --------- | ------------------------------------------------------------------- |
 | `id`      | 그래프 노드 식별자 — **중복 불가** 고유값                                          |
+| `selected` | `true`면 메인 페이지에 노출 (카테고리별 최대 3건, 최신순). 없거나 `false`면 전체 목록에만 표시 |
 | `title`   | 제목                                                                  |
 | `authors` | 저자 배열. 본인(`Hyoseung Shin`/`신효승`)은 그래프 중심 `Me` 노드, 나머지는 공동연구자 노드 자동 생성 |
 | `venue`   | 저널/학회 전체 명칭 (축약 없이)                                                  |
@@ -222,11 +225,12 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
 ```css
 :root[data-theme="light"]{
     --paper:#ffffff;   /* 페이지 배경 */
-    --panel:#f2f4f7;   /* 면: 레일 · 실적 수 타일 · 알약 버튼 · 그래프 영역 */
+    --panel:#f2f4f7;   /* 면: 드롭다운 · 실적 수 타일 · 알약 버튼 · 그래프 영역 */
     --panel-2:#e6eaf0; /* 면 hover */
     --ink:#12161c;     /* 본문 텍스트 · 현재 섹션 표시 */
     --ink-2:#4a515c;   /* 보조 텍스트 */
     --ink-3:#656c78;   /* 메타 텍스트 (흰 배경 대비 5.3:1) */
+    --accent:#003876;  /* 연세·VISCOM 블루: 섹션 라벨 · Int./국내 표시 · 사진 뒤 블록 · 모자이크의 한 칸 */
 }
 ```
 
@@ -245,8 +249,8 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
 
 ### 페이지 연결
 
-- 메인 → 리서치: 레일의 **전체 목록 · Knowledge Graph** / 각 카테고리의 **전체 0N건 보기**
-- 리서치 → 메인: 레일의 이름 / **← Home**
+- 메인 → 리서치: Research 드롭다운의 **전체 목록 · Knowledge Graph** / 각 카테고리의 **전체 0N건 보기**
+- 리서치 → 메인: 상단 바의 이름 / **← Home**
 
 ---
 
@@ -254,8 +258,8 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
 
 | 브레이크포인트   | 동작                                              |
 | --------- | ----------------------------------------------- |
-| `≤ 1023px` | 좌측 레일 → 떠 있는 상단 바 + Menu 시트, 본문 1단 720px |
-| `≤ 600px`  | 실적 수 타일 2×2, 사진 140px, 본문 16px                |
+| `≤ 1099px` | 상단 메뉴 → Menu 시트, 사진 240px, 논문 썸네일 220px |
+| `≤ 699px`  | 사진이 이름 위로, 실적 수 타일 2×2, 논문 썸네일 숨김, 본문 16px |
 
 ---
 

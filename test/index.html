@@ -7,7 +7,7 @@
 <meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-15c">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15d">
 </head>
 <body class="site">
 
@@ -59,6 +59,7 @@
         <span class="cap">Study plan ↗</span>
       </a>
       <div>
+        <p class="eyebrow">Visual Communication Lab · Yonsei University</p>
         <h1 id="heroName"></h1>
         <p class="lead" id="heroLead"></p>
         <p class="sub" id="heroSub"></p>
@@ -68,27 +69,27 @@
     <div class="strip" id="metrics"></div>
 
     <section class="sec" id="research">
-      <div class="sec-h"><h2>Research</h2><span class="span">Recent 3 cases</span></div>
+      <div class="sec-h"><span class="eyebrow">Selected 3 cases</span><h2>Research</h2></div>
       <div id="researchBody"></div>
     </section>
 
     <section class="sec" id="education">
-      <div class="sec-h"><h2>Education</h2><span class="span" id="eduSpan"></span></div>
+      <div class="sec-h"><span class="eyebrow" id="eduSpan"></span><h2>Education</h2></div>
       <div id="eduBody"></div>
     </section>
 
     <section class="sec" id="activities">
-      <div class="sec-h"><h2>Activities</h2><span class="span">교육 · 연수 이수</span></div>
+      <div class="sec-h"><span class="eyebrow">교육 · 연수 이수</span><h2>Activities</h2></div>
       <div id="actBody"></div>
     </section>
 
     <section class="sec" id="awards">
-      <div class="sec-h"><h2>Honors &amp; Awards</h2><span class="span" id="awardSpan"></span></div>
+      <div class="sec-h"><span class="eyebrow" id="awardSpan"></span><h2>Honors &amp; Awards</h2></div>
       <div id="awardBody"></div>
     </section>
 
     <section class="sec" id="beyond">
-      <div class="sec-h"><h2>Beyond Research</h2><span class="span">학생자치 · 봉사 활동</span></div>
+      <div class="sec-h"><span class="eyebrow">학생자치 · 봉사 활동</span><h2>Beyond Research</h2></div>
       <div id="beyondBody"></div>
     </section>
 
@@ -98,9 +99,9 @@
     </footer>
   </main>
 
-<script src="./app.js?v=2026-10-15c"></script>
+<script src="./app.js?v=2026-10-15d"></script>
 <script>
-const { $, esc, pad, byYear, journals, fileLinks, paperRow, projectRow,
+const { $, esc, pad, byYear, featured, journals, fileLinks, paperRow, projectRow,
         load, loadError, initTheme, initNav, initSpy, decodePortrait } = APP;
 
 initTheme();
@@ -127,12 +128,12 @@ function renderLinks(p) {
   const out = [];
 
   if (L.email) {
-    out.push(`<a class="pill lift" href="mailto:${esc(L.email)}" id="mailLink" data-addr="${esc(L.email)}">Email</a>`);
+    out.push(`<a class="pill" href="mailto:${esc(L.email)}" id="mailLink" data-addr="${esc(L.email)}">Email</a>`);
   }
   [["Google Scholar", L.scholar], ["GitHub", L.github], ["ORCID", L.orcid],
    ["LinkedIn", L.linkedin], ["Curriculum Vitae", L.cv]]
     .filter(([, u]) => u)
-    .forEach(([n, u]) => out.push(`<a class="pill lift" href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`));
+    .forEach(([n, u]) => out.push(`<a class="pill" href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`));
 
   $("#links").innerHTML = out.join("");
 
@@ -173,23 +174,25 @@ function renderMetrics(r) {
    in research.html under the matching anchor. Empty categories are hidden
    here but kept in the archive. */
 function renderResearch(r) {
-  const groups = [
-    ["journal",    "Journal",    byYear(journals(r)).map(p => paperRow(p, "Journal", true))],
-    ["conference", "Conference", byYear(r.conference || []).map(p => paperRow(p, "Conference"))],
-    ["patent",     "Patent",     byYear(r.patent || []).map(projectRow)],
-    ["standard",   "International Standard", byYear(r.standard || []).map(projectRow)],
-    ["project",    "Project",    byYear(r.project || []).map(projectRow)]
-  ].filter(([, , rows]) => rows.length);
+  const cats = [
+    ["journal",    "Journal",    journals(r),     p => paperRow(p, "Journal", true)],
+    ["conference", "Conference", r.conference || [], p => paperRow(p, "Conference", true)],
+    ["patent",     "Patent",     r.patent || [],  projectRow],
+    ["standard",   "International Standard", r.standard || [], projectRow],
+    ["project",    "Project",    r.project || [], projectRow]
+  ].filter(([, , list]) => list.length);
 
-  $("#researchBody").innerHTML = groups.map(([id, label, rows]) =>
+  /* Only entries marked "selected": true in research.json are shown here
+     (max 3 each); the full list always lives in research.html. */
+  $("#researchBody").innerHTML = cats.map(([id, label, list, row]) =>
     `<div class="group" id="${id}">
       <div class="group-h">
         <h3>${label}</h3>
-        <a class="pill sm" href="./research.html#${id}">전체 ${pad(rows.length)}건 보기</a>
+        <a class="pill sm" href="./research.html#${id}">전체 ${pad(list.length)}건 보기</a>
       </div>
-      ${rows.slice(0, 3).join("")}
+      ${featured(list).map(row).join("")}
     </div>`).join("");
-  return groups.map(([id]) => id);
+  return cats.map(([id]) => id);
 }
 
 function renderEducation(p) {
