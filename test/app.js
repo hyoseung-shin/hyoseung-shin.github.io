@@ -52,15 +52,20 @@ const APP = (() => {
       : "";
   };
 
+  /* withThumb: the figure sits left of the text on tablet/desktop
+     and is dropped on phones (CSS). */
   function paperRow(p, kind, withThumb = false) {
     const info = noEmoji(p.info);
-    return `<article class="item">
-      ${meta(p.year, kind)}
-      <h4 class="t">${esc(p.title)}</h4>
-      <div class="a">${authorList(p.authors)}</div>
-      <div class="v">${esc(p.venue)}${info ? " · " + esc(info) : ""}</div>
-      ${withThumb && p.image ? `<img class="thumb" src="${esc(p.image)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
-      ${fileLinks(p.links)}
+    const thumb = withThumb && p.image;
+    return `<article class="item${thumb ? " has-thumb" : ""}">
+      ${thumb ? `<figure class="pthumb"><img src="${esc(p.image)}" alt="" loading="lazy" onerror="this.parentNode.remove()"></figure>` : ""}
+      <div class="body">
+        ${meta(p.year, kind)}
+        <h4 class="t">${esc(p.title)}</h4>
+        <div class="a">${authorList(p.authors)}</div>
+        <div class="v">${esc(p.venue)}${info ? " · " + esc(info) : ""}</div>
+        ${fileLinks(p.links)}
+      </div>
     </article>`;
   }
 
@@ -129,6 +134,20 @@ const APP = (() => {
       document.addEventListener("click", e => { if (!sheet.contains(e.target)) set(false); });
       document.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
     }
+    /* Research dropdown in the top bar */
+    const dd = $("#ddResearch");
+    if (dd) {
+      const trigger = $("button", dd);
+      const close = () => { dd.classList.remove("open"); trigger.setAttribute("aria-expanded", "false"); };
+      trigger.addEventListener("click", e => {
+        e.stopPropagation();
+        trigger.setAttribute("aria-expanded", String(dd.classList.toggle("open")));
+      });
+      $$("a", dd).forEach(a => a.addEventListener("click", close));
+      document.addEventListener("click", close);
+      document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+    }
+
     const top = $("#toTop");
     if (top) top.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
@@ -146,7 +165,7 @@ const APP = (() => {
       const line = innerHeight * 0.3;
       ids.forEach(id => { if (document.getElementById(id).getBoundingClientRect().top <= line) cur = id; });
       if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = ids[ids.length - 1];
-      $$(".rail nav a").forEach(a => a.classList.remove("on", "in"));
+      $$("[data-spy]").forEach(a => a.classList.remove("on", "in"));
       if (!cur) return;
       const a = $(map[cur]);
       if (a) a.classList.add("on");

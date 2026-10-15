@@ -7,16 +7,26 @@
 <meta name="description" content="신효승 연구 실적 전체 목록과 Knowledge Graph.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-15b">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15c">
 </head>
 <body class="site">
 
-<!-- mobile / tablet: floating bar + menu sheet -->
-<header class="topbar">
-  <a class="me" href="./index.html">Hyo-seung Shin</a>
-  <div class="acts">
-    <button class="pill sm" data-theme-btn>Dark</button>
-    <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
+<header class="topnav">
+  <div class="wrap topnav-in">
+    <a class="logo" href="./index.html">Hyo-seung Shin</a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a data-spy href="#graph">Graph</a>
+      <a data-spy href="#journal">Journal</a>
+      <a data-spy href="#conference">Conference</a>
+      <a data-spy href="#patent">Patent</a>
+      <a data-spy href="#standard">Standard</a>
+      <a data-spy href="#project">Project</a>
+    </nav>
+    <div class="nav-acts">
+      <a class="pill sm" href="./index.html">← Home</a>
+      <button class="pill sm" data-theme-btn>Dark</button>
+      <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
+    </div>
   </div>
 </header>
 <nav class="sheet" id="sheet" aria-label="모바일 메뉴">
@@ -29,26 +39,7 @@
   <a href="./index.html">← Home</a>
 </nav>
 
-<div class="shell">
-
-  <!-- desktop: sticky rail -->
-  <aside class="rail">
-    <a class="me" href="./index.html">Hyo-seung Shin</a>
-    <nav aria-label="주요 메뉴">
-      <a href="#graph">Graph</a>
-      <a href="#journal">Journal</a>
-      <a href="#conference">Conference</a>
-      <a href="#patent">Patent</a>
-      <a href="#standard">Standard</a>
-      <a href="#project">Project</a>
-    </nav>
-    <div class="rail-foot">
-      <a class="pill sm" href="./index.html">← Home</a>
-      <button class="pill sm" data-theme-btn>Dark</button>
-    </div>
-  </aside>
-
-  <main class="main" id="top">
+  <main class="wrap" id="top">
     <div id="errBox"></div>
 
     <div class="page-head">
@@ -94,10 +85,9 @@
       <button class="pill sm ghost" id="toTop">맨 위로</button>
     </footer>
   </main>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="./app.js?v=2026-10-15b"></script>
+<script src="./app.js?v=2026-10-15c"></script>
 <script>
 const { $, $$, esc, pad, byYear, journals, fileLinks, authorList,
         paperRow, projectRow, emptyRow, load, loadError,
@@ -332,12 +322,12 @@ load().then(({ research }) => {
   renderArchive(research);
   initGraph(research);
   initSpy({
-    graph:      '.rail a[href="#graph"]',
-    journal:    '.rail a[href="#journal"]',
-    conference: '.rail a[href="#conference"]',
-    patent:     '.rail a[href="#patent"]',
-    standard:   '.rail a[href="#standard"]',
-    project:    '.rail a[href="#project"]'
+    graph:      '.nav-links a[href="#graph"]',
+    journal:    '.nav-links a[href="#journal"]',
+    conference: '.nav-links a[href="#conference"]',
+    patent:     '.nav-links a[href="#patent"]',
+    standard:   '.nav-links a[href="#standard"]',
+    project:    '.nav-links a[href="#project"]'
   });
 
   /* The archive renders after load, so a #category link from the main page
