@@ -19,7 +19,7 @@
         "id": "j-2026-jisps",
         "title": "Traffic Accident Video Analysis using MoCo v3 and Object Detection",
         "authors": ["Jun-kyung Ju","Hyo-seung Shin","Gyu-min Park","Tae-wook Kim","Ellen J.Hong"],
-        "venue": "The Journal of Korea Institute of Convergence Signal Processing (JISPS)",
+        "venue": "The Joural of Korea Institute of Convergence Signal Processing (JISPS)",
         "year": 2026,
         "image": "./journal/domestic/img/domestic_img_03.png",
         "links": [
@@ -32,7 +32,7 @@
         "id": "j-2024-jisps",
         "title": "TAREF: 운전자 특성 및 실시간 행동 분석 기반 교통사고 위험도 산출 프레임워크",
         "authors": ["Tae-wook Kim","Jun-kyung Ju","Hyo-seung Shin","Gyu-min Park","Ellen J.Hong"],
-        "venue": "The Journal of Korea Institute of Convergence Signal Processing (JISPS)",
+        "venue": "The Joural of Korea Institute of Convergence Signal Processing (JISPS)",
         "year": 2024,
         "image": "./journal/domestic/img/domestic_img_02.png",
         "links": [
@@ -70,7 +70,7 @@
       "id": "c-2024-ksci-s",
       "title": "비디오 클러스터링을 통한 위험 운전 습관 분석",
       "authors": ["Tae-wook Kim","Jun-kyung Ju","Gyu-min Park","Hyo-seung Shin","Ellen J.Hong"],
-      "venue": "The Korea Society of Computer and Information (KSCI) Summer Conference 2024",
+      "venue": "The Korea Society of Computer and Informationn (KSCI) Summer Conference 2024",
       "info": "📍 Jeju (Korea) | July",
       "year": 2024,
       "links": [ { "name": "paper", "url": "./conference/2024_Summer_KSCI.pdf" } ]
@@ -79,7 +79,7 @@
       "id": "c-2024-kicsp-s",
       "title": "대조 학습 기반 운전자 사고 영상 클러스터링 및 사고 패턴 분석",
       "authors": ["Jun-kyung Ju","Tae-wook Kim","Gyu-min Park","Hyo-seung Shin","Ellen J.Hong"],
-      "venue": "The Korea Institute of Convergence Signal Processing (KICSP) Summer Conference 2024",
+      "venue": "The Korea Institute of Convergence Singal Processing (KICSP) Summer Conference 2024",
       "info": "📍 Changwon (Korea) | June",
       "year": 2024,
       "links": [ { "name": "paper", "url": "./conference/2024_Summer_KICSP.pdf" } ]
