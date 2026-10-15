@@ -136,7 +136,8 @@
           "url": "./conference/2027_Winter_IWAIT.pdf"
         }
       ],
-      "selected": true
+      "selected": true,
+      "_scope": "Int."
     },
     {
       "id": "c-2026-giwr",
