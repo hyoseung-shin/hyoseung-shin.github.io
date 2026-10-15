@@ -228,7 +228,9 @@ const APP = (() => {
   function decodePortrait(box) {
     const img = box && $("img", box), cv = box && $("canvas", box);
     if (!img || !cv) return;
-    const done = () => { box.classList.remove("decoding"); box.classList.add("decoded"); };
+    const bits = box.parentNode ? $$(".bits i", box.parentNode) : [];
+    const light = n => bits.forEach((b, k) => b.classList.toggle("on", k < n));
+    const done = () => { light(bits.length); box.classList.remove("decoding"); box.classList.add("decoded"); };
     if (matchMedia("(prefers-reduced-motion: reduce)").matches || !cv.getContext) { done(); return; }
     box.classList.add("decoding");
 
@@ -249,6 +251,7 @@ const APP = (() => {
       const frame = () => {
         if (i >= steps.length) { done(); return; }
         const [block, lumaOnly] = steps[i++];
+        light(i);
         const bw = Math.max(1, Math.round(r.width / block)), bh = Math.max(1, Math.round(r.height / block));
         tmp.width = bw; tmp.height = bh;
         t.drawImage(img, sx, sy, sw, sh, 0, 0, bw, bh);

@@ -7,7 +7,7 @@
 <meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-15d">
+<link rel="stylesheet" href="./styles.css?v=2026-10-15e">
 </head>
 <body class="site">
 
@@ -51,13 +51,18 @@
     <div id="errBox"></div>
 
     <div class="hero">
-      <a class="portrait" href="./graduate_plan.html" aria-label="대학원 계획 보기">
-        <span class="frame">
-          <canvas aria-hidden="true"></canvas>
-          <img id="heroImg" alt="" width="172" height="200">
-        </span>
-        <span class="cap">Study plan ↗</span>
-      </a>
+      <div class="portrait-col">
+        <a class="portrait" href="./graduate_plan.html" aria-label="대학원 계획 보기">
+          <span class="frame">
+            <canvas aria-hidden="true"></canvas>
+            <img id="heroImg" alt="" width="172" height="200">
+          </span>
+          <span class="cap">Study plan ↗</span>
+        </a>
+        <!-- the "bitstream" that decodes the photo: one segment lights per
+             decode pass — grey for the luma-only passes, blue once chroma arrives -->
+        <div class="bits" aria-hidden="true"><i class="y"></i><i class="y"></i><i></i><i></i><i></i><i></i></div>
+      </div>
       <div>
         <p class="eyebrow">Visual Communication Lab · Yonsei University</p>
         <h1 id="heroName"></h1>
@@ -99,7 +104,7 @@
     </footer>
   </main>
 
-<script src="./app.js?v=2026-10-15d"></script>
+<script src="./app.js?v=2026-10-15e"></script>
 <script>
 const { $, esc, pad, byYear, featured, journals, fileLinks, paperRow, projectRow,
         load, loadError, initTheme, initNav, initSpy, decodePortrait } = APP;
