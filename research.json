@@ -116,6 +116,29 @@
   },
   "conference": [
     {
+      "id": "c-2026-c52b",
+      "title": "Object Size-Aware Adaptive Scale Adjustment for RD-Curve Stabilization under Tool Interaction in VCM",
+      "authors": [
+        "Min-suk Kim",
+        "Hyo-seung Shin",
+        "Se-hee Park",
+        "Sang-woon Kwak",
+        "Soon-heung Jung",
+        "Kwang-deok Seo"
+      ],
+      "venue": "International Workshop on Advanced Image Technology (IWAIT) 2027",
+      "info": "Seoul (Korea) | January",
+      "year": 2027,
+      "image": "",
+      "links": [
+        {
+          "name": "paper",
+          "url": ""
+        }
+      ],
+      "selected": true
+    },
+    {
       "id": "c-2026-giwr",
       "title": "VCM 비트스트림 메타데이터 기반 비디오 압축 도메인 초고속 이상 탐지 기법",
       "authors": [
@@ -178,7 +201,7 @@
           "url": "./conference/2024_Summer_KSCI.pdf"
         }
       ],
-      "selected": true
+      "selected": false
     },
     {
       "id": "c-2024-kicsp-s",
