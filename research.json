@@ -180,7 +180,8 @@
           "url": "./conference/2025_Winter_KSCI.pdf"
         }
       ],
-      "selected": true
+      "selected": true,
+      "image": "./conference/img/2025_Winter_KSCI_figure.png"
     },
     {
       "id": "c-2024-ksci-s",
@@ -201,7 +202,8 @@
           "url": "./conference/2024_Summer_KSCI.pdf"
         }
       ],
-      "selected": false
+      "selected": false,
+      "image": "./conference/img/2024_Summer_KSCI_figure.png"
     },
     {
       "id": "c-2024-kicsp-s",
@@ -221,7 +223,8 @@
           "name": "paper",
           "url": "./conference/2024_Summer_KICSP.pdf"
         }
-      ]
+      ],
+      "image": "./conference/img/2024_Summer_KICSP_figure.png"
     }
   ],
   "patent": [],
