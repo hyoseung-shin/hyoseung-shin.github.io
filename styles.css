@@ -446,10 +446,17 @@ footer a.egg,footer a.egg:hover{color:inherit;cursor:text}
   :root{--gutter:20px;--navh:62px}
   body.site{font-size:16px}
   .logo{font-size:16px}
-  .hero{grid-template-columns:1fr;gap:36px;padding-top:24px}
-  .portrait-col{width:min(200px,58vw)}
-  .hero .ko{margin-top:12px}
-  .hero .lead{font-size:1.08rem;margin-top:22px}
+  /* phones: small portrait on the left, lab + name beside it, the rest full width below */
+  .hero{grid-template-columns:minmax(0,clamp(112px,34vw,150px)) minmax(0,1fr);gap:0 18px;align-items:center;padding-top:24px}
+  .hero-text{display:contents}
+  .portrait-col{grid-column:1;grid-row:1}
+  .hero-id{grid-column:2;grid-row:1;min-width:0}
+  .hero .eyebrow{margin-bottom:12px;padding:5px 10px;border-radius:12px;font-size:12px;line-height:1.35}
+  .hero h1{font-size:clamp(1.85rem,8.6vw,2.6rem);letter-spacing:-.045em;line-height:1.02}
+  .hero .ko{margin-top:8px;font-size:1rem}
+  .hero .lead,.hero .sub,.hero .links{grid-column:1 / -1}
+  .bits{margin-top:10px;height:6px;gap:3px}
+  .hero .lead{font-size:1.08rem;margin-top:26px}
   .links{margin-top:22px}
   .strip{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:40px}
   .metric{padding:16px;border-radius:18px}

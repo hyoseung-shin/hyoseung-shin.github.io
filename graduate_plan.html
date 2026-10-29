@@ -7,7 +7,7 @@
 <title>Study Plan — Hyo-seung Shin</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-29">
+<link rel="stylesheet" href="./styles.css?v=2026-10-29b">
 <style>
 /* ============================================================
    Study plan — page rules on top of styles.css
@@ -160,7 +160,7 @@ mark{background:none;color:var(--ink);font-weight:650;padding:0 1px;box-shadow:i
 #chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:12px;padding:14px;border-radius:24px;
   background:var(--panel);scrollbar-width:thin}
 .chart{display:grid;grid-template-columns:160px repeat(17,minmax(108px,1fr));
-  grid-template-rows:30px 56px 30px repeat(9,50px);min-width:2000px;row-gap:6px}
+  grid-template-rows:30px 56px 30px repeat(10,50px);min-width:2000px;row-gap:6px}
 .mcell{grid-row:1;display:flex;align-items:center;padding-left:10px;font-size:13px;
   font-weight:650;color:var(--ink-2);box-shadow:inset 1px 0 0 var(--rule-strong)}
 .wcell{grid-row:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
@@ -498,7 +498,7 @@ details[open]>summary .mark{background:var(--on-ink);color:var(--ink)}
 <section class="section-card">
     <div class="sec-head">
 <h2>전체 배치도</h2>
-<p class="note">맨 윗줄이 학사 일정 · 주차를 누르면 캘린더가 그 주 월요일로 이동합니다 · 파란 점은 일정이 바뀌는 주</p>
+<p class="note">맨 윗줄이 학사 일정, 그 아래가 학회 · 공휴일 · 주차를 누르면 캘린더가 그 주 월요일로 이동합니다 · 파란 점은 일정이 바뀌는 주</p>
 </div>
 
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -522,82 +522,94 @@ details[open]>summary .mark{background:var(--on-ink);color:var(--ink)}
         <div class="band-lab"><b>학사 일정</b></div>
         <div class="band" style="grid-column:2/span 7;background:var(--g8);color:var(--ink-2)">2026-2학기 · 세미나 ~12.14 · 랩미팅 ~12.16 · 수업 · 조교 ~12.20</div>
         <div class="band" style="grid-column:9/span 10;background:var(--g7);color:var(--ink)">겨울방학 — 세미나 · 랩미팅 미정, 빈 시간은 연구</div>
-        <div class="band" style="grid-column:11/span 2;background:var(--g0);color:var(--paper);z-index:3">IWAIT 1.10–12</div>
-        <div class="band" style="grid-column:15/span 2;background:var(--g3);color:var(--paper);z-index:3">설날 2.6–9</div>
 
-        <div class="lane-lab" style="grid-row:4"><b>영어 발표 준비</b><i>평일 매일 · 1h</i></div>
+        <div class="lane-lab" style="grid-row:4"><b>학회 · 공휴일</b><i>과목 학습은 일요일 이월</i></div>
         <div class="lane-bg" style="grid-row:4;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:4;grid-column:2/span 3;background:var(--g4)">10분 대본 확정 · 발음 표시 · 낭독</div>
-        <div class="seg" style="grid-row:4;grid-column:5/span 4;background:var(--g3)">셰도잉 · 문단별 암기 · 무원고 시도</div>
-        <div class="seg" style="grid-row:4;grid-column:9/span 2;background:var(--g2)">무원고 완주 · Q&amp;A 답변</div>
-        <div class="seg" style="grid-row:4;grid-column:11/span 1;background:var(--g1)">최종 리허설</div>
-        <div class="seg" style="grid-row:4;grid-column:12/span 1;background:var(--g0)">실전</div>
-        <div class="seg" style="grid-row:4;grid-column:13/span 1;background:var(--g4)">회고</div>
-        <div class="seg" style="grid-row:4;grid-column:14/span 5;background:var(--g3)">연구 내용 3분 영어 설명 연습</div>
+        <div class="seg" style="grid-row:4;grid-column:4/span 1;background:var(--g1)" title="2026 방송미디어공학회 추계학술대회 11.19–20">방미공 추계</div>
+        <div class="seg" style="grid-row:4;grid-column:9/span 1;background:var(--g1)" title="KSC 2026 12.21–23 · 크리스마스 12.25">KSC · 성탄</div>
+        <div class="seg ghost" style="grid-row:4;grid-column:10/span 1" title="신정 1.1">신정</div>
+        <div class="seg" style="grid-row:4;grid-column:11/span 2;background:var(--g0)">IWAIT 2027 1.10–12 · 영어 발표</div>
+        <div class="seg" style="grid-row:4;grid-column:15/span 1;background:var(--g1)" title="2027 방송미디어공학회 동계학술대회 2.1–3">방미공 동계</div>
+        <div class="seg ghost" style="grid-row:4;grid-column:16/span 1" title="설날 연휴 2.6–9">설날</div>
+        <div class="seg" style="grid-row:4;grid-column:17/span 1;background:var(--g1)" title="IPIU 2027 2.17–19">IPIU 2027</div>
 
-        <div class="lane-lab" style="grid-row:5"><b>매일 루틴</b><i>평일 · 1.5h</i></div>
+        <div class="lane-lab" style="grid-row:5"><b>영어 발표 준비</b><i>평일 매일 · 1h</i></div>
         <div class="lane-bg" style="grid-row:5;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:5;grid-column:2/span 17;background:var(--g3)">Daily news · paper 30m  ·  회화 영어(스픽) 30m  ·  영어 단어 30m — 공휴일 · 학회 날은 쉼</div>
+        <div class="seg" style="grid-row:5;grid-column:2/span 3;background:var(--g4)">10분 대본 확정 · 발음 표시 · 낭독</div>
+        <div class="seg" style="grid-row:5;grid-column:5/span 4;background:var(--g3)">셰도잉 · 문단별 암기 · 무원고 시도</div>
+        <div class="seg" style="grid-row:5;grid-column:9/span 2;background:var(--g2)">무원고 완주 · Q&amp;A 답변</div>
+        <div class="seg" style="grid-row:5;grid-column:11/span 1;background:var(--g1)">최종 리허설</div>
+        <div class="seg" style="grid-row:5;grid-column:12/span 1;background:var(--g0)">실전</div>
+        <div class="seg" style="grid-row:5;grid-column:13/span 1;background:var(--g4)">회고</div>
+        <div class="seg" style="grid-row:5;grid-column:14/span 5;background:var(--g3)">연구 내용 3분 영어 설명 연습</div>
 
-        <div class="lane-lab" style="grid-row:6"><b>Video coding</b><i>월 · 2h</i></div>
+        <div class="lane-lab" style="grid-row:6"><b>매일 루틴</b><i>평일 · 1.5h</i></div>
         <div class="lane-bg" style="grid-row:6;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:6;grid-column:2/span 2;background:var(--g2)">04 RDO</div>
-        <div class="seg" style="grid-row:6;grid-column:4/span 1;background:var(--g4)">05 BD-rate</div>
-        <div class="seg" style="grid-row:6;grid-column:5/span 2;background:var(--g3)">01 H.264/AVC</div>
-        <div class="seg" style="grid-row:6;grid-column:7/span 2;background:var(--g2)">02 HEVC</div>
-        <div class="seg" style="grid-row:6;grid-column:9/span 3;background:var(--g1)">03 VVC</div>
-        <div class="seg" style="grid-row:6;grid-column:12/span 2;background:var(--g3)">06 VCM (Duan)</div>
-        <div class="seg" style="grid-row:6;grid-column:14/span 2;background:var(--g4)">07 VCM (Yang)</div>
-        <div class="seg" style="grid-row:6;grid-column:16/span 2;background:var(--g2)">08 VNVC</div>
-        <div class="seg ghost" style="grid-row:6;grid-column:18/span 1">정리</div>
+        <div class="seg" style="grid-row:6;grid-column:2/span 17;background:var(--g3)">Daily news · paper 30m  ·  회화 영어(스픽) 30m  ·  영어 단어 30m — 공휴일 · 학회 날은 쉼</div>
 
-        <div class="lane-lab" style="grid-row:7"><b>통신</b><i>화 · 1h</i></div>
+        <div class="lane-lab" style="grid-row:7"><b>Video coding</b><i>월 · 2h</i></div>
         <div class="lane-bg" style="grid-row:7;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:7;grid-column:2/span 4;background:var(--g3)">15 QUIC</div>
-        <div class="seg" style="grid-row:7;grid-column:6/span 2;background:var(--g4)">13 MPEG-DASH</div>
-        <div class="seg" style="grid-row:7;grid-column:8/span 5;background:var(--g2)">16 DASH 적응 기법 서베이 (Kua)</div>
-        <div class="seg" style="grid-row:7;grid-column:13/span 5;background:var(--g3)">14 비트레이트 적응 서베이 (Bentaleb)</div>
+        <div class="seg" style="grid-row:7;grid-column:2/span 2;background:var(--g2)">04 RDO</div>
+        <div class="seg" style="grid-row:7;grid-column:4/span 1;background:var(--g4)">05 BD-rate</div>
+        <div class="seg" style="grid-row:7;grid-column:5/span 2;background:var(--g3)">01 H.264/AVC</div>
+        <div class="seg" style="grid-row:7;grid-column:7/span 2;background:var(--g2)">02 HEVC</div>
+        <div class="seg" style="grid-row:7;grid-column:9/span 3;background:var(--g1)">03 VVC</div>
+        <div class="seg" style="grid-row:7;grid-column:12/span 2;background:var(--g3)">06 VCM (Duan)</div>
+        <div class="seg" style="grid-row:7;grid-column:14/span 2;background:var(--g4)">07 VCM (Yang)</div>
+        <div class="seg" style="grid-row:7;grid-column:16/span 2;background:var(--g2)">08 VNVC</div>
         <div class="seg ghost" style="grid-row:7;grid-column:18/span 1">정리</div>
 
-        <div class="lane-lab" style="grid-row:8"><b>신경망</b><i>금 · 1h30</i></div>
+        <div class="lane-lab" style="grid-row:8"><b>통신</b><i>화 · 1h</i></div>
         <div class="lane-bg" style="grid-row:8;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:8;grid-column:2/span 4;background:var(--g2)">교재① 컴퓨터 비전과 딥러닝</div>
-        <div class="seg" style="grid-row:8;grid-column:6/span 4;background:var(--g1)">교재② 만들면서 배우는 생성 AI</div>
-        <div class="seg" style="grid-row:8;grid-column:10/span 2;background:var(--g4)">09 Ballé 2017</div>
-        <div class="seg" style="grid-row:8;grid-column:12/span 2;background:var(--g3)">10 Hyperprior</div>
-        <div class="seg" style="grid-row:8;grid-column:14/span 2;background:var(--g4)">11 DVC</div>
-        <div class="seg" style="grid-row:8;grid-column:16/span 2;background:var(--g2)">12 DCVC-FM</div>
+        <div class="seg" style="grid-row:8;grid-column:2/span 4;background:var(--g3)">15 QUIC</div>
+        <div class="seg" style="grid-row:8;grid-column:6/span 2;background:var(--g4)">13 MPEG-DASH</div>
+        <div class="seg" style="grid-row:8;grid-column:8/span 5;background:var(--g2)">16 DASH 적응 기법 서베이 (Kua)</div>
+        <div class="seg" style="grid-row:8;grid-column:13/span 5;background:var(--g3)">14 비트레이트 적응 서베이 (Bentaleb)</div>
         <div class="seg ghost" style="grid-row:8;grid-column:18/span 1">정리</div>
 
-        <div class="lane-lab" style="grid-row:9"><b>TEPS</b><i>목 · 금 · 2h</i></div>
+        <div class="lane-lab" style="grid-row:9"><b>신경망</b><i>금 · 1h30</i></div>
         <div class="lane-bg" style="grid-row:9;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:9;grid-column:2/span 9;background:var(--g4)">단어 추가 공부 (12월까지)</div>
-        <div class="seg" style="grid-row:9;grid-column:11/span 8;background:var(--g2)">텝스의 정석 (3월까지) → 3월 이후 1차 응시</div>
+        <div class="seg" style="grid-row:9;grid-column:2/span 4;background:var(--g2)">교재① 컴퓨터 비전과 딥러닝</div>
+        <div class="seg" style="grid-row:9;grid-column:6/span 4;background:var(--g1)">교재② 만들면서 배우는 생성 AI</div>
+        <div class="seg" style="grid-row:9;grid-column:10/span 2;background:var(--g4)">09 Ballé 2017</div>
+        <div class="seg" style="grid-row:9;grid-column:12/span 2;background:var(--g3)">10 Hyperprior</div>
+        <div class="seg" style="grid-row:9;grid-column:14/span 2;background:var(--g4)">11 DVC</div>
+        <div class="seg" style="grid-row:9;grid-column:16/span 2;background:var(--g2)">12 DCVC-FM</div>
+        <div class="seg ghost" style="grid-row:9;grid-column:18/span 1">정리</div>
 
-        <div class="lane-lab" style="grid-row:10"><b>한국사</b><i>수 · 40m</i></div>
+        <div class="lane-lab" style="grid-row:10"><b>TEPS</b><i>목 · 금 · 2h</i></div>
         <div class="lane-bg" style="grid-row:10;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:10;grid-column:2/span 9;background:var(--g4)">전근대 — 선사 → 조선 후기</div>
-        <div class="seg" style="grid-row:10;grid-column:11/span 7;background:var(--g3)">근현대 — 개항 → 현대</div>
-        <div class="seg ghost" style="grid-row:10;grid-column:18/span 1">정리</div>
+        <div class="seg" style="grid-row:10;grid-column:2/span 9;background:var(--g4)">단어 추가 공부 (12월까지)</div>
+        <div class="seg" style="grid-row:10;grid-column:11/span 8;background:var(--g2)">텝스의 정석 (3월까지) → 3월 이후 1차 응시</div>
 
-        <div class="lane-lab" style="grid-row:11"><b>고정 일정</b><i>학기 중</i></div>
+        <div class="lane-lab" style="grid-row:11"><b>한국사</b><i>수 · 40m</i></div>
         <div class="lane-bg" style="grid-row:11;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:11;grid-column:2/span 7;background:var(--g4)">세미나(월) · 랩미팅(목) · 수업(화 · 수) · 조교(목)</div>
-        <div class="seg ghost" style="grid-row:11;grid-column:9/span 10">방학 — 세미나 · 랩미팅 일정 미정, 그 시간은 연구</div>
+        <div class="seg" style="grid-row:11;grid-column:2/span 9;background:var(--g4)">전근대 — 선사 → 조선 후기</div>
+        <div class="seg" style="grid-row:11;grid-column:11/span 7;background:var(--g3)">근현대 — 개항 → 현대</div>
+        <div class="seg ghost" style="grid-row:11;grid-column:18/span 1">정리</div>
 
-        <div class="lane-lab" style="grid-row:12"><b>운동</b><i>월 · 수 · 2h</i></div>
+        <div class="lane-lab" style="grid-row:12"><b>고정 일정</b><i>학기 중</i></div>
         <div class="lane-bg" style="grid-row:12;grid-column:2/span 17"></div>
-        <div class="seg" style="grid-row:12;grid-column:2/span 17;background:var(--g4)">월 · 수 09:00–11:00 — 운동 후 11:30 출근</div>
+        <div class="seg" style="grid-row:12;grid-column:2/span 7;background:var(--g4)">세미나(월) · 랩미팅(목) · 수업(화 · 수) · 조교(목)</div>
+        <div class="seg ghost" style="grid-row:12;grid-column:9/span 10">방학 — 세미나 · 랩미팅 일정 미정, 그 시간은 연구</div>
+
+        <div class="lane-lab" style="grid-row:13"><b>운동</b><i>월 · 수 · 2h</i></div>
+        <div class="lane-bg" style="grid-row:13;grid-column:2/span 17"></div>
+        <div class="seg" style="grid-row:13;grid-column:2/span 17;background:var(--g4)">월 · 수 09:00–11:00 — 운동 후 11:30 출근</div>
     </div>
     </div>
 
     <h3 class="subhead">고정 마일스톤</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 milestones">
         <div class="study-box"><p>11.02 (월) · W01</p><p>새 커리큘럼 시작</p></div>
+        <div class="study-box"><p>11.19–20 · W03</p><p>2026 방송미디어공학회 추계학술대회</p></div>
         <div class="study-box"><p>12.10 (목) · W06</p><p>마지막 랩미팅 — 12.16까지 유효</p></div>
         <div class="study-box"><p>12.14 (월) · W07</p><p>마지막 연구원 세미나</p></div>
         <div class="study-box"><p>12.20 (일) · W07</p><p>수업 · 조교 종료 → 방학 시간표</p></div>
+        <div class="study-box"><p>12.21–23 · W08</p><p>한국소프트웨어종합학술대회 (KSC 2026)</p></div>
         <div class="study-box"><p>1.10–12 · W10–11</p><p>IWAIT 2027 영어 발표 · 이화여대</p></div>
+        <div class="study-box"><p>2.01–03 · W14</p><p>2027 방송미디어공학회 동계학술대회</p></div>
+        <div class="study-box"><p>2.17–19 · W16</p><p>IPIU 2027</p></div>
         <div class="study-box"><p>2.28 (일) · W17</p><p>사이클 종료 → 3월 TEPS 1차 응시 준비</p></div>
     </div>
 </section>
@@ -691,14 +703,14 @@ details[open]>summary .mark{background:var(--on-ink);color:var(--ink)}
             <p class="text-xs text-slate-400">학습 · 연구 없음</p></div>
         <div class="day-card"><div class="day-header text-slate-400">일</div>
             <p class="mb-2"><span class="badge badge-green">예비</span></p><p class="text-sm font-semibold mb-3">이월 학습 또는 추가 휴무</p>
-            <p class="text-xs text-slate-400">12.27 · 1.03 · 1.17 · 2.14에 이월 있음</p></div>
+            <p class="text-xs text-slate-400">11.22 · 12.27 · 1.03 · 1.17 · 2.14 · 2.21에 이월 있음</p></div>
     </div>
 
     <div class="callout mt-5">
         <p class="text-adaptive">
             <b class="lead">공휴일과 학회 날의 과목 학습은 그 주 일요일로 옮깁니다.</b>
-            12.25(금) 신경망·TEPS는 12.27, 1.1(금)은 1.3, IWAIT 기간 1.11–12(월·화)의 Video coding·통신은 1.17,
-            설날 연휴 2.8–9(월·화)는 2.14로 갑니다. 매일 루틴과 연구는 이월하지 않습니다.
+            학회 날에는 매일 루틴도 쉽니다. 이월이 생기는 일요일은 11.22(추계학술대회), 12.27(KSC · 크리스마스), 1.3(신정), 1.17(IWAIT),
+            2.14(동계학술대회 · 설날 — 2.7이 설날이라 한 주 뒤로), 2.21(IPIU)입니다. 매일 루틴과 연구는 이월하지 않습니다.
         </p>
     </div>
   </div>
@@ -1184,9 +1196,24 @@ var HOLI = {
  '2026-12-25':'크리스마스', '2027-01-01':'신정',
  '2027-02-06':'설날 연휴', '2027-02-07':'설날', '2027-02-08':'설날 연휴', '2027-02-09':'대체공휴일'
 };
-var CONF = {
- '2027-01-10':'IWAIT 2027 1일차 · 이화여대', '2027-01-11':'IWAIT 2027 2일차', '2027-01-12':'IWAIT 2027 3일차'
-};
+/* 학회 — 참석일에는 매일 루틴을 쉬고, 과목 학습은 일요일로 이월 */
+var CONFS = [
+ {name:'2026 방송미디어공학회 추계학술대회', short:'방미공 추계', from:'2026-11-19', to:'2026-11-20'},
+ {name:'한국소프트웨어종합학술대회 (KSC 2026)', short:'KSC 2026', from:'2026-12-21', to:'2026-12-23'},
+ {name:'IWAIT 2027 · 이화여대', short:'IWAIT 2027', from:'2027-01-10', to:'2027-01-12', task:'영어 발표 · 세션 참관'},
+ {name:'2027 방송미디어공학회 동계학술대회', short:'방미공 동계', from:'2027-02-01', to:'2027-02-03'},
+ {name:'IPIU 2027', short:'IPIU 2027', from:'2027-02-17', to:'2027-02-19'}
+];
+var CONF = {}, CONFOF = {};
+CONFS.forEach(function(c){
+  var p = c.from.split('-'), d = new Date(+p[0], +p[1]-1, +p[2]), i = 1;
+  for (;;) {
+    var k = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    CONF[k] = c.name + ' ' + i + '일차'; CONFOF[k] = c;
+    if (k === c.to) break;
+    d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1); i++;
+  }
+});
 var EVENT = {
  '2026-11-02':'새 커리큘럼 시작', '2026-12-10':'마지막 랩미팅 (12.16까지 유효)',
  '2026-12-14':'마지막 연구원 세미나', '2026-12-17':'랩미팅 이후 일정 미정',
@@ -1233,20 +1260,20 @@ var PRES = [ /* 매일 · 영어 발표 준비 1h */
 var CORE = [
  '새 시간표 첫 주 · 교재① 착수 · 10분 대본 확정',
  'RDO 마무리 · QUIC 계속 · 문단별 낭독',
- 'BD-rate 원전 · 낭독 녹음과 시간 측정',
+ 'BD-rate 원전 · 낭독 녹음과 시간 측정 · <mark>방미공 추계학술대회(11.19–20)</mark> → 목 · 금 학습은 11.22(일)로 이월',
  'H.264 착수 · 교재① 마무리(Ch11) · 셰도잉과 암기 착수',
  '교재② 착수 · MPEG-DASH · 본론 암기',
  'HEVC · <b>마지막 랩미팅(12.10)</b>',
  '<b>마지막 세미나(12.14) · 수업 · 조교 종료(12.20)</b>',
- '방학 시간표 시작 · VVC · <mark>크리스마스(12.25) → 일요일 이월</mark>',
+ '방학 시간표 시작 · <mark>KSC 2026(12.21–23) · 크리스마스(12.25)</mark> → 월 · 화 · 수 · 금 학습은 12.27(일)로 이월',
  '<mark>신정(1.1) → 일요일 이월</mark> · 신경망 논문 착수 · TEPS 단어 마무리 → 텝스의 정석 착수',
  '<b>최종 리허설</b> · VVC 마무리 · <mark>IWAIT 개막(1.10)</mark>',
  '<mark>IWAIT 2027 (1.11–12)</mark> — 월·화 학습은 일요일(1.17)로 이월',
  '발표 회고 · Bentaleb 서베이 착수',
  '연구 영어 설명 연습 시작 · DVC',
- 'VCM (Yang) · <mark>설날 연휴 시작(2.6–7)</mark>',
- '<mark>설날 연휴 · 대체공휴일(2.8–9)</mark> — 월·화 학습은 일요일(2.14)로 이월',
- 'VNVC · DCVC-FM 마무리',
+ '<mark>방미공 동계학술대회(2.1–3)</mark> · 설날 연휴(2.6–7)라 일요일이 없어 월 · 화 · 수 학습은 2.14(일)로 이월',
+ '<mark>설날 연휴 · 대체공휴일(2.8–9)</mark> — 월 · 화 학습도 2.14(일)로 이월',
+ 'VNVC · <mark>IPIU 2027(2.17–19)</mark> → 수 · 목 · 금 학습은 2.21(일)로 이월',
  '<b>트랙별 정리 · 사이클 종료(2.28)</b> → 3월 텝스의 정석 마무리 · 1차 응시 준비'
 ];
 
@@ -1333,9 +1360,19 @@ function resolve(row, n, k){
   return {time: b ? a + '–' + b : a, label: label, cls: cls, min: (cls === 'core' && b) ? mins(a, b) : 0, tag: tag};
 }
 
-/* 평일이 공휴일·학회로 비면 과목 세션을 그 주 일요일로 넘깁니다 */
+/* 평일이 공휴일·학회로 비면 과목 세션을 그 주 일요일로 넘깁니다.
+   그 일요일도 공휴일·학회면 다음 주 일요일로 넘깁니다. */
 var SUBJ_TAGS = ['vc','comm','kh','teps','nn'];
 function skipped(d){ var k = key(d); return !!(HOLI[k] || CONF[k]); }
+function sunTarget(n){
+  for (var m = n; m <= WEEKS; m++) if (!skipped(addDays(weekStart(m), 6))) return m;
+  return WEEKS;
+}
+function carriedTo(n){
+  var out = [];
+  for (var m = 1; m <= n; m++) if (sunTarget(m) === n) out = out.concat(carried(m));
+  return out;
+}
 function carried(n){
   var out = [];
   for (var dw = 0; dw < 5; dw++){
@@ -1355,17 +1392,18 @@ function plan(d){
   var k = key(d), n = weekOf(d), dw = dowOf(d);
   var o = {k:k, n:n, dw:dw, rows:[], tasks:[], research:0, kind:'work', tag:null};
   if (CONF[k]) {
+    var cf = CONFOF[k], tgt = addDays(weekStart(sunTarget(n)), 6);
     o.kind = 'conf'; o.tag = CONF[k];
-    o.rows = [{time:'종일', label:'IWAIT 2027 학회 일정 (이화여대)', cls:'fix'}];
-    o.tasks = ['<b>IWAIT 2027</b> — 영어 발표 · 세션 참관'];
-    if (dw < 5) o.tasks.push('<span class="text-slate-400">이날의 과목 학습은 일요일로 이월</span>');
-    o.short = 'IWAIT 2027';
+    o.rows = [{time:'종일', label:cf.name + ' 참석', cls:'fix'}];
+    o.tasks = ['<b>' + cf.name + '</b> — ' + (cf.task || '학회 참석')];
+    if (dw < 5) o.tasks.push('<span class="text-slate-400">매일 루틴은 쉬고, 이날의 과목 학습은 ' + md(tgt) + '(일)로 이월</span>');
+    o.short = cf.short;
     return o;
   }
   if (HOLI[k]) {
     o.kind = 'holi'; o.tag = HOLI[k];
     o.rows = [{time:'종일', label:'공휴일 · 쉬는 날', cls:'off'}];
-    if (dw < 5) o.tasks = ['<span class="text-slate-400">이날의 과목 학습은 일요일로 이월</span>'];
+    if (dw < 5) o.tasks = ['<span class="text-slate-400">이날의 과목 학습은 ' + md(addDays(weekStart(sunTarget(n)), 6)) + '(일)로 이월</span>'];
     o.short = HOLI[k];
     return o;
   }
@@ -1377,7 +1415,7 @@ function plan(d){
   }
   if (dw === 6) {
     o.kind = 'sun';
-    var c = carried(n);
+    var c = carriedTo(n);
     if (c.length) {
       o.rows = c.map(function(x){ return {time:x.dur, label:'이월 · ' + x.text + ' (' + md(x.from) + ')', cls:'study'}; });
       o.tasks = c.map(function(x){ return '<b>' + x.text + '</b> — ' + md(x.from) + '(' + DOW[dowOf(x.from)] + ')에서 이월'; });
@@ -1414,7 +1452,7 @@ document.getElementById('mTerm').textContent  = hm(weekResearch(2));
 document.getElementById('mBreak').textContent = hm(weekResearch(12));
 
 /* ── 배치도 주차 눈금 ── */
-var EVW = {7:1, 8:1, 9:1, 10:1, 11:1, 14:1, 15:1};
+var EVW = {3:1, 7:1, 8:1, 9:1, 10:1, 11:1, 14:1, 15:1, 16:1};
 document.getElementById('ruler').innerHTML = Array.from({length:WEEKS}, function(_, i){
   var n = i + 1, s = weekStart(n);
   return '<div class="wcell" data-w="'+n+'" title="'+wlabel(n)+' · '+md(s)+'–'+md(addDays(s,6))+'">'
@@ -1426,7 +1464,7 @@ document.getElementById('ruler').innerHTML = Array.from({length:WEEKS}, function
 /* ── 주차별 상세 표 ── */
 function cellOf(n, dw, list){
   var d = addDays(weekStart(n), dw), t = list[n-1];
-  return skipped(d) ? t + '<br><span class="text-xs text-slate-400">→ 일 '+md(addDays(weekStart(n),6))+' 이월</span>' : t;
+  return skipped(d) ? t + '<br><span class="text-xs text-slate-400">→ 일 '+md(addDays(weekStart(sunTarget(n)),6))+' 이월</span>' : t;
 }
 document.getElementById('wbody').innerHTML = Array.from({length:WEEKS}, function(_, i){
   var n = i + 1, s = weekStart(n), m = mode(n);
@@ -1437,7 +1475,7 @@ document.getElementById('wbody').innerHTML = Array.from({length:WEEKS}, function
     + '<td class="tl text-slate-700">'+CORE[i]+'</td>'
     + '<td class="tl">'+cellOf(n,0,VC)+'</td>'
     + '<td class="tl">'+cellOf(n,1,COMM)+'</td>'
-    + '<td class="tl">'+KH[i]+'</td>'
+    + '<td class="tl">'+cellOf(n,2,KH)+'</td>'
     + '<td class="tl">'+cellOf(n,4,NN)+'</td>'
     + '<td class="tl text-slate-600">'+teps+'</td>'
     + '<td class="tl text-slate-600">'+PRES[i]+'</td></tr>';
@@ -1834,7 +1872,7 @@ function selectYear(year){
 buildTimelineNav();
 selectYear(activeYear);
 </script>
-<script src="./app.js?v=2026-10-29"></script>
+<script src="./app.js?v=2026-10-29b"></script>
 <script>APP.initTheme(); APP.initNav();</script>
 </body>
 </html>
