@@ -1,24 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
 <title>Study Plan — Hyo-seung Shin</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-15g">
+<link rel="stylesheet" href="./styles.css?v=2026-10-29">
 <style>
-/* ===== grayscale ramp — every former hue maps onto this ===== */
+/* ============================================================
+   Study plan — page rules on top of styles.css
+   Same language as index.html: tinted surfaces instead of rules,
+   every control a pill, one accent (Yonsei blue), 800-weight heads.
+   ============================================================ */
+
+/* ===== tone ramp for chart segments and bands — accent-blue steps =====
+   light: dark → light blue (white text sits on g0–g4)
+   dark:  light → dark blue (the dark --paper text sits on g0–g4)        */
 :root[data-theme="light"]{
-  --g0:#000000; --g1:#1c1c1c; --g2:#333333; --g3:#4d4d4d; --g4:#6e6e6e;
-  --g5:#949494; --g6:#bdbdbd; --g7:#d8d8d4; --g8:#ececea; --g9:#ffffff;
+  --g0:#001b3d; --g1:#003876; --g2:#1f4a85; --g3:#345f99; --g4:#4d77ae;
+  --g5:#8aa6cc; --g6:#b4c6df; --g7:#d3dfee; --g8:#e3ebf6; --g9:#ffffff;
+  --on-accent:#ffffff;
 }
 :root[data-theme="dark"]{
-  --g0:#ffffff; --g1:#f0f0f0; --g2:#d8d8d8; --g3:#bbbbbb; --g4:#8f8f8f;
-  --g5:#6a6a6a; --g6:#454545; --g7:#2e2e2e; --g8:#1c1c1c; --g9:#0d0d0d;
+  --g0:#dbe6fa; --g1:#b3c9f2; --g2:#9cb8ee; --g3:#86a7e6; --g4:#7496d8;
+  --g5:#4a5f86; --g6:#34445f; --g7:#24324a; --g8:#1b2a44; --g9:#0f1216;
+  --on-accent:#0f1216;
 }
 :root{
-  --c-blue:var(--g1);   --c-blue-soft:var(--g8);   --c-blue-txt:var(--g1);
+  --c-blue:var(--accent);  --c-blue-soft:var(--accent-soft);  --c-blue-txt:var(--accent);
   --c-indigo:var(--g2); --c-indigo-soft:var(--g8); --c-indigo-txt:var(--g2);
   --c-green:var(--g2);  --c-green-soft:var(--g8);  --c-green-txt:var(--g2);
   --c-violet:var(--g3); --c-violet-soft:var(--g8); --c-violet-txt:var(--g3);
@@ -26,290 +37,292 @@
   --c-cyan:var(--g3);   --c-cyan-soft:var(--g8);   --c-cyan-txt:var(--g3);
   --c-rose:var(--g4);   --c-rose-soft:var(--g8);   --c-rose-txt:var(--g3);
   --c-red:var(--g0);    --c-red-soft:var(--g8);    --c-red-txt:var(--g0);
+  --danger:#b42318;
 }
+:root[data-theme="dark"]{--danger:#ff8a7a}
 
-/* ===== reset the portfolio section grid for this page ===== */
-body{padding:0}
-main.plan{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
-section.section-card{display:block;grid-template-columns:none;padding:0;scroll-margin-top:12px}
-
-/* ===== page head ===== */
-.plan-head{padding:72px 0 40px;max-width:52em}
-.plan-head h1{font-size:clamp(32px,5.5vw,58px);font-weight:600;letter-spacing:-.032em;line-height:1.05}
-.plan-head .kicker{font-size:14px;color:var(--ink-3);margin-bottom:16px}
-.plan-head .range{font-size:14px;font-weight:500;margin-top:20px;padding-bottom:2px;
-  border-bottom:1.5px solid var(--ink);display:inline-block;font-variant-numeric:tabular-nums}
-.plan-head .desc{font-size:15.5px;color:var(--ink-2);margin-top:22px;line-height:1.75}
-.plan-head .desc b{font-weight:600;color:var(--ink)}
-
-/* ===== tabs ===== */
-.tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule);margin-bottom:8px}
-.tab{padding:14px 0;font-size:14px;font-weight:500;color:var(--ink-3);
-  border-bottom:2px solid transparent;margin-bottom:-1px}
-.tab:hover{color:var(--ink)}
-.tab.active{color:var(--ink);border-bottom-color:var(--ink)}
+/* ===== page shell ===== */
+section.section-card{display:block;padding-top:96px;scroll-margin-top:var(--navh)}
 .page{display:none}
 .page.on{display:block}
 
-/* ===== section shell — rail label + body, matching the portfolio ===== */
-.section-card{padding:64px 0 0}
-.sec-head{display:grid;grid-template-columns:var(--rail) 1fr;gap:var(--gap);align-items:baseline;
-  padding-bottom:11px;border-bottom:1.5px solid var(--ink);margin-bottom:26px}
-.sec-head h2{font-size:16px;font-weight:600;letter-spacing:-.01em}
-.sec-head .note{font-size:13px;color:var(--ink-3);line-height:1.6}
-.subhead{font-size:14px;font-weight:600;color:var(--ink);margin:36px 0 14px;
-  padding-bottom:9px;border-bottom:1px solid var(--rule)}
+/* ===== page head — same as research.html's .page-head ===== */
+.plan-head{padding-top:48px;max-width:52em}
+.plan-head .eyebrow{display:inline-flex;margin-bottom:22px;padding:6px 13px;border-radius:999px;
+  background:var(--accent-soft);font-size:13.5px}
+.plan-head h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;letter-spacing:-.05em;line-height:1.02;word-break:keep-all}
+.plan-head .desc{margin-top:16px;font-size:1.08rem;color:var(--ink-2);max-width:36em;word-break:keep-all}
+.plan-head .desc b{font-weight:650;color:var(--ink)}
+.plan-head .range{display:inline-flex;margin-top:22px;padding:6px 14px;border-radius:999px;background:var(--panel);
+  font-size:14px;font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums}
+.page > .plan-head:first-child{padding-top:72px}
+
+/* ===== tabs — pills, the active one inked ===== */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:36px}
+.tab{display:inline-flex;align-items:center;min-height:42px;padding:0 18px;border-radius:999px;
+  background:var(--panel);color:var(--ink-2);font-size:15px;line-height:1.2}
+.tab:hover{background:var(--panel-2);color:var(--ink)}
+.tab.active,.tab.active:hover{background:var(--ink);color:var(--on-ink)}
+
+/* ===== section head — .sec-h from index ===== */
+.sec-head{margin-bottom:32px;padding-top:22px;border-top:2px solid var(--ink)}
+.sec-head h2{font-size:1.9rem;font-weight:800;letter-spacing:-.045em;line-height:1.15}
+.sec-head .note{margin-top:10px;font-size:15px;color:var(--ink-3);line-height:1.55;max-width:46em;word-break:keep-all}
+.subhead{display:block;margin:56px 0 18px;padding-bottom:14px;border-bottom:1px solid var(--rule-strong);
+  font-size:1.2rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);line-height:1.35;word-break:keep-all}
+h4.subhead{margin-top:0;font-size:1.06rem}
 .ico,.hbar,.subbar,.swatch,.dot-icon{display:none}
 
-/* ===== metric boxes ===== */
-.study-box{padding:16px 0 16px 14px;border-left:2px solid var(--g4)}
-.study-box p:first-child{font-size:24px;font-weight:600;letter-spacing:-.03em;line-height:1.1}
-.study-box p+p{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+/* ===== metric tiles — .metric from index ===== */
+.study-box{background:var(--panel);border-radius:20px;padding:20px 20px 18px}
+.study-box p:first-child{font-size:2.1rem;font-weight:800;letter-spacing:-.045em;line-height:1}
+.study-box p+p{margin-top:10px;font-size:14px;color:var(--ink-3);line-height:1.35}
+/* milestones: week in accent, label below */
+.milestones .study-box p:first-child{font-size:13.5px;font-weight:650;letter-spacing:0;color:var(--accent);line-height:1.4}
+.milestones .study-box p+p{margin-top:6px;font-size:15.5px;font-weight:650;color:var(--ink);letter-spacing:-.015em}
 
-/* ===== plain surfaces (former cards) ===== */
-.card,.panel,.day-card,.year-card,.dcard,.process-flow,.process-step{
-  background:none;border:0;border-radius:0;box-shadow:none;padding:0}
-.card,.year-card{padding:20px 0;box-shadow:inset 0 1px 0 var(--rule)}
-.panel{padding:18px 16px;background:var(--panel)}
-.day-header{font-weight:600;font-size:15px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--ink)}
+/* ===== surfaces ===== */
+.card,.panel,.day-card,.year-card{background:var(--panel);border-radius:24px}
+.card{padding:26px 28px}
+.year-card{padding:22px 24px}
+.panel{padding:20px 22px;border-radius:20px}
+.panel p{line-height:1.75}
+.day-card{padding:20px 20px 18px;border-radius:20px}
+.day-header{font-size:1.15rem;font-weight:800;letter-spacing:-.03em;margin-bottom:14px}
+.callout{padding:22px 24px;border-radius:20px;background:var(--accent-soft);color:var(--ink-2)}
+.callout b{color:var(--ink)}
+.callout .lead{color:var(--accent)}
+.callout.caution{background:var(--panel)}
+.callout.caution h4{color:var(--danger)}
+.callout p{font-size:14.5px;line-height:1.75}
 
-/* ===== tables ===== */
-.table-container{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;
-  border:0;border-top:1.5px solid var(--ink);margin:18px 0 0;background:none}
+/* ===== tables — tinted header, light record rules ===== */
+.table-container{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:18px;
+  background:var(--paper);box-shadow:inset 0 0 0 1px var(--rule);margin:18px 0 0}
 table{min-width:720px;width:100%;border-collapse:collapse}
-th,td{border:0;box-shadow:inset 0 -1px 0 var(--rule);padding:11px 14px;text-align:center;
-  font-size:13.5px;font-variant-numeric:tabular-nums;word-wrap:break-word}
-th{background:var(--paper);color:var(--ink-3);font-weight:500;font-size:12.5px}
-#wbody-wrap th{position:sticky;top:0;z-index:5;box-shadow:inset 0 -1px 0 var(--ink)}
+th,td{border:0;box-shadow:inset 0 -1px 0 var(--rule);padding:12px 14px;text-align:center;
+  font-size:14px;font-variant-numeric:tabular-nums;word-wrap:break-word}
+tr:last-child td{box-shadow:none}
+th{background:var(--panel);color:var(--ink-2);font-weight:650;font-size:13.5px;box-shadow:none}
+td.side{background:var(--panel);font-weight:650}
+#wbody-wrap th{position:sticky;top:0;z-index:5}
 td.tl{text-align:left}
 tr.zebra{background:transparent}
-tr.hi td{background:var(--panel);font-weight:600}
+tr.hi td{background:var(--accent-soft);font-weight:650;color:var(--ink)}
 #wbody tr{cursor:pointer}
 #wbody tr:hover td{background:var(--panel)}
-#wbody tr.hit td{background:var(--panel)}
-#wbody tr.hit td:first-child{box-shadow:inset 3px 0 0 var(--ink),inset 0 -1px 0 var(--rule)}
-mark{background:none;padding:0;font-weight:600;color:var(--ink);
-  box-shadow:inset 0 -.42em 0 var(--g7)}
+#wbody tr.hit td{background:var(--accent-soft)}
+#wbody tr.hit td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+mark{background:none;color:var(--ink);font-weight:650;padding:0 1px;box-shadow:inset 0 -.42em 0 var(--accent-soft)}
 
-/* ===== badges — weight and rule instead of colour ===== */
-.badge{display:inline-block;padding:2px 0;font-size:12px;font-weight:500;
-  color:var(--ink-2);border-bottom:1px solid var(--rule-strong)}
-.badge-red,.badge-orange{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
-.badge-slate{color:var(--ink-3);border-bottom-color:var(--rule)}
+/* ===== badges — .badge pill from index, a few weights ===== */
+.badge{display:inline-flex;align-items:center;padding:1px 10px;border-radius:999px;font-size:12px;font-weight:650;
+  background:var(--accent-soft);color:var(--accent);line-height:1.6;white-space:nowrap}
+.badge-green{background:var(--panel-2);color:var(--ink-2)}
+.badge-orange{background:var(--ink);color:var(--on-ink)}
+.badge-red{background:var(--accent);color:var(--on-accent)}
+.badge-slate{background:var(--panel-2);color:var(--ink-3)}
+.card .badge-slate,.panel .badge-slate,.day-card .badge-slate,.day-card .badge-green{background:var(--paper)}
 
-/* ===== lists ===== */
-.info-list{font-size:14px;color:var(--ink-2);margin:0;padding:0;list-style:none}
-.info-list li{margin-bottom:7px;position:relative;padding-left:14px;line-height:1.7}
+/* ===== lists — dot bullets as on index (.roles) ===== */
+.info-list{font-size:15px;color:var(--ink-2);margin:0;padding:0;list-style:none}
+.info-list li{margin-bottom:6px;position:relative;padding-left:16px;line-height:1.7}
 .info-list li:last-child{margin-bottom:0}
-.info-list li::before{content:"";position:absolute;left:0;top:.78em;width:5px;height:1px;background:var(--ink-3)}
-.info-list.sm{font-size:12.5px}
-.info-list.sm li{padding-left:12px;margin-bottom:5px}
+.info-list li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--ink-3)}
+.info-list b,.info-list strong{color:var(--ink);font-weight:650}
+.info-list.sm{font-size:13.5px}
+.info-list.sm li{margin-bottom:4px}
 .text-adaptive{white-space:normal;word-break:keep-all}
 
-/* ===== track definition lists ===== */
-.tcard-h{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;
-  border-bottom:1.5px solid var(--ink);margin-bottom:4px}
-.tcard-h b{font-size:15px;font-weight:600;letter-spacing:-.015em}
-.tcard-lede{font-size:13.5px;line-height:1.7;color:var(--ink-3);margin:12px 0 0}
+/* ===== track cards ===== */
+.tcard-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tcard-h b{font-size:1.2rem;font-weight:800;letter-spacing:-.03em}
+.tcard-lede{font-size:14.5px;line-height:1.7;color:var(--ink-2);margin:12px 0 6px;word-break:keep-all}
+.tcard-lede b{color:var(--ink);font-weight:650}
 .deflist{margin:0}
 .deflist>div{display:grid;grid-template-columns:112px 1fr;gap:0 20px;padding:14px 0;
-  box-shadow:inset 0 1px 0 var(--rule)}
-.deflist>div:first-child{box-shadow:none}
-.deflist dt{font-size:12.5px;font-weight:500;color:var(--ink-3);padding-top:3px;line-height:1.5}
-.deflist dd{margin:0;font-size:14px;line-height:1.72;color:var(--ink-2)}
-.deflist dd b{color:var(--ink);font-weight:600}
+  box-shadow:inset 0 1px 0 var(--panel-2)}
+.deflist dt{font-size:13px;font-weight:650;color:var(--accent);padding-top:3px;line-height:1.5}
+.deflist dd{margin:0;font-size:14.5px;line-height:1.72;color:var(--ink-2);word-break:keep-all}
+.deflist dd b{color:var(--ink);font-weight:650}
 .deflist dd i{font-style:normal;color:var(--ink-3)}
-.deflist dd .q{color:var(--ink-3)}
+.deflist dd.q{color:var(--ink-3)}
 
 /* ===== paper list ===== */
-.plist{list-style:none;margin:0;padding:0}
-.plist li{display:grid;grid-template-columns:30px 1fr;gap:0 12px;padding:14px 0;
-  box-shadow:inset 0 1px 0 var(--rule)}
-.plist li:first-child{box-shadow:none}
-.pnum{font-size:12.5px;font-weight:500;color:var(--ink-3);padding-top:3px;font-variant-numeric:tabular-nums}
-.ptitle{margin:0;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.5}
-.pmeta{margin:4px 0 0;font-size:12.5px;color:var(--ink-3)}
-.pnote{margin:6px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.plist{list-style:none;margin:14px 0 0;padding:0}
+.plist li{display:grid;grid-template-columns:32px 1fr;gap:0 12px;padding:14px 0;box-shadow:inset 0 1px 0 var(--panel-2)}
+.pnum{font-size:13px;font-weight:650;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums}
+.ptitle{margin:0;font-size:15px;font-weight:650;color:var(--ink);line-height:1.5;letter-spacing:-.01em}
+.pmeta{margin:4px 0 0;font-size:13.5px;color:var(--ink-3)}
+.pnote{margin:8px 0 0;font-size:14px;color:var(--ink-2);line-height:1.65;word-break:keep-all}
 
 /* ===== 24-week layer chart ===== */
-#chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 0 18px;scrollbar-width:thin}
+#chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:12px;padding:14px;border-radius:24px;
+  background:var(--panel);scrollbar-width:thin}
 .chart{display:grid;grid-template-columns:152px repeat(24,minmax(78px,1fr));
   grid-template-rows:30px 56px 30px repeat(8,50px);min-width:2030px;row-gap:6px}
-.mcell{grid-row:1;display:flex;align-items:center;padding-left:10px;font-size:12.5px;
-  font-weight:500;color:var(--ink-3);box-shadow:inset 1px 0 0 var(--rule)}
+.mcell{grid-row:1;display:flex;align-items:center;padding-left:10px;font-size:13px;
+  font-weight:650;color:var(--ink-2);box-shadow:inset 1px 0 0 var(--rule-strong)}
 .wcell{grid-row:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
-  cursor:pointer;margin:0 2px;position:relative;z-index:4;background:none;
-  border:0;box-shadow:inset 0 -1px 0 var(--rule)}
-.wcell:hover{background:var(--panel)}
+  cursor:pointer;margin:0 2px;position:relative;z-index:4;border-radius:12px;background:var(--paper)}
+.wcell:hover{background:var(--panel-2)}
 .wcell.active{background:var(--ink)}
-.wcell.active .wn,.wcell.active .wd{color:var(--paper)}
-.wcell .wn{font-weight:600;font-size:13.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.wcell.active .wn,.wcell.active .wd{color:var(--on-ink)}
+.wcell .wn{font-weight:800;font-size:14px;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .wcell .wd{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.wcell .rap{position:absolute;top:-6px;width:7px;height:7px;background:var(--ink);border:0;transform:rotate(45deg)}
+.wcell .rap{position:absolute;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 2px var(--panel)}
 .corner{grid-row:1/3;grid-column:1;display:flex;align-items:flex-end;padding:0 0 18px 0}
-.corner span{font-size:12.5px;color:var(--ink-3);text-transform:none;letter-spacing:0}
-.band{grid-row:3;display:flex;align-items:center;justify-content:center;margin:0 2px;
-  font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10px}
+.corner span{font-size:13px;font-weight:650;color:var(--ink-3)}
+.band{grid-row:3;display:flex;align-items:center;justify-content:center;margin:0 2px;border-radius:999px;
+  font-size:12.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 12px}
 .band-lab{grid-row:3;grid-column:1;display:flex;align-items:center;padding-right:12px}
-.band-lab b{font-size:13px;font-weight:500;color:var(--ink-3)}
+.band-lab b{font-size:13px;font-weight:650;color:var(--ink-3)}
 .lane-lab{grid-column:1;display:flex;flex-direction:column;justify-content:center;padding-right:12px}
-.lane-lab b{font-size:14px;font-weight:600;color:var(--ink);line-height:1.3}
-.lane-lab i{font-style:normal;font-size:11.5px;font-weight:400;color:var(--ink-3)}
-.lane-bg{background:var(--panel)}
-.seg{margin:0 2px;display:flex;align-items:center;padding:0 12px;color:var(--paper);
-  font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+.lane-lab b{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.015em}
+.lane-lab i{font-style:normal;font-size:12px;color:var(--ink-3)}
+.lane-bg{background:var(--paper);border-radius:12px;margin:0 2px}
+.seg{margin:4px 3px;display:flex;align-items:center;padding:0 12px;border-radius:9px;color:var(--paper);
+  font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   z-index:2;position:relative}
-.seg.ghost{background:none;color:var(--ink-3);border:1px dashed var(--rule-strong)}
+.seg.ghost{background:none;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--rule-strong)}
 .rapline{grid-row:2/-1;box-shadow:inset 1px 0 0 var(--rule-strong);pointer-events:none;z-index:1}
 
-/* ===== day-by-day ===== */
-.dgrid{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:700px){.dgrid{grid-template-columns:repeat(2,1fr);gap:0 32px}}
-@media(min-width:1200px){.dgrid{grid-template-columns:repeat(4,1fr);gap:0 26px}}
-.dcard{padding:16px 0;display:flex;flex-direction:column;gap:8px;box-shadow:inset 0 1px 0 var(--rule)}
-.dcard.off{opacity:.55}
-.dcard h5{font-weight:600;font-size:14.5px;margin:0;display:flex;align-items:center;justify-content:space-between;gap:6px}
-.dtask{font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.55;background:var(--panel);padding:9px 11px}
-.dcard.off .dtask{background:none;color:var(--ink-3);font-weight:400;padding-left:0}
-.drow{font-size:12.5px;color:var(--ink-2);display:flex;gap:8px;line-height:1.55}
-.drow b{color:var(--ink-3);font-weight:400;flex:0 0 auto;min-width:2.7rem}
-.dfix{font-size:12px;color:var(--ink-3);padding-top:8px;box-shadow:inset 0 1px 0 var(--rule);line-height:1.55}
-
 /* ===== process flow ===== */
-.process-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:none;padding:0}
-.process-step{padding:12px 16px;border:1px solid var(--rule-strong);font-size:13.5px;
-  font-weight:500;color:var(--ink);text-align:left;line-height:1.5;max-width:230px}
-.process-step em{display:block;font-style:normal;font-size:12px;color:var(--ink-3);font-weight:400;margin-top:4px}
-.process-arrow{color:var(--ink-3);font-weight:400}
+.process-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.process-step{padding:14px 18px;border-radius:18px;background:var(--panel);font-size:14.5px;
+  font-weight:650;color:var(--ink);text-align:left;line-height:1.5;max-width:240px;word-break:keep-all}
+.process-step em{display:block;font-style:normal;font-size:13px;color:var(--accent);font-weight:650;margin-top:6px}
+.process-arrow{color:var(--ink-3)}
 
 /* ===== year timeline ===== */
-#timeline-track{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding:18px 0 22px;scrollbar-width:thin}
+#timeline-track{display:flex;align-items:flex-start;overflow-x:auto;padding:8px 0 16px;scrollbar-width:thin}
 .tl-wrap{display:flex;align-items:flex-start;flex:0 0 auto}
-.tl-conn{width:28px;height:1px;margin-top:19px;background:var(--rule-strong);flex:0 0 auto}
-@media(min-width:768px){.tl-conn{width:48px}}
+.tl-conn{width:24px;height:2px;margin-top:25px;border-radius:2px;background:var(--panel-2);flex:0 0 auto}
+@media(min-width:768px){.tl-conn{width:40px}}
 .tl-node{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
-  padding:8px 10px;min-width:98px;max-width:116px}
-.tl-node:hover{background:var(--panel)}
-.tl-dot{width:11px;height:11px;background:var(--paper);border:1.5px solid var(--ink-3);box-sizing:border-box}
-.tl-node.active .tl-dot{background:var(--ink);border-color:var(--ink)}
-.tl-node.active .tl-year{color:var(--ink)}
-.tl-node.active .tl-tag{color:var(--ink-2)}
-.tl-year{font-weight:600;font-size:16px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.tl-tag{font-size:11.5px;color:var(--ink-3);text-align:center;width:100%;word-break:keep-all;
+  padding:12px 12px 14px;min-width:104px;max-width:122px;border-radius:20px;background:var(--panel)}
+.tl-node:hover{background:var(--panel-2)}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink-3)}
+.tl-node.active{background:var(--ink)}
+.tl-node.active .tl-dot{background:var(--accent);box-shadow:0 0 0 2px var(--on-ink)}
+.tl-node.active .tl-year{color:var(--on-ink)}
+.tl-node.active .tl-tag{color:var(--on-ink);opacity:.75}
+.tl-year{font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
+.tl-tag{font-size:12px;color:var(--ink-3);text-align:center;width:100%;word-break:keep-all;
   display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
-  min-height:2.2em;line-height:1.25}
-.year-card h4{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;margin:0 0 12px;color:var(--ink)}
-
+  min-height:2.3em;line-height:1.25}
+.year-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:28px 0 20px}
+.year-head h3{font-size:1.35rem;font-weight:800;letter-spacing:-.035em;line-height:1.3;word-break:keep-all}
+.year-card h4{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.02rem;letter-spacing:-.02em;margin:0 0 12px;color:var(--ink)}
+.year-card h4 span{display:inline-flex;color:var(--accent)}
 
 /* ===== day calendar ===== */
-.cal-bar{display:flex;align-items:center;gap:14px;padding:14px 0;
-  border-top:1.5px solid var(--ink);border-bottom:1px solid var(--rule)}
-.cal-bar .mo{font-size:17px;font-weight:600;letter-spacing:-.02em;min-width:150px;font-variant-numeric:tabular-nums}
-.cal-nav{font-size:13px;color:var(--ink-3);border:1px solid var(--rule-strong);
-  padding:6px 12px;min-height:32px;min-width:38px}
-.cal-nav:hover:not(:disabled){color:var(--ink);border-color:var(--ink)}
-.cal-nav:disabled{opacity:.35;cursor:default}
+.cal-bar{display:flex;align-items:center;gap:10px;padding:0 0 14px}
+.cal-bar .mo{font-size:1.35rem;font-weight:800;letter-spacing:-.035em;min-width:150px;text-align:center;font-variant-numeric:tabular-nums}
+.cal-nav{display:inline-flex;align-items:center;justify-content:center;min-height:38px;min-width:44px;padding:0 14px;
+  border-radius:999px;background:var(--panel);color:var(--ink);font-size:15px}
+.cal-nav:hover:not(:disabled){background:var(--panel-2)}
+.cal-nav:disabled{opacity:.4;cursor:default}
 .cal-bar .spacer{flex:1}
-.cal-bar .hint{font-size:12.5px;color:var(--ink-3)}
+.cal-bar .hint{font-size:14px;color:var(--ink-3)}
 
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-top:2px}
-.cal-dow{font-size:12px;color:var(--ink-3);text-align:center;padding:10px 0;
-  box-shadow:inset 0 -1px 0 var(--rule)}
-.cal-dow.we{color:var(--ink-2)}
-.cal-day{min-height:84px;padding:8px 8px 6px;text-align:left;display:flex;flex-direction:column;gap:4px;
-  box-shadow:inset 0 -1px 0 var(--rule),inset -1px 0 0 var(--rule);cursor:pointer}
-.cal-day:nth-child(7n){box-shadow:inset 0 -1px 0 var(--rule)}
-.cal-day:hover{background:var(--panel)}
-.cal-day.out{cursor:default;opacity:.3}
-.cal-day.out:hover{background:none}
-.cal-day.sel{background:var(--ink)}
-.cal-day.sel .dn,.cal-day.sel .dl,.cal-day.sel .wt{color:var(--paper)}
-.cal-day .dn{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
-.cal-day .wt{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.cal-day .dl{font-size:11.5px;color:var(--ink-2);line-height:1.35;overflow:hidden;
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-dow{font-size:13px;font-weight:650;color:var(--ink-3);text-align:center;padding:6px 0 4px}
+.cal-dow.we{color:var(--accent)}
+.cal-day{min-height:88px;padding:10px 10px 8px;text-align:left;display:flex;flex-direction:column;gap:4px;
+  border-radius:14px;background:var(--panel);cursor:pointer;transition:background-color .12s}
+.cal-day:hover{background:var(--panel-2)}
+.cal-day.out{cursor:default;background:transparent;opacity:.4}
+.cal-day.out:hover{background:transparent}
+.cal-day.sel,.cal-day.sel:hover{background:var(--ink)}
+.cal-day.sel .dn,.cal-day.sel .dl,.cal-day.sel .wt{color:var(--on-ink)}
+.cal-day .dn{font-size:15px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.cal-day .wt{font-size:11.5px;font-weight:650;color:var(--accent);font-variant-numeric:tabular-nums}
+.cal-day .dl{font-size:12px;color:var(--ink-2);line-height:1.35;overflow:hidden;
   display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
 .cal-day .mk{margin-top:auto;display:flex;gap:4px}
-.cal-day .mk i{width:5px;height:5px;background:var(--ink);display:block}
-.cal-day.sel .mk i{background:var(--paper)}
-.cal-day.off .dn{color:var(--ink-3);font-weight:400}
+.cal-day .mk i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}
+.cal-day.sel .mk i{background:var(--on-ink)}
+.cal-day.off{background:transparent;box-shadow:inset 0 0 0 1px var(--rule)}
+.cal-day.off .dn{color:var(--ink-3);font-weight:500}
+.cal-day.off.sel{background:var(--ink);box-shadow:none}
 
-.dsheet{padding:24px 0 4px}
-.dsheet .dhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
-  padding-bottom:11px;border-bottom:1.5px solid var(--ink)}
-.dsheet .dhead h4{font-size:19px;font-weight:600;letter-spacing:-.02em;margin:0}
-.dsheet .dhead .dw{font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.dsheet .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:20px}
-.dsheet h5{font-size:13px;font-weight:600;color:var(--ink);margin:0 0 10px;
-  padding-bottom:8px;box-shadow:inset 0 -1px 0 var(--rule)}
+.dsheet{margin-top:16px;padding:26px 28px;border-radius:24px;background:var(--panel)}
+.dsheet .dhead{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
+.dsheet .dhead h4{font-size:1.45rem;font-weight:800;letter-spacing:-.04em;margin:0 6px 0 0}
+.dsheet .dhead .dw{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.dsheet .dhead .badge-slate,.dsheet .dhead .badge-green{background:var(--paper)}
+.dsheet .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:22px}
+.dsheet h5{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 6px;padding-bottom:10px;
+  box-shadow:inset 0 -1px 0 var(--rule-strong)}
 .dsheet ul.task{list-style:none;margin:0;padding:0}
-.dsheet ul.task li{font-size:14.5px;line-height:1.6;padding:9px 0 9px 16px;position:relative;
-  box-shadow:inset 0 -1px 0 var(--rule)}
-.dsheet ul.task li::before{content:"";position:absolute;left:0;top:1.08em;width:6px;height:1px;background:var(--ink)}
-.tt{width:100%;border-collapse:collapse}
-.tt td{border:0;box-shadow:inset 0 -1px 0 var(--rule);padding:8px 0;font-size:13.5px;text-align:left}
-.tt td.h{width:104px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
-.tt tr.core td{font-weight:600}
+.dsheet ul.task li{font-size:15px;line-height:1.6;padding:10px 0 10px 16px;position:relative;
+  box-shadow:inset 0 -1px 0 var(--panel-2);word-break:keep-all}
+.dsheet ul.task li::before{content:"";position:absolute;left:2px;top:1.12em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.tt{width:100%;min-width:0;border-collapse:collapse}
+.tt td{box-shadow:inset 0 -1px 0 var(--panel-2);padding:9px 0;font-size:14px;text-align:left}
+.tt tr:last-child td{box-shadow:inset 0 -1px 0 var(--panel-2)}
+.tt td.h{width:108px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tt tr.core td{font-weight:650;color:var(--ink)}
 .tt tr.fix td:last-child{color:var(--ink-2)}
 .tt tr.off td{color:var(--ink-3)}
-.dsheet .ph{font-size:14px;color:var(--ink-3);padding:26px 0}
+.dsheet .ph{font-size:15px;color:var(--ink-3);padding:6px 0}
 @media(max-width:860px){
+  .dsheet{padding:22px 20px}
   .dsheet .cols{grid-template-columns:1fr;gap:26px}
-  .cal-day{min-height:62px;padding:6px 5px}
+  .cal{gap:3px}
+  .cal-day{min-height:58px;padding:7px 6px;border-radius:10px}
   .cal-day .dl{display:none}
-  .cal-bar{gap:8px}
-  .cal-bar .mo{font-size:15px;min-width:118px}
+  .cal-bar{gap:6px}
+  .cal-bar .mo{font-size:1.1rem;min-width:110px}
   .cal-bar .hint{display:none}
 }
 
-
-
-
-/* ===== standalone page top bar ===== */
-.plan-topbar{display:flex;justify-content:flex-end;padding:18px 0 0}
-.plan-topbar .tbtn{font-size:13px;color:var(--ink-3);
-  border-bottom:1px solid var(--rule-strong);padding:4px 0 1px;background:none;border-top:0;border-left:0;border-right:0}
-.plan-topbar .tbtn:hover{color:var(--ink);border-bottom-color:var(--ink)}
-
 /* ===== weekly rhythm ===== */
-.rhythm{max-width:52em;margin-bottom:8px}
-.rhythm-list{margin-top:2px}
-.rhythm-row{display:grid;grid-template-columns:28px 118px 1fr;gap:0 18px;align-items:baseline;
-  padding:11px 0;box-shadow:inset 0 -1px 0 var(--rule)}
+.rhythm{margin-top:48px;max-width:var(--measure)}
+.rhythm .subhead{margin-top:0}
+.rhythm-row{display:grid;grid-template-columns:34px 120px 1fr;gap:0 16px;align-items:center;
+  padding:12px 0;box-shadow:inset 0 -1px 0 var(--rule)}
 .rhythm-row:last-child{box-shadow:none}
-.rhythm-row .d{font-size:15px;font-weight:600}
-.rhythm-row .k{font-size:14px;font-weight:500;color:var(--ink)}
-.rhythm-row .v{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.rhythm-row .d{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);font-size:14px;font-weight:700}
+.rhythm-row:nth-last-child(-n+2) .d{background:var(--panel);color:var(--ink-2)}
+.rhythm-row .k{font-size:15.5px;font-weight:650;color:var(--ink);letter-spacing:-.015em}
+.rhythm-row .v{font-size:14.5px;color:var(--ink-2);line-height:1.6;word-break:keep-all}
 @media(max-width:640px){
-  .rhythm-row{grid-template-columns:24px 1fr;gap:0 14px}
-  .rhythm-row .v{grid-column:2;margin-top:2px}
+  .rhythm-row{grid-template-columns:32px 1fr;gap:2px 14px}
+  .rhythm-row .d{grid-row:span 2}
+  .rhythm-row .v{grid-column:2}
 }
 
-/* ===== collapsible sections ===== */
-.folds{margin-top:56px}
-details.fold{box-shadow:inset 0 1px 0 var(--rule)}
-details.fold:first-of-type{box-shadow:inset 0 1.5px 0 var(--ink)}
-details.fold>summary{list-style:none;cursor:pointer;display:grid;
-  grid-template-columns:var(--rail) 1fr;gap:var(--gap);align-items:baseline;padding:22px 0}
+/* ===== collapsible sections — a pill-row per fold ===== */
+.folds{margin-top:112px}
+.folds-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  margin-bottom:20px;padding-top:22px;border-top:2px solid var(--ink)}
+.folds-head h3{font-size:1.9rem;font-weight:800;letter-spacing:-.045em;line-height:1.15}
+details.fold + details.fold{margin-top:10px}
+details.fold>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;gap:4px 16px;padding:20px 22px 20px 26px;border-radius:22px;background:var(--panel);
+  transition:background-color .12s}
+details.fold>summary:hover{background:var(--panel-2)}
 details.fold>summary::-webkit-details-marker{display:none}
 details.fold>summary::marker{content:""}
-details.fold>summary:hover .mark,details.fold>summary:hover h2{color:var(--ink)}
-summary .lbl{display:flex;align-items:baseline;gap:9px}
-summary .mark{font-size:12px;color:var(--ink-3);display:inline-block;
-  transition:transform .15s;line-height:1;transform:translateY(-1px)}
-details[open]>summary .mark{transform:translateY(-1px) rotate(90deg)}
-details.fold>summary h2{font-size:16px;font-weight:600;letter-spacing:-.01em;margin:0}
-details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
-.fold-body{padding:2px 0 46px}
-.folds-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  padding-bottom:11px;margin-bottom:0}
-.folds-head h3{font-size:14px;font-weight:600}
-.folds-head button{font-size:13px;color:var(--ink-3);border-bottom:1px solid transparent;padding:6px 0}
-.folds-head button:hover{color:var(--ink);border-bottom-color:var(--ink)}
-@media(max-width:860px){
-  details.fold>summary{grid-template-columns:1fr;gap:5px;padding:18px 0}
-  .folds{margin-top:40px}
-  .fold-body{padding-bottom:34px}
-}
+summary .lbl{display:contents}
+summary .lbl h2{grid-column:1;grid-row:1;font-size:1.25rem;font-weight:700;letter-spacing:-.025em;margin:0;line-height:1.35;word-break:keep-all}
+summary .note{grid-column:1;grid-row:2;font-size:14px;color:var(--ink-3);line-height:1.55;word-break:keep-all}
+summary .mark{grid-column:2;grid-row:1 / 3;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+  border-radius:50%;background:var(--paper);color:var(--ink);font-size:17px;line-height:1;transition:transform .2s}
+details[open]>summary .mark{transform:rotate(90deg)}
+details[open]>summary{background:var(--ink);color:var(--on-ink)}
+details[open]>summary .note{color:var(--on-ink);opacity:.7}
+details[open]>summary .mark{background:var(--on-ink);color:var(--ink)}
+.fold-body{padding:8px 0 56px}
+.fold-body > .subhead:first-child,.fold-body > div:first-child > .subhead:first-child{margin-top:32px}
+.fold-body > .table-container:first-child,.fold-body > .grid:first-child{margin-top:24px}
+
+/* ===== roadmap banner ===== */
+.road-head{padding-top:72px}
 
 /* ===== layout utilities (replaces the Tailwind CDN) ===== */
 .grid{display:grid}.flex{display:flex}.inline-block{display:inline-block}
@@ -319,28 +332,25 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
 .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
 .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .gap-2{gap:8px}.gap-2\.5{gap:10px}.gap-3{gap:12px}.gap-4{gap:16px}
-.gap-5{gap:20px}.gap-6{gap:24px}.gap-8{gap:32px}
+.gap-5{gap:16px}.gap-6{gap:16px}.gap-8{gap:32px}
 .mb-1{margin-bottom:4px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
 .mb-5{margin-bottom:20px}.mb-6{margin-bottom:24px}.mb-8{margin-bottom:32px}
 .mb-9{margin-bottom:36px}.mb-10{margin-bottom:40px}.mb-11{margin-bottom:44px}
 .mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}
 .mt-5{margin-top:20px}.mt-8{margin-top:32px}.mt-10{margin-top:40px}
-.p-4{padding:16px}.p-5{padding:20px}.p-6{padding:24px}.pb-8{padding-bottom:32px}
-.px-4{padding-left:16px;padding-right:16px}.py-1\.5{padding-top:6px;padding-bottom:6px}
-.space-y-7>*+*{margin-top:28px}
-.max-w-2xl{max-width:42rem}.max-w-7xl{max-width:1240px}
+.pb-8{padding-bottom:32px}
+.space-y-7>*+*{margin-top:40px}
+.max-w-2xl{max-width:42rem}
 .w-4{width:16px}.h-4{height:16px}.w-6{width:24px}.h-6{height:24px}
-.text-\[10px\]{font-size:10.5px}.text-xs{font-size:12.5px}.text-sm{font-size:13.5px}
-.text-lg{font-size:16px}.text-xl{font-size:18px}.text-2xl{font-size:21px}.text-3xl{font-size:26px}
-.font-normal{font-weight:400}.font-semibold{font-weight:500}
-.font-bold{font-weight:600}.font-extrabold{font-weight:600}
+.text-\[10px\]{font-size:11px}.text-xs{font-size:13px}.text-sm{font-size:14.5px}
+.text-lg{font-size:17px}.text-xl{font-size:19px}.text-2xl{font-size:22px}.text-3xl{font-size:28px}
+.font-normal{font-weight:400}.font-semibold{font-weight:600}
+.font-bold{font-weight:700}.font-extrabold{font-weight:800}
 .leading-relaxed{line-height:1.75}
-.tracking-tight{letter-spacing:-.022em}.tracking-widest{letter-spacing:.02em}
-.text-white{color:var(--paper)}
+.tracking-tight{letter-spacing:-.03em}
 .text-slate-900,.text-slate-800{color:var(--ink)}
 .text-slate-700,.text-slate-600{color:var(--ink-2)}
 .text-slate-500,.text-slate-400{color:var(--ink-3)}
-.hover\:text-slate-700:hover{color:var(--ink)}
 @media(min-width:640px){
   .sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}
   .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -348,50 +358,84 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
 @media(min-width:768px){
   .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
   .md\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .md\:text-3xl{font-size:26px}.md\:text-5xl{font-size:40px}
-  .md\:mb-12{margin-bottom:48px}.md\:p-6{padding:24px}.md\:p-10{padding:0}
 }
 @media(min-width:1024px){
   .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
   .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .lg\:p-16{padding:0}
 }
-@media(min-width:1280px){
+@media(min-width:1100px){
   .xl\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
   .xl\:grid-cols-7{grid-template-columns:repeat(4,minmax(0,1fr))}
   .xl\:col-span-2{grid-column:span 2/span 2}
 }
 
-/* ===== responsive ===== */
-@media(max-width:860px){
-  .sec-head{grid-template-columns:1fr;gap:6px}
-  .plan-head{padding:48px 0 28px}
-  .tabs{gap:18px}
-  .tab{font-size:13.5px}
+/* ===== tablet / phone — same breakpoints as styles.css ===== */
+@media(max-width:1099px){
+  section.section-card{padding-top:88px}
+  .folds{margin-top:96px}
+  .card{padding:24px}
 }
-@media(max-width:640px){
+@media(max-width:699px){
+  .plan-head{padding-top:28px}
+  .page > .plan-head:first-child,.road-head{padding-top:48px}
+  .tabs{margin-top:28px}
+  .tab{min-height:38px;padding:0 15px;font-size:14px}
+  section.section-card{padding-top:72px}
+  .sec-head{margin-bottom:24px;padding-top:18px}
+  .sec-head h2,.folds-head h3{font-size:1.6rem}
+  .folds{margin-top:80px}
+  .folds-head{flex-direction:column;align-items:flex-start}
+  details.fold>summary{padding:16px 16px 16px 20px;border-radius:18px}
+  summary .lbl h2{font-size:1.1rem}
+  .card{padding:22px 20px;border-radius:20px}
+  .study-box{padding:16px;border-radius:18px}
+  .study-box p:first-child{font-size:1.75rem}
   .deflist>div{grid-template-columns:1fr;gap:4px}
   .grid-cols-2{grid-template-columns:1fr}
+  .grid-cols-2.md\:grid-cols-5{grid-template-columns:repeat(2,minmax(0,1fr))}
   .process-step{max-width:none;width:100%}
   .process-arrow{display:none}
 }
+@media print{
+  .tabs,.folds-head .pill{display:none!important}
+  .page{display:block!important}
+  details.fold>summary{background:none!important;color:var(--ink)!important}
+}
 </style>
 </head>
-<body>
+<body class="site">
 
-<main class="plan">
+<header class="topnav">
+  <div class="wrap topnav-in">
+    <a class="logo" href="./index.html">Hyo-seung Shin</a>
+    <nav class="nav-links" aria-label="주요 메뉴">
+      <a href="#curriculum" data-page="curriculum">Curriculum</a>
+      <a href="#roadmap" data-page="roadmap">Roadmap</a>
+    </nav>
+    <div class="nav-acts">
+      <a class="pill sm" href="./index.html">← Home</a>
+      <button class="theme-sw" type="button" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
+        <span class="ts-knob" aria-hidden="true"></span>
+        <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
+      </button>
+      <button class="pill sm menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="메뉴 열기">Menu</button>
+    </div>
+  </div>
+</header>
+<nav class="sheet" id="sheet" aria-label="모바일 메뉴">
+  <a href="#curriculum" data-page="curriculum">학습 커리큘럼 · W01–W24</a>
+  <a href="#roadmap" data-page="roadmap">커리어 로드맵 · 2026–2033</a>
+  <span class="sheet-sep" aria-hidden="true"></span>
+  <a href="./index.html">← Home</a>
+</nav>
 
-<div class="plan-topbar">
-    <button class="theme-sw" type="button" id="themeBtn" data-theme-btn role="switch" aria-checked="false" aria-label="다크 모드">
-      <span class="ts-knob" aria-hidden="true"></span>
-      <svg class="ts-ic ts-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
-      <svg class="ts-ic ts-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/><path class="ts-star" d="M17 3.2v2.6M15.7 4.5h2.6M20.6 7.6v1.8M19.7 8.5h1.8"/></svg>
-    </button>
-</div>
+<main class="wrap plan" id="top">
 
 <div class="plan-head">
-    <p class="kicker">Video coding &amp; compression standards researcher</p>
+    <p class="eyebrow">Video coding &amp; compression standards researcher</p>
     <h1>Research &amp; Career Plan</h1>
+    <p class="desc">석박사통합과정 첫 24주의 학습 커리큘럼과 2033년까지의 커리어 로드맵입니다.</p>
 </div>
 
 <div class="tabs">
@@ -404,7 +448,8 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
      ══════════════════════════════════════════════════════════════ -->
 <div class="page on" id="page-curriculum">
 
-<div class="plan-head" style="padding-top:40px">
+<div class="plan-head">
+    <span class="eyebrow">Page 1 · 학습 커리큘럼</span>
     <h1>24-Week Study Curriculum</h1>
     <div class="range">2026.09.07 — 2027.02.21 · W01–W24</div>
     <p class="desc text-adaptive">
@@ -413,7 +458,7 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
 </div>
 
 <div class="rhythm">
-    <h3 class="subhead" style="margin-top:0">주간 리듬</h3>
+    <h3 class="subhead">주간 리듬</h3>
     <div class="rhythm-list">
             <div class="rhythm-row"><span class="d">월</span><span class="k">프로토콜의 날</span><span class="v">연구 4h 확보, 저녁에 프로토콜 2h</span></div>
             <div class="rhythm-row"><span class="d">화</span><span class="k">영어의 날</span><span class="v">TEPS 2.5h + 논문 영어 2h, 연구는 3h로 축소</span></div>
@@ -443,7 +488,7 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
     <div class="dsheet" id="daySheet"><p class="ph">날짜를 선택하면 그날의 계획이 표시됩니다.</p></div>
 </section>
 
-<section class="section-card" style="border-top-color:var(--c-blue);">
+<section class="section-card">
     <div class="sec-head">
 <h2>전체 배치도</h2>
 <p class="note">맨 윗줄이 학사 일정 · 주차를 클릭하면 아래 「주차별 상세」로 이동해 일차별 계획이 펼쳐집니다</p>
@@ -538,20 +583,20 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
     </div>
 
     <h3 class="subhead">고정 마일스톤 6개</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W03 · 9.24–27</p><p class="text-sm font-semibold">추석 연휴 — 부하 50%</p></div>
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W06 · 10.12–16</p><p class="text-sm font-semibold">중간고사 — 부하 60%</p></div>
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W15 · 12.14–18</p><p class="text-sm font-semibold">기말고사 — 부하 50%</p></div>
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W16 · 12.21</p><p class="text-sm font-semibold">겨울방학 — 화·수 수업 종료</p></div>
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W18–19 · 1.10–12</p><p class="text-sm font-semibold">IWAIT 2027 · 영어 발표</p></div>
-        <div class="study-box" style="border-left-color:var(--g0)"><p class="text-xs font-extrabold mb-1">W24 · 2.21</p><p class="text-sm font-semibold">사이클 종료 · 전체 회고</p></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 milestones">
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W03 · 9.24–27</p><p class="text-sm font-semibold">추석 연휴 — 부하 50%</p></div>
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W06 · 10.12–16</p><p class="text-sm font-semibold">중간고사 — 부하 60%</p></div>
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W15 · 12.14–18</p><p class="text-sm font-semibold">기말고사 — 부하 50%</p></div>
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W16 · 12.21</p><p class="text-sm font-semibold">겨울방학 — 화·수 수업 종료</p></div>
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W18–19 · 1.10–12</p><p class="text-sm font-semibold">IWAIT 2027 · 영어 발표</p></div>
+        <div class="study-box"><p class="text-xs font-extrabold mb-1">W24 · 2.21</p><p class="text-sm font-semibold">사이클 종료 · 전체 회고</p></div>
     </div>
 </section>
 
 <div class="folds">
   <div class="folds-head">
     <h3>세부 계획</h3>
-    <button class="foldAll" data-open="0">모두 펼치기</button>
+    <button class="pill sm foldAll" data-open="0">모두 펼치기</button>
   </div>
 <details class="fold">
   <summary>
@@ -657,9 +702,9 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
             <p class="text-xs text-slate-400">밀린 것만 이월</p></div>
     </div>
 
-    <div class="mt-5 p-5" style="background:var(--c-green-soft);border:1px solid var(--g7);border-radius:var(--r-sm)">
-        <p class="text-sm text-slate-700 text-adaptive">
-            <b style="color:var(--c-green-txt)">일요일을 비워두는 것이 이 계획의 핵심 장치입니다.</b>
+    <div class="callout mt-5">
+        <p class="text-adaptive">
+            <b class="lead">일요일을 비워두는 것이 이 계획의 핵심 장치입니다.</b>
             24주 중 절반은 무언가 밀립니다. 이월할 곳이 없으면 밀린 항목이 다음 주를 무너뜨리고, 그 지점에서 커리큘럼이 폐기됩니다.
             일요일에 공부하기 시작하면 <b>그 주가 이미 과부하였다는 신호</b>로 읽으세요.
         </p>
@@ -822,26 +867,27 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
      ══════════════════════════════════════════════════════════════ -->
 <div class="page" id="page-roadmap">
 
-<div class="text-center mb-10 md:mb-12">
-    <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Career Integration Roadmap</h2>
-    <div class="inline-block text-white px-4 py-1.5 text-sm font-bold" style="background:var(--c-blue);border-radius:var(--r-sm)">2026 SUMMER — 2033 CAREER HIGH</div>
-    <p class="text-slate-500 text-sm mt-5 max-w-2xl mx-auto text-adaptive">VCM/FCM 및 차세대 비디오 코딩 표준(NGVC, H.267) 연구를 축으로, 대학원 졸업과 전문연구요원 복무를 통과하며 2033년 커리어 하이에 도달하기 위한 8개년 계획입니다.</p>
+<div class="plan-head road-head">
+    <span class="eyebrow">Page 2 · 커리어 로드맵</span>
+    <h1>Career Integration Roadmap</h1>
+    <div class="range">2026 Summer — 2033 Career High</div>
+    <p class="desc text-adaptive">VCM/FCM 및 차세대 비디오 코딩 표준(NGVC, H.267) 연구를 축으로, 대학원 졸업과 전문연구요원 복무를 통과하며 2033년 커리어 하이에 도달하기 위한 8개년 계획입니다.</p>
 </div>
 
 <!-- 연도별 로드맵 타임라인 -->
-<section class="section-card" style="border-top-color:var(--c-blue);">
+<section class="section-card">
     <div class="sec-head">
 <h2>연도별 로드맵 타임라인</h2>
 <p class="note">연도를 클릭하면 아래에 해당 연도의 목표가 표시됩니다</p>
 </div>
     <div id="timeline-track"></div>
-    <div id="year-panel" class="fade-in"></div>
+    <div id="year-panel"></div>
 </section>
 
 <div class="folds">
   <div class="folds-head">
     <h3>세부 계획</h3>
-    <button class="foldAll" data-open="0">모두 펼치기</button>
+    <button class="pill sm foldAll" data-open="0">모두 펼치기</button>
   </div>
 
 <details class="fold">
@@ -941,8 +987,8 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
                     <li class="text-adaptive">2029-2 (연구계획서 제출 전): 국내·국외 각 1편 이상 게재 요건 최종 충족 확인</li>
                 </ul>
             </div>
-            <div class="p-5" style="background:var(--c-green-soft);border:1px solid var(--g7);border-radius:var(--r-sm)">
-                <p class="text-xs leading-relaxed text-adaptive" style="color:var(--c-green-txt)"><b>Tip.</b> 전문연구요원 편입은 대학원 <b>수료 시점(29-1학기)</b>에 이루어지며, 편입 후 2년 내 학위 취득이 원칙입니다. 국내·국외 논문 게재는 편입 훨씬 이전인 2026~2027년에 앞당겨 확보해두면, 편입 이후에는 종합시험·연구지도·심사 일정에만 집중할 수 있어 전체 졸업 일정의 리스크가 크게 줄어듭니다.</p>
+            <div class="callout">
+                <p class="text-adaptive"><b class="lead">Tip.</b> 전문연구요원 편입은 대학원 <b>수료 시점(29-1학기)</b>에 이루어지며, 편입 후 2년 내 학위 취득이 원칙입니다. 국내·국외 논문 게재는 편입 훨씬 이전인 2026~2027년에 앞당겨 확보해두면, 편입 이후에는 종합시험·연구지도·심사 일정에만 집중할 수 있어 전체 졸업 일정의 리스크가 크게 줄어듭니다.</p>
             </div>
         </div>
     </div>
@@ -982,11 +1028,11 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
                 <thead><tr><th style="width:80px">절차</th><th>신청</th><th>접수</th><th>평가</th><th>선발</th></tr></thead>
                 <tbody>
                     <tr>
-                        <td class="font-bold" style="background:var(--g9)">주체</td>
+                        <td class="side">주체</td>
                         <td>연구자, 대학교</td><td>한국연구재단</td><td>한국연구재단</td><td>한국연구재단</td>
                     </tr>
                     <tr>
-                        <td class="font-bold" style="background:var(--g9)">내용</td>
+                        <td class="side">내용</td>
                         <td class="tl"><ul class="info-list sm"><li class="text-adaptive">온라인 신청</li><li class="text-adaptive">현황표 취합 제출</li></ul></td>
                         <td class="tl"><ul class="info-list sm"><li class="text-adaptive">접수 확인</li><li class="text-adaptive">신청공문 및 서류 구비</li></ul></td>
                         <td class="tl"><ul class="info-list sm"><li class="text-adaptive">지원자격 요건 검토</li><li class="text-adaptive">선발기준 검토</li></ul></td>
@@ -1019,15 +1065,15 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6" style="background:var(--c-red-soft);border:1px solid var(--g7);border-radius:var(--r-sm)">
-            <h4 class="font-bold mb-3" style="color:var(--c-red-txt)">편입 · 학위취득 관련 주의사항</h4>
-            <p class="text-xs leading-relaxed text-adaptive" style="color:var(--g3)">
+        <div class="callout caution">
+            <h4 class="font-bold mb-3">편입 · 학위취득 관련 주의사항</h4>
+            <p class="text-adaptive">
                 편입은 <b>박사과정 수료 시기(29-1학기)</b>부터 해당되며, 수료하는 날의 14일 전까지 지정업체의 장에게 편입원서를 제출해야 합니다. 편입 후 2년 내(2029→2031) 학위를 취득하는 것이 원칙이며, 미취득 시 3년 범위에서 유예기간을 받을 수 있으나(단, 유예기간은 의무복무기간에 미산입) 신청은 편입일로부터 2년째 되는 날 또는 유예기간 만료일 40일 전까지 해야 합니다. 군사교육소집은 편입 후 가급적 6개월 이내 수료를 목표로 합니다.
             </p>
         </div>
-        <div class="p-6" style="background:var(--c-red-soft);border:1px solid var(--g7);border-radius:var(--r-sm)">
-            <h4 class="font-bold mb-3" style="color:var(--c-red-txt)">전직 · 복무 만료 주의사항</h4>
-            <p class="text-xs leading-relaxed text-adaptive" style="color:var(--g3)">
+        <div class="callout caution">
+            <h4 class="font-bold mb-3">전직 · 복무 만료 주의사항</h4>
+            <p class="text-adaptive">
                 학위 취득(2031년 목표) 후에는 반드시 1년간 타 병역지정업체(연구소)로 옮겨 근무해야 하며(병역법 시행령 제85조 등), 전직대기 기간이 1·2차로 나뉘지만 실질적으로 약 3개월 내 취업을 마쳐야 합니다. 따라서 졸업 수개월 전부터 자대 포닥 또는 ETRI 등으로의 취업 준비를 병행해야 합니다. 복무 만료 목표 시점은 <b>2032년</b>이며, 이후 ETRI 잔류 또는 삼성전자 Research 취직을 통해 커리어를 이어갑니다. 최근 정원 개편으로 석사 배정 인원은 감축 추세이나, 박사 배정 인원(연 1,000명 수준)은 유지되고 있습니다.
             </p>
         </div>
@@ -1037,23 +1083,42 @@ details.fold>summary .note{font-size:13px;color:var(--ink-3);line-height:1.6}
 </div>
 </div><!-- /page-roadmap -->
 
-<footer class="text-center text-xs text-slate-400 pb-8">
-    © 2026–2033 Personal Research &amp; Career Roadmap · 계획은 표준화 일정, 학사 일정 변경에 따라 매년 갱신됩니다.
+<footer>
+    <div>© 2026–2033 Hyo-seung Shin · 계획은 표준화 일정과 학사 일정 변경에 따라 매년 갱신됩니다.</div>
+    <button class="pill sm ghost" id="toTop">맨 위로</button>
 </footer>
 
 </main>
 
 <script>
 /* ══════════ TABS ══════════ */
+function showPage(name, scroll){
+  if (!document.getElementById('page-' + name)) name = 'curriculum';
+  document.querySelectorAll('.tab').forEach(function(x){
+    var on = x.dataset.page === name;
+    x.classList.toggle('active', on);
+    x.setAttribute('aria-selected', String(on));
+  });
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
+    a.classList.toggle('on', a.dataset.page === name);
+  });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.toggle('on', p.id === 'page-' + name); });
+  if (scroll) window.scrollTo({top:0, behavior:'smooth'});
+}
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click', function(){
-    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
-    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
-    t.classList.add('active');
-    document.getElementById('page-' + t.dataset.page).classList.add('on');
-    window.scrollTo({top:0, behavior:'smooth'});
+    history.replaceState(null, '', '#' + t.dataset.page);
+    showPage(t.dataset.page, true);
   });
 });
+document.querySelectorAll('a[data-page]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    history.replaceState(null, '', '#' + a.dataset.page);
+    showPage(a.dataset.page, true);
+  });
+});
+showPage(location.hash.slice(1) || 'curriculum', false);
 
 /* ══════════ PAGE 1 — CURRICULUM ══════════ */
 var W = [
@@ -1556,7 +1621,7 @@ const iconSvg = {
   milestones: '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>'
 };
 const catLabel = { research:"연구 프로젝트", publications:"논문 · 수상", standardization:"표준화 활동(MPEG/JVET)", milestones:"학위 · 병역 마일스톤" };
-const catColor = { research:"var(--g3)", publications:"var(--g4)", standardization:"var(--g3)", milestones:"var(--g4)" };
+const catColor = { research:"var(--accent)", publications:"var(--accent)", standardization:"var(--accent)", milestones:"var(--accent)" };
 
 let activeYear = 2026;
 
@@ -1584,10 +1649,10 @@ function renderYear(year){
     const d = timelineData[year];
     const p = document.getElementById('year-panel');
     const c = colorMap[d.color];
-    p.innerHTML = '<div class="fade-in mt-4">'
-      + '<div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">'
-      +   '<span class="badge '+c.badge+'" style="width:fit-content">'+year+'</span>'
-      +   '<h3 class="text-xl font-bold text-slate-800 text-adaptive">'+d.theme+'</h3>'
+    p.innerHTML = '<div>'
+      + '<div class="year-head">'
+      +   '<span class="badge '+c.badge+'">'+year+'</span>'
+      +   '<h3>'+d.theme+'</h3>'
       + '</div>'
       + '<div class="grid grid-cols-1 md:grid-cols-2 gap-5">'
       +   listBlock('research', d.research)
@@ -1606,7 +1671,7 @@ function selectYear(year){
 buildTimelineNav();
 selectYear(activeYear);
 </script>
-<script src="./app.js?v=2026-10-15g"></script>
-<script>APP.initTheme();</script>
+<script src="./app.js?v=2026-10-29"></script>
+<script>APP.initTheme(); APP.initNav();</script>
 </body>
 </html>

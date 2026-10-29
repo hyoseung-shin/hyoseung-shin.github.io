@@ -10,9 +10,9 @@
 
    Three layouts:  desktop ≥ 1100px · tablet 700–1099px · phone < 700px
 
-   Shared with graduate_plan.html — keep these names:
-   --paper --panel --ink --ink-2 --ink-3 --rule --rule-strong
-   --rail --gap --gutter, .tbtn and the bare `footer` rule.
+   graduate_plan.html (the study plan, reached only through the footer
+   name on index.html) uses this sheet too: the top bar, pills, eyebrows,
+   .sec-h, .metric and `body.site footer`, plus its own page rules.
    ============================================================ */
 
 :root[data-theme="light"]{
@@ -77,10 +77,6 @@ img{max-width:100%}
 ::selection{background:var(--ink);color:var(--paper)}
 .wrap{max-width:calc(1120px + var(--gutter) * 2);margin:0 auto;padding:0 var(--gutter)}
 
-/* legacy text toggle (graduate_plan.html) */
-.tbtn{font-size:13px;color:var(--ink-2);border-bottom:1px solid var(--rule-strong);padding:4px 0 1px}
-.tbtn:hover{color:var(--ink);border-bottom-color:var(--ink)}
-
 /* ============================================================
    Pills
    ============================================================ */
@@ -137,8 +133,6 @@ a.pill:hover,button.pill:hover{background:var(--panel-2)}
 .theme-sw[aria-checked="true"] .ts-star{opacity:1}
 .theme-sw:hover .ts-ic{stroke:var(--ts-on)}
 .theme-sw:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-/* the study plan page keeps its own small top bar */
-.plan-topbar .theme-sw{margin-left:auto}
 @media(max-width:699px){
   .theme-sw{width:64px;height:32px}
   .theme-sw .ts-knob{width:28px;height:24px}
@@ -171,10 +165,6 @@ a.pill:hover,button.pill:hover{background:var(--panel-2)}
 .portrait img{object-fit:cover;object-position:50% 30%}
 .portrait.decoding img{opacity:0}
 .portrait.decoded img{opacity:1;transition:opacity .22s ease-out}
-.portrait .cap{position:absolute;left:12px;bottom:12px;z-index:2;padding:6px 12px;border-radius:999px;
-  background:var(--scrim);color:#fff;font-size:13px;line-height:1.2;
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.portrait:hover .cap{background:rgba(0,0,0,.82)}
 
 /* decode strip under the photo — six passes of uneven length, like the
    coded size of each refinement; lit as the photo decodes, then stays */
@@ -423,12 +413,14 @@ a.pill:hover,button.pill:hover{background:var(--panel-2)}
 }
 
 /* ============================================================
-   Footer (bare rule also styles graduate_plan.html's footer)
+   Footer
    ============================================================ */
 footer{padding:44px 0 72px;font-size:13px;color:var(--ink-3);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer button:hover,footer a:hover{color:var(--ink)}
 body.site footer{margin-top:136px;padding:0 0 56px;align-items:center;font-size:14px}
+/* easter egg: the footer name opens the study plan, but reads as plain text */
+footer a.egg,footer a.egg:hover{color:inherit;cursor:text}
 
 /* ============================================================
    Tablet  700–1099px
@@ -483,7 +475,7 @@ body.site footer{margin-top:136px;padding:0 0 56px;align-items:center;font-size:
   *{transition:none!important;animation:none!important}
 }
 @media print{
-  .topnav,.sheet,.graph-sec,footer button,.portrait .cap{display:none!important}
+  .topnav,.sheet,.graph-sec,footer button{display:none!important}
   .bits{display:none}
   .sec{padding-top:24px;break-inside:avoid}
   body.site{font-size:10.5pt}

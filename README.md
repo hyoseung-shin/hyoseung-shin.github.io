@@ -264,7 +264,8 @@ Knowledge Graph가 모두 자동 갱신**됩니다.
 }
 ```
 
-`--paper`, `--ink*`, `--rule*`, `--panel`과 `.tbtn`은 `graduate_plan.html`도 함께 쓰므로 이름을 바꾸지 마세요.
+`graduate_plan.html`(Study plan)도 `styles.css`의 색 토큰 · 상단 바 · 알약 · `.eyebrow` · 푸터를 그대로 쓰고, 페이지 전용 규칙만 자체 `<style>`에 둡니다. 토큰 이름을 바꾸면 두 페이지를 함께 확인하세요.
+Study plan 페이지는 메뉴에 노출하지 않고, `index.html` 푸터의 **Hyo-seung Shin** 이름(`a.egg`, 일반 텍스트처럼 보이게 스타일)을 눌러야 들어갈 수 있습니다.
 사진 디코딩 단계(블록 크기 · 휘도 전용 단계 · 간격)는 `app.js`의 `decodePortrait`에서 조정합니다.
 
 ### 폰트
