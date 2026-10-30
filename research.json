@@ -158,6 +158,10 @@
         {
           "name": "paper",
           "url": "./conference/2026_Fall_KIBME.pdf"
+        },
+        {
+          "name": "poster",
+          "url": "./conference/2026_Fall_KIBME_Poster.pdf"
         }
       ],
       "selected": true
