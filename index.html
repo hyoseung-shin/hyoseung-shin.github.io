@@ -7,7 +7,7 @@
 <meta name="description" content="신효승 · 연세대학교 VISCOM Lab. 비디오 코덱 표준화와 머신 비전을 위한 영상 압축 연구.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="./styles.css?v=2026-10-29b">
+<link rel="stylesheet" href="./styles.css?v=2026-11-01">
 </head>
 <body class="site">
 
@@ -108,8 +108,8 @@
     </section>
 
     <footer>
-      <!-- the name is the only way into the study plan page — kept unstyled on purpose -->
-      <div>© 2026 <a class="egg" href="./graduate_plan.html">Hyo-seung Shin</a> · VISCOM Lab, Yonsei University Mirae Campus</div>
+      <!-- double-clicking the name opens the easter egg hub (easter_egg.html) — kept unstyled on purpose -->
+      <div>© 2026 <a class="egg" id="egg" href="./easter_egg.html">Hyo-seung Shin</a> · VISCOM Lab, Yonsei University Mirae Campus</div>
       <button class="pill sm ghost" id="toTop">맨 위로</button>
     </footer>
   </main>
@@ -121,6 +121,15 @@ const { $, esc, pad, byYear, featured, journals, fileLinks, paperRow, projectRow
 
 initTheme();
 initNav();
+
+/* Easter egg: a single mouse click on the footer name does nothing, a
+   double click opens the hub. Keyboard Enter (click with detail 0) still works. */
+(() => {
+  const egg = $("#egg");
+  if (!egg) return;
+  egg.addEventListener("click", e => { if (e.detail > 0) e.preventDefault(); });
+  egg.addEventListener("dblclick", e => { e.preventDefault(); location.href = egg.href; });
+})();
 
 function renderHero(p) {
   document.title = `${p.name} — Portfolio`;

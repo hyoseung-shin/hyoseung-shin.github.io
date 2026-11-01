@@ -10,8 +10,9 @@
 
    Three layouts:  desktop ≥ 1100px · tablet 700–1099px · phone < 700px
 
-   graduate_plan.html (the study plan, reached only through the footer
-   name on index.html) uses this sheet too: the top bar, pills, eyebrows,
+   easter_egg.html (hub opened by double-clicking the footer name on
+   index.html) and graduate_plan.html (the study plan, linked from the
+   hub) use this sheet too: the top bar, pills, eyebrows,
    .sec-h, .metric and `body.site footer`, plus its own page rules.
    ============================================================ */
 
@@ -419,8 +420,9 @@ footer{padding:44px 0 72px;font-size:13px;color:var(--ink-3);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer button:hover,footer a:hover{color:var(--ink)}
 body.site footer{margin-top:136px;padding:0 0 56px;align-items:center;font-size:14px}
-/* easter egg: the footer name opens the study plan, but reads as plain text */
-footer a.egg,footer a.egg:hover{color:inherit;cursor:text}
+/* easter egg: double-clicking the footer name opens easter_egg.html, but it reads as plain text.
+   touch-action stops mobile double-tap zoom so the double tap reaches the link */
+footer a.egg,footer a.egg:hover{color:inherit;cursor:text;touch-action:manipulation}
 
 /* ============================================================
    Tablet  700–1099px

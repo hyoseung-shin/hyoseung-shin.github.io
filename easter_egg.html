@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Easter Egg — Hyo-seung Shin</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preload" href="./fonts/dancing-script-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./styles.css?v=2026-11-01">
+<style>
+/* ============================================================
+   Easter egg hub — reached only by double-clicking the footer
+   name on index.html. Background + buttons, nothing else.
+   To add a page: copy one <a class="pill egg-btn"> line below.
+   ============================================================ */
+/* Dancing Script (SIL OFL, fonts/DancingScript-OFL.txt) — self-hosted */
+@font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;
+  src:url('./fonts/dancing-script-latin-600-normal.woff2') format('woff2')}
+html,body{height:100%}
+body.egg-hub{min-height:100vh;min-height:100dvh;display:grid;place-items:center;overflow:hidden;position:relative}
+
+/* diagonal handwritten watermark, tinted from the page colours so it
+   follows light / dark mode automatically */
+.egg-mark{position:fixed;inset:0;overflow:hidden;pointer-events:none;user-select:none;z-index:0}
+.egg-mark span{
+  position:absolute;left:50%;top:50%;
+  font-family:'Dancing Script',cursive;font-weight:600;
+  font-size:clamp(54px,11vw,176px);line-height:1;white-space:nowrap;letter-spacing:0;
+  color:color-mix(in srgb,var(--accent) 13%,var(--paper));
+  transform:translate(-50%,-50%) rotate(var(--egg-angle,-24deg));
+}
+
+.egg-list{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;width:min(320px,calc(100vw - 48px))}
+.egg-list .pill{width:100%;justify-content:center;min-height:50px;font-size:16px;font-weight:600}
+</style>
+</head>
+<body class="site egg-hub">
+
+<div class="egg-mark" aria-hidden="true"><span>Hyo-seung’s Easter Egg</span></div>
+
+<nav class="egg-list" aria-label="Easter egg pages">
+  <a class="pill egg-btn" href="./graduate_plan.html">Research &amp; Career Plan</a>
+  <a class="pill egg-btn" href="./moneybook.html">개인 가계부</a>
+</nav>
+
+<script src="./app.js?v=2026-10-29b"></script>
+<script>
+APP.initTheme();
+
+/* Fit the watermark to the screen: run it along the viewport diagonal
+   (angle clamped to 18–62°, so portrait phones get a steep line) and size it to about 80% of that length. */
+(() => {
+  const mark = document.querySelector(".egg-mark span");
+  const fit = () => {
+    const w = innerWidth, h = innerHeight;
+    const ang = Math.min(62, Math.max(18, Math.atan2(h, w) * 180 / Math.PI));
+    const rad = ang * Math.PI / 180;
+    /* longest line through the centre at this angle that stays on screen */
+    const len = Math.min(w / Math.cos(rad), h / Math.sin(rad));
+    mark.style.fontSize = "100px";
+    const scale = (len * 0.8) / mark.scrollWidth;
+    mark.style.fontSize = Math.min(220, 100 * scale) + "px";
+    mark.style.setProperty("--egg-angle", -ang + "deg");
+  };
+  fit();
+  addEventListener("resize", fit);
+  if (document.fonts) document.fonts.ready.then(fit);
+})();
+</script>
+</body>
+</html>
