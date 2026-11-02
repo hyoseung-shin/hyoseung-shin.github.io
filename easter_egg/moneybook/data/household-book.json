@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-02T03:34:45.200Z",
+ "exportedAt": "2026-11-02T03:39:19.461Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -5900,6 +5900,17 @@
      "cat": "교통/차량",
      "sub": "대중교통비",
      "src": "capture"
+    },
+    {
+     "id": "mvypmknn9vdbt",
+     "t": "i",
+     "d": "2026-10-23",
+     "memo": "10월 BK21 장학금",
+     "amt": 844000,
+     "acc": "HeyYoung카드",
+     "cat": "주수입",
+     "sub": "급여",
+     "src": "manual"
     },
     {
      "id": "mvyodlxifa3kg",
