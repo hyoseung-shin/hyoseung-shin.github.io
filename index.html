@@ -247,7 +247,7 @@ function renderAwards(p) {
       ${m ? `<div class="meta num"><span class="y">${m[1]}</span></div>` : ""}
       <h4 class="t">${esc(a.title)}</h4>
       <div class="v">${esc((a.desc || "").replace(/\s*\|\s*/g, " · "))}</div>
-      ${fileLinks([{ name: "상장", url: a.link }])}
+      ${fileLinks([{ name: "certificate", url: a.link }])}
     </article>`;
   }).join("");
 }
