@@ -236,6 +236,20 @@
   "standard": [],
   "project": [
     {
+      "id": "p-2026-ifls",
+      "title": "2023 Student Self-Directed Learning Mentoring Research Project",
+      "org": "Yonsei University Mirae Campus, National Center of Excellence in Software",
+      "period": "2023.06 - 2024.02",
+      "year": 2023,
+      "links": [
+        {
+          "name": "report",
+          "url": "./projects/2023_자기주동학습_최종보고서.pdf"
+        }
+      ],
+      "selected": false
+    },
+    {
       "id": "p-2026-gscrp",
       "title": "2026 Graduate Student Convergence Research Program",
       "org": "Yonsei University Graduate School Future Innovation Support Center",
@@ -246,7 +260,8 @@
           "name": "document",
           "url": "https://to.be.continue/"
         }
-      ]
+      ],
+      "selected": true
     },
     {
       "id": "p-2025-gscrp",
@@ -256,10 +271,11 @@
       "year": 2025,
       "links": [
         {
-          "name": "document",
+          "name": "report",
           "url": "./projects/2025_대학원생융합연구프로그램_결과보고서.pdf"
         }
-      ]
+      ],
+      "selected": true
     },
     {
       "id": "p-2024-nrf",
@@ -269,10 +285,11 @@
       "year": 2024,
       "links": [
         {
-          "name": "document",
-          "url": "https://to.be.continue/"
+          "name": "certificate",
+          "url": "./projects/2024_NRF_참여증명서.pdf"
         }
-      ]
+      ],
+      "selected": true
     },
     {
       "id": "p-2024-pharma",
@@ -289,14 +306,14 @@
     },
     {
       "id": "p-2024-mentoring",
-      "title": "Student Self-Directed Learning Mentoring Research Project",
-      "org": "Reduction of image noise according to high and low frequencies",
+      "title": "2024 Student Self-Directed Learning Mentoring Research Project",
+      "org": "Yonsei University Mirae Campus, National Center of Excellence in Software",
       "period": "2024.03 - 2025.02",
       "year": 2024,
       "links": [
         {
-          "name": "document",
-          "url": "https://to.be.continue/"
+          "name": "report",
+          "url": "./projects/2024_자기주동학습_최종보고서.pdf"
         }
       ]
     }
