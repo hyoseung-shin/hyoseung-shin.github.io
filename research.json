@@ -242,7 +242,7 @@
       "period": "2026.11 - 2026.12",
       "year": 2026,
       "links": [],
-      "selected": false
+      "selected": true
     },
     {
       "id": "p-2026-ifls",
@@ -270,7 +270,7 @@
           "url": "https://to.be.continue/"
         }
       ],
-      "selected": true
+      "selected": false
     },
     {
       "id": "p-2025-gscrp",
