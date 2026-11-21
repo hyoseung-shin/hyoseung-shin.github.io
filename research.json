@@ -236,6 +236,15 @@
   "standard": [],
   "project": [
     {
+      "id": "p-2026-x7rt",
+      "title": "[전문연구실] 기계를 위한 영상 부호화 (5차년도) (2단계)",
+      "org": "한국전자통신연구원",
+      "period": "2026.11 - 2026.12",
+      "year": 2026,
+      "links": [],
+      "selected": false
+    },
+    {
       "id": "p-2026-ifls",
       "title": "2023 Student Self-Directed Learning Mentoring Research Project",
       "org": "Yonsei University Mirae Campus, National Center of Excellence in Software",
