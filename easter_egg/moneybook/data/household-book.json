@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-02T03:39:19.461Z",
+ "exportedAt": "2026-11-24T01:42:06.971Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -5583,6 +5583,17 @@
      "src": "capture"
     },
     {
+     "id": "mwu0yvaxzaxgl",
+     "t": "e",
+     "d": "2026-10-09",
+     "memo": "APPLE",
+     "amt": 29000,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
      "id": "mvyodlxgdwndo",
      "t": "e",
      "d": "2026-10-10",
@@ -5602,6 +5613,17 @@
      "acc": "HeyYoung카드",
      "cat": "식비",
      "sub": "부식",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvaxvyq5m",
+     "t": "e",
+     "d": "2026-10-10",
+     "memo": "스포티파이",
+     "amt": 8690,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
      "src": "capture"
     },
     {
@@ -5715,6 +5737,17 @@
      "src": "capture"
     },
     {
+     "id": "mwu0yvax0ffqk",
+     "t": "e",
+     "d": "2026-10-12",
+     "memo": "APPLE",
+     "amt": 3300,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
      "id": "mvyodlxhxrw37",
      "t": "e",
      "d": "2026-10-13",
@@ -5745,6 +5778,17 @@
      "acc": "HeyYoung카드",
      "cat": "교통/차량",
      "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvax9ge9w",
+     "t": "e",
+     "d": "2026-10-14",
+     "memo": "One Drive",
+     "amt": 9119,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
      "src": "capture"
     },
     {
@@ -5811,6 +5855,17 @@
      "acc": "HeyYoung카드",
      "cat": "교통/차량",
      "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvax7skgp",
+     "t": "e",
+     "d": "2026-10-17",
+     "memo": "듀듀",
+     "amt": 5000,
+     "acc": "노리1",
+     "cat": "미분류",
+     "sub": "미분류",
      "src": "capture"
     },
     {
@@ -5902,6 +5957,17 @@
      "src": "capture"
     },
     {
+     "id": "mwu0yvaydbuso",
+     "t": "i",
+     "d": "2026-10-22",
+     "memo": "BK21 장학금",
+     "amt": 1000000,
+     "acc": "노리1",
+     "cat": "주수입",
+     "sub": "급여",
+     "src": "capture"
+    },
+    {
      "id": "mvypmknn9vdbt",
      "t": "i",
      "d": "2026-10-23",
@@ -5911,6 +5977,29 @@
      "cat": "주수입",
      "sub": "급여",
      "src": "manual"
+    },
+    {
+     "id": "mwu0yvay4g21d",
+     "t": "x",
+     "d": "2026-10-23",
+     "memo": "생활비 분배",
+     "amt": 797000,
+     "acc": "노리1",
+     "cat": "이체",
+     "sub": "이체",
+     "src": "capture",
+     "to": "HeyYoung카드"
+    },
+    {
+     "id": "mwu0yvayx4dsc",
+     "t": "e",
+     "d": "2026-10-24",
+     "memo": "카카오 MY구독",
+     "amt": 1900,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
     },
     {
      "id": "mvyodlxifa3kg",
@@ -6057,6 +6146,83 @@
      "acc": "HeyYoung카드",
      "cat": "교통/차량",
      "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvayuq1cn",
+     "t": "e",
+     "d": "2026-11-02",
+     "memo": "ChatGPT",
+     "amt": 29000,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvaym4pty",
+     "t": "e",
+     "d": "2026-11-02",
+     "memo": "One Drive",
+     "amt": 150963,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvayrqpf5",
+     "t": "e",
+     "d": "2026-11-12",
+     "memo": "APPLE",
+     "amt": 3300,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvayzp3xx",
+     "t": "i",
+     "d": "2026-11-14",
+     "memo": "예금이자",
+     "amt": 39,
+     "acc": "노리1",
+     "cat": "부수입",
+     "sub": "이자/배당금",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvayq38x4",
+     "t": "e",
+     "d": "2026-11-14",
+     "memo": "스포티파이",
+     "amt": 6600,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvaydvmps",
+     "t": "e",
+     "d": "2026-11-16",
+     "memo": "One Drive",
+     "amt": 9138,
+     "acc": "노리1",
+     "cat": "용돈/기타",
+     "sub": "구독료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu0yvayp6p30",
+     "t": "e",
+     "d": "2026-11-21",
+     "memo": "세븐일레븐 원주연대",
+     "amt": 3650,
+     "acc": "노리1",
+     "cat": "식비",
+     "sub": "부식",
      "src": "capture"
     }
    ]
