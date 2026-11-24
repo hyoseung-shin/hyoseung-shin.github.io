@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-24T02:25:52.265Z",
+ "exportedAt": "2026-11-24T02:26:54.001Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -6839,28 +6839,6 @@
      "src": "capture"
     },
     {
-     "id": "mwu19fll3h3ww",
-     "t": "e",
-     "d": "2026-11-21",
-     "memo": "온다택시",
-     "amt": 13300,
-     "acc": "노리2",
-     "cat": "교통/차량",
-     "sub": "대중교통비",
-     "src": "capture"
-    },
-    {
-     "id": "mwu19flluxdwy",
-     "t": "e",
-     "d": "2026-11-21",
-     "memo": "온다택시",
-     "amt": 15400,
-     "acc": "노리2",
-     "cat": "교통/차량",
-     "sub": "대중교통비",
-     "src": "capture"
-    },
-    {
      "id": "mwu19fllcbuoz",
      "t": "e",
      "d": "2026-11-21",
@@ -6870,6 +6848,28 @@
      "src": "capture",
      "cat": "의복/미용",
      "sub": "헤어/뷰티"
+    },
+    {
+     "id": "mwu19flluxdwy",
+     "t": "e",
+     "d": "2026-11-21",
+     "memo": "온다택시 (미용실 > 학교)",
+     "amt": 15400,
+     "acc": "노리2",
+     "src": "capture",
+     "cat": "교통/차량",
+     "sub": "대중교통비"
+    },
+    {
+     "id": "mwu19fll3h3ww",
+     "t": "e",
+     "d": "2026-11-21",
+     "memo": "온다택시 (매지리 > 미용실)",
+     "amt": 13300,
+     "acc": "HeyYoung카드",
+     "src": "capture",
+     "cat": "교통/차량",
+     "sub": "대중교통비"
     },
     {
      "id": "mwu19fllbh14n",
