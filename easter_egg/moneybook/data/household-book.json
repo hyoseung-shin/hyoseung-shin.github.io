@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-24T02:20:40.731Z",
+ "exportedAt": "2026-11-24T02:25:52.265Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -6850,17 +6850,6 @@
      "src": "capture"
     },
     {
-     "id": "mwu19fllcbuoz",
-     "t": "e",
-     "d": "2026-11-21",
-     "memo": "아뜰리에 온 (미용실)",
-     "amt": 48000,
-     "acc": "노리2",
-     "cat": "의복/미용",
-     "sub": "헤어/뷰티",
-     "src": "capture"
-    },
-    {
      "id": "mwu19flluxdwy",
      "t": "e",
      "d": "2026-11-21",
@@ -6870,6 +6859,17 @@
      "cat": "교통/차량",
      "sub": "대중교통비",
      "src": "capture"
+    },
+    {
+     "id": "mwu19fllcbuoz",
+     "t": "e",
+     "d": "2026-11-21",
+     "memo": "아뜰리에 온 (미용실)",
+     "amt": 48000,
+     "acc": "HeyYoung카드",
+     "src": "capture",
+     "cat": "의복/미용",
+     "sub": "헤어/뷰티"
     },
     {
      "id": "mwu19fllbh14n",
