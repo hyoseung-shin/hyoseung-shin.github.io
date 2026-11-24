@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-24T02:04:39.455Z",
+ "exportedAt": "2026-11-24T02:10:48.901Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -6403,6 +6403,105 @@
      "src": "capture"
     },
     {
+     "id": "mwu1ykwio6aml",
+     "t": "e",
+     "d": "2026-11-07",
+     "memo": "고속버스 수수료",
+     "amt": 2400,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwichgks",
+     "t": "e",
+     "d": "2026-11-08",
+     "memo": "온다택시(원주터미널 > 매지리)",
+     "amt": 16250,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwi55fik",
+     "t": "e",
+     "d": "2026-11-08",
+     "memo": "이마트24 원주연세대점",
+     "amt": 1200,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "부식",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwifehxw",
+     "t": "e",
+     "d": "2026-11-08",
+     "memo": "서현고팟 술자리 정산 01",
+     "amt": 15540,
+     "acc": "HeyYoung카드",
+     "cat": "건강/문화",
+     "sub": "문화생활",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwifeop8",
+     "t": "e",
+     "d": "2026-11-08",
+     "memo": "서현고팟 술자리 정산 02",
+     "amt": 8533,
+     "acc": "HeyYoung카드",
+     "cat": "건강/문화",
+     "sub": "문화생활",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwi4qk7g",
+     "t": "e",
+     "d": "2026-11-08",
+     "memo": "경량 패딩 세탁비",
+     "amt": 10000,
+     "acc": "HeyYoung카드",
+     "cat": "의복/미용",
+     "sub": "세탁수선비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwi23a5h",
+     "t": "e",
+     "d": "2026-11-09",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwi3hmu1",
+     "t": "e",
+     "d": "2026-11-10",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwikxpyr",
+     "t": "e",
+     "d": "2026-11-10",
+     "memo": "학생회관 푸드코트",
+     "amt": 7000,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "외식",
+     "src": "capture"
+    },
+    {
      "id": "mwu19flkusa9t",
      "t": "e",
      "d": "2026-11-11",
@@ -6425,6 +6524,39 @@
      "src": "capture"
     },
     {
+     "id": "mwu1ykwi8en7p",
+     "t": "e",
+     "d": "2026-11-11",
+     "memo": "이마트24 원주연세대점",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "부식",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwihou6f",
+     "t": "e",
+     "d": "2026-11-11",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwjltbvx",
+     "t": "e",
+     "d": "2026-11-11",
+     "memo": "빽다방 원주흥업점",
+     "amt": 7800,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "커피/음료",
+     "src": "capture"
+    },
+    {
      "id": "mwu0yvayrqpf5",
      "t": "e",
      "d": "2026-11-12",
@@ -6443,6 +6575,39 @@
      "amt": 200000,
      "acc": "노리2",
      "cat": "교육/육아",
+     "sub": "기타",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwjttsmt",
+     "t": "e",
+     "d": "2026-11-12",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwj6iom5",
+     "t": "e",
+     "d": "2026-11-13",
+     "memo": "빽다방 원주흥업점",
+     "amt": 4000,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "커피/음료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwjlcjif",
+     "t": "e",
+     "d": "2026-11-13",
+     "memo": "우보주차타워 - 주차료",
+     "amt": 1000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
      "sub": "기타",
      "src": "capture"
     },
@@ -6524,6 +6689,17 @@
      "src": "capture"
     },
     {
+     "id": "mwu1ykwjsd3ly",
+     "t": "e",
+     "d": "2026-11-16",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
      "id": "mwu19flkgb12h",
      "t": "e",
      "d": "2026-11-17",
@@ -6532,6 +6708,17 @@
      "acc": "노리2",
      "cat": "식비",
      "sub": "커피/음료",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1ykwjliozz",
+     "t": "e",
+     "d": "2026-11-17",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
      "src": "capture"
     },
     {
