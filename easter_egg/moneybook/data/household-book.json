@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-24T02:28:44.153Z",
+ "exportedAt": "2026-11-24T02:33:59.278Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -6888,10 +6888,10 @@
      "d": "2026-11-23",
      "memo": "어웨이크비",
      "amt": 2800,
-     "acc": "노리2",
+     "acc": "HeyYoung카드",
+     "src": "capture",
      "cat": "식비",
-     "sub": "커피/음료",
-     "src": "capture"
+     "sub": "커피/음료"
     },
     {
      "id": "mwu19fllzrasc",
