@@ -1,7 +1,7 @@
 {
  "app": "household-book",
  "version": 1,
- "exportedAt": "2026-11-24T01:53:34.881Z",
+ "exportedAt": "2026-11-24T02:04:39.455Z",
  "settings": {
   "ownerName": "신효승",
   "accounts": [
@@ -6238,6 +6238,171 @@
      "src": "capture"
     },
     {
+     "id": "mwu1qymbzd1kj",
+     "t": "e",
+     "d": "2026-11-02",
+     "memo": "고속버스 (원주 > 서울)",
+     "amt": 9300,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymbmfpuu",
+     "t": "e",
+     "d": "2026-11-02",
+     "memo": "교보문고 (영단어 책)",
+     "amt": 14650,
+     "acc": "HeyYoung카드",
+     "cat": "교육/육아",
+     "sub": "기타",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymc5z0r2",
+     "t": "e",
+     "d": "2026-11-03",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymch62z9",
+     "t": "e",
+     "d": "2026-11-03",
+     "memo": "흥업손칼국수",
+     "amt": 8000,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "외식",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcgqwms",
+     "t": "e",
+     "d": "2026-11-04",
+     "memo": "동승루 (데이트 점심)",
+     "amt": 30000,
+     "acc": "HeyYoung카드",
+     "cat": "건강/문화",
+     "sub": "데이트",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcyvhmn",
+     "t": "e",
+     "d": "2026-11-04",
+     "memo": "신한체크 교통 후불결제",
+     "amt": 9100,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcualgo",
+     "t": "e",
+     "d": "2026-11-05",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcq46c9",
+     "t": "e",
+     "d": "2026-11-05",
+     "memo": "연구실 모임통장",
+     "amt": 30000,
+     "acc": "HeyYoung카드",
+     "cat": "경조사/회비",
+     "sub": "모임회비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcao0to",
+     "t": "e",
+     "d": "2026-11-05",
+     "memo": "겨울 옷 드라이클리닝 (세탁소)",
+     "amt": 67000,
+     "acc": "HeyYoung카드",
+     "cat": "의복/미용",
+     "sub": "세탁수선비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymcew9q2",
+     "t": "e",
+     "d": "2026-11-05",
+     "memo": "준경이형 생일선물",
+     "amt": 30000,
+     "acc": "HeyYoung카드",
+     "cat": "경조사/회비",
+     "sub": "선물",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymci51gv",
+     "t": "e",
+     "d": "2026-11-06",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymc6yxj3",
+     "t": "e",
+     "d": "2026-11-07",
+     "memo": "연택 (신한카드)",
+     "amt": 8000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymd3h5w2",
+     "t": "e",
+     "d": "2026-11-07",
+     "memo": "키세카츠 신논현",
+     "amt": 19900,
+     "acc": "HeyYoung카드",
+     "cat": "식비",
+     "sub": "외식",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymdg35d8",
+     "t": "e",
+     "d": "2026-11-07",
+     "memo": "고속버스 (서울 > 원주)",
+     "amt": 16200,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymdgy7gu",
+     "t": "e",
+     "d": "2026-11-07",
+     "memo": "카카오T (원주터미널 > 매지리)",
+     "amt": 14000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
+     "src": "capture"
+    },
+    {
      "id": "mwu19flkusa9t",
      "t": "e",
      "d": "2026-11-11",
@@ -6378,6 +6543,17 @@
      "acc": "노리2",
      "cat": "건강/문화",
      "sub": "데이트",
+     "src": "capture"
+    },
+    {
+     "id": "mwu1qymd7ye1w",
+     "t": "e",
+     "d": "2026-11-18",
+     "memo": "연택 (신한카드)",
+     "amt": 2000,
+     "acc": "HeyYoung카드",
+     "cat": "교통/차량",
+     "sub": "대중교통비",
      "src": "capture"
     },
     {
