@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>연구 아이디어 — 평가와 투고처</title>
+<style>
+.viz-root{
+  color-scheme: light;
+  --page:#f6f7f9; --surface-1:#ffffff; --surface-2:#f2f4f7; --border:#e3e6eb;
+  --text-primary:#191919; --text-secondary:#666666; --grid:#e8e8e8; --axis:#bdbdbd;
+  --series-1:#257de0; --series-2:#f47230; --zone:#eaf3fd; --accent:#1f3864;
+  --hl:#fff6d6;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])) .viz-root{
+    color-scheme: dark;
+    --page:#111111; --surface-1:#191919; --surface-2:#222222; --border:#333333;
+    --text-primary:#efefef; --text-secondary:#9c9c9c; --grid:#2c2c2c; --axis:#555555;
+    --series-1:#338ced; --series-2:#e76624; --zone:#16263a; --accent:#9dc8f7; --hl:#3a3420;
+  }
+}
+:root[data-theme="dark"] .viz-root{
+  color-scheme: dark;
+  --page:#111111; --surface-1:#191919; --surface-2:#222222; --border:#333333;
+  --text-primary:#efefef; --text-secondary:#9c9c9c; --grid:#2c2c2c; --axis:#555555;
+  --series-1:#338ced; --series-2:#e76624; --zone:#16263a; --accent:#9dc8f7; --hl:#3a3420;
+}
+*{box-sizing:border-box}
+body{margin:0}
+.viz-root{background:var(--page);color:var(--text-primary);min-height:100vh;
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Noto Sans CJK KR",system-ui,sans-serif;
+  font-size:14px;line-height:1.5;padding:28px 20px 48px}
+.wrap{max-width:1180px;margin:0 auto}
+header h1{font-size:24px;margin:0 0 4px;letter-spacing:-.3px}
+header p{margin:0;color:var(--text-secondary);font-size:13px}
+.toolbar{display:flex;justify-content:flex-end;margin-top:-30px}
+.toolbar button{font:inherit;font-size:12px;border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);border-radius:6px;padding:4px 10px;cursor:pointer}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+.kpi{background:var(--surface-1);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.kpi .label{font-size:12px;color:var(--text-secondary)}
+.kpi .value{font-size:26px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .value.small{font-size:15px;font-weight:600;line-height:1.45;margin-top:6px}
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 18px 14px;margin-bottom:16px}
+.card h2{font-size:16px;margin:0 0 2px}
+.card .sub{font-size:12px;color:var(--text-secondary);margin:0 0 10px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--text-secondary);margin:0 0 6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg text{font-family:inherit}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+.seg button{font:inherit;font-size:12px;border:0;background:var(--surface-1);color:var(--text-secondary);padding:5px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface-1)}
+.keylist{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 18px;font-size:12px;margin-top:8px}
+.keylist .cat{grid-column:1/-1;font-weight:700;color:var(--text-secondary);margin-top:6px;font-size:11px}
+.keylist span.n{display:inline-block;min-width:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.filters select,.filters input{font:inherit;font-size:12px;border:1px solid var(--border);background:var(--surface-1);color:var(--text-primary);border-radius:6px;padding:5px 8px}
+.filters input{min-width:200px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:1100px;font-size:11.5px}
+thead th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:700;padding:8px 5px;border-bottom:1px solid var(--border);white-space:nowrap}
+thead tr.group th{font-size:11px;color:var(--text-secondary);text-align:center;border-bottom:0}
+tbody td{padding:7px 5px;border-bottom:1px solid var(--border);vertical-align:top}
+tbody tr.main{cursor:pointer}
+tbody tr.main:hover td{background:var(--surface-2)}
+tbody tr.flash td{background:var(--hl)!important;transition:background .6s}
+td.num{text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stars{letter-spacing:0;color:var(--text-primary);white-space:nowrap}
+.stars .off{color:var(--axis)}
+.pill{display:inline-block;font-size:11px;border:1px solid var(--border);border-radius:999px;padding:0 7px;color:var(--text-secondary);white-space:nowrap}
+tr.detail td{background:var(--surface-2);font-size:12.5px;color:var(--text-primary)}
+tr.detail b{display:inline-block;min-width:88px}
+.chev{display:inline-block;width:12px;color:var(--text-secondary)}
+.notes{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:16px;font-size:12.5px}
+.notes h3{font-size:13px;margin:0 0 6px}
+.notes ul{margin:0;padding-left:18px}
+.notes dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px}
+.notes dt{font-weight:700;white-space:nowrap}
+.notes dd{margin:0;color:var(--text-secondary)}
+#tip{position:fixed;pointer-events:none;z-index:10;max-width:min(320px, calc(100vw - 16px));background:var(--surface-1);color:var(--text-primary);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.14);opacity:0;transition:opacity .08s}
+#tip .t{font-weight:700;margin-bottom:3px}
+#tip .row{display:flex;justify-content:space-between;gap:14px}
+#tip .row span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+#tip .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.hit{fill:transparent;cursor:pointer}
+.chip{cursor:pointer}
+.chip:focus{outline:none}
+.chip:focus circle,.chip:hover circle,.chip:focus rect,.chip:hover rect{stroke:var(--text-primary);stroke-width:2}
+.st{display:inline-block;font-size:11px;border-radius:999px;padding:0 7px;white-space:nowrap;border:1px solid var(--border)}
+.st-research{background:var(--series-1);color:#ffffff;border-color:var(--series-1)}
+.st-idea{background:var(--zone);color:var(--text-primary);border-color:var(--series-1)}
+.fx{color:var(--accent);font-size:10px;margin-left:2px}
+.prog-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;align-items:flex-end}
+.pkey{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--text-secondary)}
+.pkey span{display:inline-flex;align-items:center;gap:5px}
+.prow{display:grid;grid-template-columns:220px 1fr 96px;gap:18px;padding:16px 0 14px;border-top:1px solid var(--border)}
+.prow:first-of-type{border-top:0}
+.pname .t{font-weight:700;font-size:14px;cursor:pointer}
+.pname .t:hover{text-decoration:underline}
+.pname .m{font-size:11.5px;color:var(--text-secondary);margin-top:3px;line-height:1.45}
+.pname .stale{color:var(--text-primary);background:var(--hl);border-radius:4px;padding:0 4px}
+.pbar{display:flex;gap:2px;height:16px;margin:2px 0 10px}
+.pbar span{flex:1;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--border);cursor:default}
+.pbar span:first-child{border-radius:4px 0 0 4px}
+.pbar span:last-child{border-radius:0 4px 4px 0}
+.pbar .s-done{background:var(--series-1);box-shadow:none}
+.pbar .s-doing{background:repeating-linear-gradient(-45deg,var(--series-1) 0 2.5px,var(--zone) 2.5px 6px);box-shadow:inset 0 0 0 1px var(--series-1)}
+.pbar .s-next{background:var(--surface-1);box-shadow:inset 0 0 0 2px var(--accent)}
+.pbar span.on{outline:2px solid var(--text-primary);outline-offset:1px}
+.mlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(255px,100%),1fr));gap:3px 18px;font-size:12px}
+.mlist li{display:flex;gap:6px;align-items:flex-start;border-radius:4px;padding:1px 3px}
+.mlist li.on{background:var(--hl)}
+.mlist li svg{flex:none;margin-top:3px}
+.mlist .n{font-variant-numeric:tabular-nums;color:var(--text-secondary);min-width:16px}
+.mlist .d{color:var(--text-secondary);font-variant-numeric:tabular-nums;margin-left:auto;padding-left:6px;white-space:nowrap}
+.mlist li.todo .lb{color:var(--text-secondary)}
+.mlist li.next .lb{font-weight:700}
+.ppct{text-align:right}
+.ppct .v{font-size:30px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.ppct .v small{font-size:15px;font-weight:600;margin-left:1px}
+.ppct .c{font-size:11.5px;color:var(--text-secondary);margin-top:4px}
+.pnext{font-size:12px;margin-top:6px}
+.pnext b{color:var(--accent)}
+.ctable{min-width:980px}
+.ctable td{vertical-align:top}
+.ctable .ev{color:var(--text-primary)}
+.ctable .dl{font-variant-numeric:tabular-nums;margin-top:2px}
+.ctable .dl.past{color:var(--text-secondary)}
+.ctable .dl.up b{color:var(--accent)}
+.bdg{display:inline-block;font-size:10px;border-radius:4px;padding:0 4px;margin-left:4px;border:1px solid var(--border);color:var(--text-secondary);vertical-align:1px}
+.bdg.ok{border-color:var(--series-1);color:var(--series-1)}
+.bdg.est{border-style:dashed}
+.bdg.past{background:var(--surface-2)}
+.rn{display:inline-block;min-width:18px;text-align:center;font-size:11px;font-weight:700;border-radius:4px;background:var(--zone);margin:0 2px 2px 0;padding:0 3px}
+.gkey{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--text-secondary);margin:2px 0 8px}
+.gkey span{display:inline-flex;align-items:center;gap:5px}
+.gkey i{display:inline-block;width:16px;height:9px;border-radius:2px}
+.slist{min-width:900px}
+.slist td.d{white-space:nowrap;font-variant-numeric:tabular-nums}
+.slist tr.past td{color:var(--text-secondary)}
+.pnotes{margin:10px 0 0;padding-left:18px;font-size:12px;color:var(--text-secondary)}
+.pnotes b{color:var(--text-primary)}
+@media (max-width:900px){.prow{grid-template-columns:1fr}.ppct{text-align:left}}
+.mkey{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-secondary);margin:4px 0 2px}
+.mkey svg{vertical-align:-3px;margin-right:5px}
+@media (max-width:900px){.grid2,.notes{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (forced-colors: active){.chip circle{forced-color-adjust:none}}
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:16px -20px 18px;padding:8px 20px;background:var(--page);border-bottom:1px solid var(--border)}
+.tabs{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1 1 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{white-space:nowrap;flex:0 0 auto}
+.tabs button{font:inherit;font-size:13.5px;font-weight:600;border:1px solid transparent;background:transparent;color:var(--text-secondary);
+  border-radius:8px;padding:7px 14px;cursor:pointer}
+.tabs button:hover{background:var(--surface-2);color:var(--text-primary)}
+.tabs button[aria-selected="true"]{background:var(--surface-1);color:var(--text-primary);border-color:var(--border);box-shadow:inset 0 -2px 0 var(--series-1)}
+#themeBtn{font:inherit;font-size:12px;border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);border-radius:6px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+.page[hidden]{display:none}
+.page > .kpis{margin-top:0}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 20px;flex-wrap:wrap;margin-bottom:10px}
+.phead .seg{margin:0}
+.upcoming{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 10px;scrollbar-width:thin}
+.upcoming .ucard{flex:0 0 178px;scroll-snap-align:start}
+.umon{flex:0 0 auto;scroll-snap-align:start;writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:800;font-size:13px;color:var(--accent);
+  background:var(--zone);border-radius:8px;padding:8px 4px}
+.umon span{font-weight:500;font-size:10.5px;color:var(--text-secondary)}
+.ucount{font-size:12px;font-weight:600;color:var(--text-secondary);margin-left:6px}
+.uctl{display:flex;gap:6px}
+.uctl button{font:inherit;font-size:16px;line-height:1;width:32px;height:30px;border:1px solid var(--border);background:var(--surface-1);color:var(--text-primary);border-radius:8px;cursor:pointer}
+.uctl button:hover{background:var(--surface-2)}
+.ucard{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--surface-1)}
+.ucard.soon{border-color:var(--series-2);box-shadow:inset 3px 0 0 var(--series-2)}
+.uday{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.ucard.soon .uday{color:var(--series-2)}
+.udate{font-size:11.5px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+.uven{font-weight:700;margin-top:6px;font-size:13.5px}
+.ures{font-size:12px;cursor:pointer;color:var(--accent)}
+.ures:hover{text-decoration:underline}
+.ubasis{margin:3px 0 2px}.ubasis .bdg{margin-left:0}
+.ucon{font-size:11.5px;color:var(--text-secondary);line-height:1.4}
+tr.qhead td{background:var(--zone);font-weight:700;font-size:12px;padding:6px 8px}
+.slist a{color:inherit;text-decoration:none}.slist a:hover{text-decoration:underline}
+/* ===== 적응형 레이아웃 ===== */
+.svgwrap.flex{display:flex;align-items:flex-start}
+.svgwrap.flex .swipe{display:none!important}
+.svgwrap.flex{mask-image:none!important;-webkit-mask-image:none!important}
+.glabels{position:sticky;left:0;z-index:2;flex:0 0 auto;background:var(--surface-1);box-shadow:4px 0 6px -4px rgba(0,0,0,.25)}
+.gl{position:absolute;left:0;right:0;display:flex;flex-direction:column;justify-content:center;padding:0 6px 0 2px;overflow:hidden;border-bottom:1px solid transparent}
+.gl.link{cursor:pointer}
+.gl-n{font-size:12px;font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-n.r{font-weight:700}
+.gl-s{font-size:10.5px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gl-g{font-size:11px;color:var(--text-secondary)}
+
+.viz-root{--padx:20px}
+.viz-root{padding-left:var(--padx);padding-right:var(--padx)}
+.nav{margin-left:calc(-1 * var(--padx));margin-right:calc(-1 * var(--padx));padding-left:var(--padx);padding-right:var(--padx)}
+.grid2>*{min-width:0}
+.card{min-width:0}
+.svgwrap{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.svgwrap svg{display:block}
+#gantt,#slots{min-width:940px}
+#matrix{min-width:440px}
+#scores,#venues{min-width:420px}
+#domestic{min-width:340px}
+.swipe{display:none;position:sticky;left:0;font-size:11px;color:var(--text-secondary);padding:2px 0 0}
+.svgwrap.scrolls .swipe{display:block}
+.svgwrap.scrolls{mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+.svgwrap.scrolls.end{mask-image:none;-webkit-mask-image:none}
+.tablewrap{-webkit-overflow-scrolling:touch}
+.filters .seg{max-width:100%;overflow-x:auto;flex-wrap:nowrap}
+.filters .seg button{white-space:nowrap}
+@media (min-width:1600px){.wrap{max-width:1440px}}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){
+  .viz-root{--padx:12px;padding-top:18px;font-size:13.5px}
+  header h1{font-size:20px}
+  header p{font-size:12px}
+  .nav{margin-top:10px;margin-bottom:12px;padding-top:6px;padding-bottom:6px}
+  .tabs button{font-size:13px;padding:6px 10px}
+  #themeBtn{padding:4px 8px;font-size:11px}
+  .card{padding:14px 12px 10px;border-radius:10px}
+  .grid2{gap:0}
+  .kpi{padding:12px}
+  .kpi .value{font-size:22px}
+  .keylist{grid-template-columns:1fr}
+  .filters{gap:8px}
+  .filters input{min-width:0;width:100%}
+  .filters label{font-size:12px}
+  .phead{flex-direction:column;align-items:flex-start}
+  .upcoming .ucard{flex-basis:158px}
+  .uday{font-size:20px}
+  .prow{gap:8px;padding:12px 0}
+  .ppct .v{font-size:26px}
+  .notes{gap:10px}
+  .gkey,.pkey,.legend,.mkey{gap:8px 12px;flex-wrap:wrap}
+}
+@media (max-width:480px){
+  .kpis{grid-template-columns:1fr}
+  .tabs button{padding:6px 8px}
+}
+@media (hover:none){
+  .tabs button:hover{background:transparent}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+@media print{
+  .nav,.swipe,.uctl,#tip{display:none!important}
+  .page[hidden]{display:block!important}
+  .viz-root{background:#fff;padding:0}
+  .card{break-inside:avoid;box-shadow:none}
+  .svgwrap{overflow:visible}
+  #gantt,#slots,#matrix,#scores,#venues,#domestic{min-width:0}
+  .upcoming{flex-wrap:wrap;overflow:visible}
+  .tablewrap{overflow:visible}
+  table{min-width:0!important}
+}
+</style>
+</head>
+<body>
+<div class="viz-root">
+<div class="wrap">
+  <header>
+    <h1>연구 아이디어 — 평가와 투고처</h1>
+    <p>Novelty·완성도 5점 만점 평가, 국내 투고처, 해외 투고처 재배분(SPIC 제외, 같은 칸 최대 2회) · 2026-11-27 기준 · ◆ 본인이 정한 투고 목표</p>
+  </header>
+  <nav class="nav" aria-label="페이지">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-page="overview">개요</button>
+      <button role="tab" data-page="table">통합표</button>
+      <button role="tab" data-page="progress">진행 상황</button>
+      <button role="tab" data-page="plan">일정</button>
+      <button role="tab" data-page="venues">투고처 · 학회 일정</button>
+      <button role="tab" data-page="ref">기준 · 약어</button>
+    </div>
+    <button id="themeBtn" type="button">다크/라이트</button>
+  </nav>
+
+  <div class="page" data-page="overview">
+  <section class="kpis" id="kpis"></section>
+  <div class="grid2">
+    <section class="card">
+      <h2>포지셔닝 매트릭스</h2>
+      <p class="sub">오른쪽 위로 갈수록 새롭고 바로 실행할 수 있는 연구 · 번호에 마우스를 올리면 상세, 누르면 표로 이동</p>
+      <div class="mkey">
+   <span><svg width="14" height="14"><rect x="1" y="1" width="12" height="12" rx="3" fill="var(--series-1)"/></svg>진행 연구</span>
+   <span><svg width="14" height="14"><circle cx="7" cy="7" r="6" fill="var(--series-1)"/></svg>아이디어</span>
+ </div>
+ <div class="svgwrap"><svg id="matrix" role="img" aria-label="Novelty와 완성도 기준 연구 위치"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+      <div class="keylist" id="keylist"></div>
+    </section>
+    <section class="card">
+      <h2>Novelty · 완성도 비교</h2>
+      <p class="sub">연구별 두 점수 · 정확한 값은 막대에 마우스를 올리거나 통합표 탭에서 확인</p>
+      <div class="legend"><span><i style="background:var(--series-1)"></i>Novelty</span><span><i style="background:var(--series-2)"></i>완성도</span></div>
+      <div class="svgwrap"><svg id="scores" role="img" aria-label="연구별 Novelty와 완성도 막대 그래프"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+    </section>
+  </div>
+  </div>
+  <div class="page" data-page="table">
+  <section class="card">
+    <h2>통합표</h2>
+    <p class="sub">행을 누르면 평가 근거가 펼쳐짐 · 분야 A 코덱·부호화·비트스트림 분석 / B 전송·접근 / C MPEG Systems 기고 겸 탑티어 / D CVPR·NeurIPS 목표 · ◆ 본인이 정한 투고 목표</p>
+    <div class="filters">
+      <div class="seg" role="group" aria-label="상태 필터" id="stSeg"></div>
+      <div class="seg" role="group" aria-label="분야 필터" id="catSeg"></div>
+      <label>정렬 <select id="sortSel">
+        <option value="no">번호순</option><option value="sum">합계 높은 순</option>
+        <option value="novelty">Novelty 높은 순</option><option value="maturity">완성도 높은 순</option>
+      </select></label>
+      <input id="q" type="search" placeholder="연구명·투고처 검색">
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr class="group"><th colspan="3"></th><th colspan="4">평가</th><th colspan="2">국내 투고처</th><th colspan="4">해외 투고처</th></tr>
+          <tr><th>#</th><th>상태</th><th>연구 (분야)</th><th>Novelty</th><th>완성도</th><th>합계</th><th>판정</th>
+            <th>국내 저널</th><th>국내 학술대회</th><th>해외 저널 (적합)</th><th>해외 저널 (도전)</th><th>해외 학회 (적합)</th><th>해외 학회 (도전)</th></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+  </div>
+  <div class="page" data-page="progress">
+  <section class="card" id="progress">
+    <div class="prog-head">
+      <div>
+        <h2>진행 연구 진행 상황</h2>
+        <p class="sub" style="margin:0">달성률 = (완료 단계 + 진행 중 단계 × 0.5) ÷ 전체 단계 · 전체 단계는 각 연구 기록의 계획을 해외 저널 투고까지 나눈 것 · 단계별 노력은 같지 않으니 대략적인 지표</p>
+      </div>
+      <div class="pkey" id="pkey"></div>
+    </div>
+    <div id="prows" style="margin-top:8px"></div>
+  </section>
+  </div>
+  <div class="page" data-page="plan">
+  <section class="card">
+    <div class="phead">
+      <div><h2>다가오는 투고 <span class="ucount" id="ucount"></span></h2><p class="sub" style="margin:0">오늘(2026-11-27)부터 마지막 투고까지 · 좌우로 넘겨 보기(가로 스크롤·화살표) · D-day는 계획한 투고일 기준 · 31일 이내는 주황</p></div>
+      <div class="uctl"><button type="button" id="uPrev" aria-label="이전">‹</button><button type="button" id="uNext" aria-label="다음">›</button></div>
+    </div>
+    <div class="upcoming" id="upcoming"></div>
+  </section>
+
+  <section class="card">
+    <div class="phead">
+      <div><h2>연구별 일정</h2>
+        <p class="sub" style="margin:0">막대 위 글자는 투고처 · 막대 안 글자는 하는 일 · 마우스를 올리면 상세 · 연구명을 누르면 통합표로 이동</p></div>
+      <div class="seg" role="group" aria-label="기간" id="rangeSeg">
+        <button type="button" data-r="all" aria-pressed="false">전체</button>
+        <button type="button" data-r="2027" aria-pressed="true">2027</button>
+        <button type="button" data-r="2028" aria-pressed="false">2028</button>
+      </div>
+    </div>
+    <div class="gkey">
+      <span><i style="background:var(--series-1)"></i>실험</span>
+      <span><i style="background:var(--series-2)"></i>집필</span>
+      <span><i style="background:repeating-linear-gradient(-45deg,var(--axis) 0 2px,transparent 2px 5px);box-shadow:inset 0 0 0 1px var(--axis)"></i>심사 대기</span>
+      <span><i style="box-shadow:inset 0 0 0 1.5px var(--text-secondary);background:transparent"></i>대기 (자리 없음)</span>
+      <span><svg width="12" height="12"><path d="M6 1L11 6 6 11 1 6z" fill="var(--text-primary)"/></svg>투고</span>
+      <span><svg width="12" height="12"><line x1="6" y1="0" x2="6" y2="12" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 2"/></svg>오늘</span>
+    </div>
+    <div class="svgwrap"><svg id="gantt" role="img" aria-label="연구별 진행 일정과 투고 시점"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+  </section>
+
+  <section class="card">
+    <h2>연구 자리 4개 배치</h2>
+    <p class="sub">동시에 실험·집필할 수 있는 연구는 4개 · 자리마다 어느 연구가 언제 쓰는지 · 심사 대기 기간은 자리를 비움 · 기간 선택은 위와 같음</p>
+    <div class="legend"><span><i style="background:var(--series-1)"></i>진행 연구</span><span><i style="background:var(--series-2)"></i>아이디어</span><span><i style="background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--border)"></i>빈 자리</span></div>
+    <div class="svgwrap"><svg id="slots" role="img" aria-label="연구 자리 4개의 시간별 배치"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+  </section>
+
+  <section class="card">
+    <h2>투고 일정 (분기별)</h2>
+    <p class="sub">선택한 기간의 투고만 표시 · 지난 일정은 흐리게</p>
+    <div class="tablewrap"><table class="slist">
+      <thead><tr><th>투고 시점</th><th>D-day</th><th>연구</th><th>투고처</th><th>마감 근거</th><th>담는 내용</th></tr></thead>
+      <tbody id="sbody"></tbody></table></div>
+    <ul class="pnotes" id="pnotes"></ul>
+  </section>
+  </div>
+  <div class="page" data-page="venues">
+  <div class="grid2">
+    <section class="card">
+      <h2>해외 투고처 분포</h2>
+      <p class="sub">해외 투고처가 빈 10번은 셈에서 빠짐 · ◆ 본인 확정 목표 포함 · 점선은 같은 칸 최대 2회 기준(Claude 배정분에만 적용)</p>
+      <div class="seg" role="group" aria-label="해외 투고처 종류">
+        <button type="button" data-kind="j" aria-pressed="true">해외 저널</button>
+        <button type="button" data-kind="c" aria-pressed="false">해외 학술대회</button>
+      </div>
+      <div class="legend"><span><i style="background:var(--series-1)"></i>적합</span><span><i style="background:var(--series-2)"></i>도전</span></div>
+      <div class="svgwrap"><svg id="venues" role="img" aria-label="해외 투고처별 배정 횟수"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+    </section>
+    <section class="card">
+      <h2>국내 투고처 분포</h2>
+      <p class="sub">한 칸에 두 곳이 적힌 경우 각각 셈</p>
+      <div class="legend"><span><i style="background:var(--series-1)"></i>배정 횟수</span></div>
+      <div class="svgwrap"><svg id="domestic" role="img" aria-label="국내 투고처별 배정 횟수"></svg><span class="swipe" aria-hidden="true">좌우로 밀어 보기 ⇆</span></div>
+    </section>
+  </div>
+  <section class="card" id="confs">
+    <h2>해외 학회 일정 (2026–2028)</h2>
+    <p class="sub">통합표의 해외 학회 <span id="ccount"></span>곳 · 각 칸 위는 개최일·장소, 아래는 논문 마감 · <span class="bdg ok">확정</span> 공식 발표로 확인, <span class="bdg est">추정</span> 과거 일정으로 추정, <span class="bdg past">지남</span> 2026-11-27 기준 마감이 지남</p>
+    <div class="tablewrap"><table class="ctable">
+      <thead><tr><th>학회</th><th>관련 연구</th><th>2026</th><th>2027</th><th>2028</th></tr></thead>
+      <tbody id="ctbody"></tbody></table></div>
+  </section>
+  </div>
+  <div class="page" data-page="ref">
+  <section class="card">
+    <div class="notes">
+      <div><h3>평가 기준</h3><dl id="scales"></dl></div>
+      <div><h3>참고 사항</h3><ul id="notes"></ul></div>
+      <div><h3>약어</h3><dl id="abbr"></dl></div>
+    </div>
+  </section>
+  </div>
+</div>
+<div id="tip" role="tooltip"></div>
+</div>
+
+<script>
+const DATA = {"confs": [{"name": "CVPR", "rel": [3], "y": {"2026": ["06-03~07 · 미국 덴버", "2025-11-13", "ok"], "2027": ["06-20~25 · 미국 시애틀", "2026-11-16", "ok"], "2028": ["6월 · 미정", "2027-11 중순", "est"]}}, {"name": "ICASSP", "rel": [2], "y": {"2026": ["05월 초 · 스페인 바르셀로나", "2025-09 중순", "est"], "2027": ["05-16~21 · 캐나다 토론토", "2026-09-23", "ok"], "2028": ["05-28~06-03 · 일본 도쿄", "2027-09 중순", "est"]}}, {"name": "ICIP", "rel": [2, 3, 4], "y": {"2026": ["09-13~17 · 핀란드 탐페레", "2026-02-04", "ok"], "2027": ["11-29~12-03 · 싱가포르", "2027-04 중순 (3~5월)", "est"], "2028": ["11-27~12-02 · 싱가포르", "2028-04 중순", "est"]}}, {"name": "ACM MM", "rel": [1, 7, 8], "y": {"2026": ["11-10~14 · 브라질 리우데자네이루", "2026-04-01 (초록 03-25)", "ok"], "2027": ["10월 말~11월 초 · 홍콩", "2027-04 초", "est"], "2028": ["10월 말~11월 초 · 영국 런던", "2028-04 초", "est"]}}, {"name": "IEEE MMSP", "rel": [8], "y": {"2026": ["09-22~24 · 튀르키예 이스탄불", "2026-05-29", "ok"], "2027": ["9~10월 · 미정", "2027-05 말", "est"], "2028": ["9~10월 · 미정", "2028-05 말", "est"]}}, {"name": "IEEE AVSS", "rel": [1], "y": {"2026": ["08-31~09-03 · 이탈리아 레체", "2026-04~05 (미확인)", "est"], "2027": ["8월(관례) · 미정", "2027-04~05", "est"], "2028": ["8월(관례) · 미정", "2028-04~05", "est"]}}, {"name": "ACM MM Asia", "rel": [6], "y": {"2026": ["12-15~ · 베트남 하노이", "2026-08-03", "ok"], "2027": ["12월 · 미정", "2027-08 초", "est"], "2028": ["12월 · 미정", "2028-08 초", "est"]}}, {"name": "MMSys", "rel": [6, 11], "y": {"2026": ["04-04~ · 홍콩", "2025-11-14", "ok"], "2027": ["03-30~04-02 · 벨기에 겐트", "2026-11-19", "ok"], "2028": ["3~4월 · 미정", "2027-11 중순", "est"]}}, {"name": "DCC", "rel": [5, 9], "y": {"2026": ["03-24~27 · 미국 스노버드", "2025-10-03", "ok"], "2027": ["03-23~26 · 미국 스노버드", "2026-10-02", "ok"], "2028": ["3월 · 미국 스노버드(관례)", "2027-10 초", "est"]}}, {"name": "VCIP", "rel": [5, 7], "y": {"2026": ["12-13~16 · 싱가포르", "2026-07-03 (연장)", "ok"], "2027": ["12월 · 미정", "2027-06 중순", "est"], "2028": ["12월 · 미정", "2028-06 중순", "est"]}}, {"name": "NeurIPS", "rel": [13], "y": {"2026": ["12-06~12 · 호주 시드니 외 2곳", "2026-05-06 (초록 05-04)", "ok"], "2027": ["12월 · 유럽(도시 미정)", "2027-05 중순", "est"], "2028": ["12월 · 미국 서부", "2028-05 중순", "est"]}}, {"name": "NeurIPS 워크숍", "rel": [13], "y": {"2026": ["12-11~12 · 시드니", "2026-09 초 (워크숍별, 8월 말부터)", "est"], "2027": ["12월 · 유럽", "2027-08 말~09 초", "est"], "2028": ["12월 · 미국 서부", "2028-08 말~09 초", "est"]}}, {"name": "IEEE INFOCOM", "rel": [12], "y": {"2026": ["05-18~21 · 일본 도쿄", "2025-07-24 (초록 07-17)", "ok"], "2027": ["05-24~27 · 미국 호놀룰루", "2026-07-24 (초록 07-17)", "ok"], "2028": ["5월 · 미정", "2027-07 말", "est"]}}, {"name": "IEEE BMSB", "rel": [11], "y": {"2026": ["07-08~10 · 브라질 주앙페소아", "2026-01-31 (연장)", "ok"], "2027": ["07-07~09 · 호주 시드니", "2027-01-15", "ok"], "2028": ["6~7월 · 미정", "2028-01 중순", "est"]}}, {"name": "ICCE-Asia", "rel": [12], "y": {"2026": ["10-28~30 · 강릉", "2026-08 말 (2025년 08-22 기준)", "est"], "2027": ["10~11월 · 미정", "2027-08 말", "est"], "2028": ["10~11월 · 미정", "2028-08 말", "est"]}}, {"name": "ICEIC", "rel": [4], "y": {"2026": ["01-18~21 · 마카오", "2025-10~11 (미확인)", "est"], "2027": ["2027-01 · 장소 미확인", "2026-10~11 (미확인)", "est"], "2028": ["2028-01 · 미정", "2027-10~11", "est"]}}, {"name": "ITC-CSCC", "rel": [9], "y": {"2026": ["7월(추정) · 태국 방콕", "2026-03-31 (최종 연장)", "ok"], "2027": ["7월 · 미정", "2027-03 말", "est"], "2028": ["7월 · 미정", "2028-03 말", "est"]}}], "plan": [{"no": 1, "short": "Bit-RASD", "status": "research", "note": "AVSS 2027 마감·개최일 미발표 — 2026년(8-31~09-03 개최) 기준 추정. TCSVT는 AVSS 발표 뒤 투고", "ph": [{"s": "2026-11-30", "e": "2026-12-06", "t": "exp", "l": "Codex 감사"}, {"s": "2026-12-07", "e": "2026-12-18", "t": "write", "l": "방송공학회논문지 원고"}, {"s": "2026-12-19", "e": "2027-04-01", "t": "wait", "l": "논문지 심사"}, {"s": "2027-04-02", "e": "2027-04-16", "t": "write", "l": "AVSS 2027 원고"}, {"s": "2027-04-17", "e": "2027-09-10", "t": "wait", "l": "AVSS 심사 · 발표 (8월 추정)"}, {"s": "2027-09-13", "e": "2027-10-08", "t": "write", "l": "TCSVT 원고 (AVSS 발표 반영 확장)"}, {"s": "2027-10-09", "e": "2028-01-31", "t": "wait", "l": "TCSVT 1차 심사"}], "sub": [{"d": "2026-12-18", "v": "방송공학회논문지", "k": "rolling", "c": "1단계(BiSTAR) 확장 + 객체 목록 전달"}, {"d": "2027-04-30", "v": "IEEE AVSS 2027", "k": "est", "c": "CR1·X1·X2 결과 (원고는 04-16 완성)"}, {"d": "2027-10-08", "v": "IEEE TCSVT", "k": "rolling", "c": "AVSS 발표 내용 확장 · 최신 압축 영역 VAD 비교"}]}, {"no": 2, "short": "ReMAC (디코더 신뢰도)", "status": "research", "note": "ICIP 원고는 TCSVT와 내용 범위를 나눠야 함", "ph": [{"s": "2026-11-30", "e": "2026-12-18", "t": "write", "l": "IPIU 2027 원고"}, {"s": "2026-12-01", "e": "2027-01-22", "t": "exp", "l": "신뢰도 힌트 비트스트림 탑재 · 같은 비트율 판정"}, {"s": "2027-01-25", "e": "2027-03-05", "t": "exp", "l": "최종 메커니즘 (후처리 우선)"}, {"s": "2027-03-08", "e": "2027-03-31", "t": "write", "l": "TCSVT 원고"}, {"s": "2027-04-01", "e": "2027-04-16", "t": "write", "l": "ICIP 2027 원고 (범위 분리)"}, {"s": "2027-04-17", "e": "2027-08-31", "t": "wait", "l": "TCSVT · ICIP 심사"}], "sub": [{"d": "2026-12-18", "v": "IPIU 2027", "k": "ok", "c": "도구별 오류 귀속 · 신호 정보 분석"}, {"d": "2027-03-31", "v": "IEEE TCSVT", "k": "rolling", "c": "분석 + 신뢰도 힌트 + 최종 메커니즘"}, {"d": "2027-04-16", "v": "ICIP 2027", "k": "est", "c": "신뢰도 힌트 탑재만 따로 (중복 투고 회피)"}]}, {"no": 7, "short": "VCM-LL (저지연 통신)", "status": "research", "note": "TBC·VCIP(◆)는 ACM MM 심사 중이라 같은 내용으로 못 냄 — TCSVT 결과 뒤 TBC 확장판 검토", "ph": [{"s": "2026-11-30", "e": "2026-12-18", "t": "write", "l": "계획서 갱신 · 2단계 결과 보고서"}, {"s": "2026-12-07", "e": "2027-01-08", "t": "write", "l": "방미공 동계 원고 (1단계)"}, {"s": "2026-12-21", "e": "2027-02-05", "t": "exp", "l": "새 데이터셋 확증 실험"}, {"s": "2027-02-08", "e": "2027-04-01", "t": "write", "l": "ACM MM 2027 원고"}, {"s": "2027-04-02", "e": "2027-07-09", "t": "wait", "l": "ACM MM 심사"}, {"s": "2027-07-12", "e": "2027-08-27", "t": "write", "l": "TCSVT 확장 원고"}, {"s": "2027-08-28", "e": "2027-12-31", "t": "wait", "l": "TCSVT 심사"}], "sub": [{"d": "2027-01-08", "v": "방미공 동계학술대회", "k": "est", "c": "1단계 링크 용량 인지 시간 축소"}, {"d": "2027-04-01", "v": "ACM MM 2027", "k": "est", "c": "2단계 용량 예측기 · RTP+NACK · 새 데이터셋"}, {"d": "2027-08-27", "v": "IEEE TCSVT", "k": "rolling", "c": "ACM MM 결과 반영 확장"}]}, {"no": 8, "short": "VCM 영상 통신 복원", "status": "research", "note": "MMSP(적합)는 ACM MM 심사와 겹쳐 2027 회차에 같은 내용 불가 — 필요하면 MMSP 2028(5월 말 추정)에 범위를 나눈 원고로", "ph": [{"s": "2026-11-30", "e": "2026-12-31", "t": "exp", "l": "관문 C 판정 마무리"}, {"s": "2026-12-14", "e": "2027-01-08", "t": "write", "l": "방미공 동계 원고 (관문 B)"}, {"s": "2027-01-04", "e": "2027-02-26", "t": "exp", "l": "확장 실험 (채널 B2 · 해상도 변화 · 지연)"}, {"s": "2027-03-01", "e": "2027-04-01", "t": "write", "l": "ACM MM 2027 원고"}, {"s": "2027-04-02", "e": "2027-07-09", "t": "wait", "l": "ACM MM 심사"}, {"s": "2027-07-12", "e": "2027-09-03", "t": "write", "l": "TCSVT 원고"}, {"s": "2027-09-04", "e": "2027-12-31", "t": "wait", "l": "TCSVT 심사"}], "sub": [{"d": "2027-01-08", "v": "방미공 동계학술대회", "k": "est", "c": "관문 B 특성 분석"}, {"d": "2027-04-01", "v": "ACM MM 2027", "k": "est", "c": "관문 C 복원 기법 + 확장 실험"}, {"d": "2027-09-03", "v": "IEEE TCSVT", "k": "rolling", "c": "ACM MM 결과 반영 종합"}]}, {"no": 3, "short": "VCM with VLM (Q-VCM)", "status": "research", "note": "ICIP 2027 마감이 4월보다 이르게 공고되면 2단계를 VCIP 2027(6월 추정)로 미룸", "ph": [{"s": "2026-11-30", "e": "2027-01-15", "t": "pause", "l": "대기 (동시 4개 제한)"}, {"s": "2027-01-18", "e": "2027-02-12", "t": "exp", "l": "1-0 오라클 상한 (관문)"}, {"s": "2027-02-15", "e": "2027-03-12", "t": "exp", "l": "1단계 Q-VCM · CTC 평가"}, {"s": "2027-03-15", "e": "2027-03-26", "t": "write", "l": "논문지 원고"}, {"s": "2027-03-29", "e": "2027-04-16", "t": "exp", "l": "2단계 개방 어휘 평가 (축소판)"}, {"s": "2027-04-19", "e": "2027-08-13", "t": "exp", "l": "3단계 학습형 제어 · 다중 질의"}, {"s": "2027-08-16", "e": "2027-09-10", "t": "write", "l": "TCSVT 원고 (1–3단계)"}, {"s": "2027-09-13", "e": "2027-11-12", "t": "exp", "l": "4단계 정식화 · 벤치마크 · 증류"}], "sub": [{"d": "2027-03-26", "v": "방송공학회논문지", "k": "rolling", "c": "1단계 오라클 · Q-VCM 기본 결과"}, {"d": "2027-04-16", "v": "ICIP 2027", "k": "est", "c": "2단계 개방 어휘 질의 · VLM 기여 분해"}, {"d": "2027-09-10", "v": "IEEE TCSVT", "k": "rolling", "c": "1–3단계 종합"}, {"d": "2027-11-12", "v": "CVPR 2028", "k": "est", "c": "4단계 정식화 · 공개 벤치마크"}]}, {"no": 4, "short": "VCM 고속화", "status": "idea", "note": "2028년 1~4월은 다른 연구가 4개라 실험을 2027년 안에 끝내고 ICIP 마감까지 원고만 보관 — ICIP 2028 마감이 공고되면 투고일 조정", "ph": [{"s": "2027-04-19", "e": "2027-06-25", "t": "exp", "l": "RoI 지도 기반 RDO 노력 배분"}, {"s": "2027-06-28", "e": "2027-07-09", "t": "write", "l": "논문지 원고"}, {"s": "2027-07-12", "e": "2027-10-08", "t": "pause", "l": "대기 (VCM-LL·복원·Bit-RASD 저널 원고에 자리 양보)"}, {"s": "2027-10-11", "e": "2027-12-29", "t": "exp", "l": "확장 (설정·데이터 일반화) · ICIP 원고 완성"}, {"s": "2027-12-30", "e": "2028-04-14", "t": "pause", "l": "ICIP 마감 대기 (원고 완성 상태)"}, {"s": "2028-04-15", "e": "2028-08-31", "t": "wait", "l": "ICIP 심사"}, {"s": "2028-09-04", "e": "2028-10-27", "t": "write", "l": "TIP 확장 원고"}], "sub": [{"d": "2027-07-09", "v": "방송공학회논문지", "k": "rolling", "c": "VCM 인코더 고속화 기본 결과"}, {"d": "2028-04-14", "v": "ICIP 2028", "k": "est", "c": "확장 결과"}, {"d": "2028-10-27", "v": "IEEE TIP", "k": "rolling", "c": "ICIP 확장"}]}, {"no": 5, "short": "하이브리드 VCM", "status": "idea", "note": "DCC(도전)는 다른 기여(율–왜곡 이론)일 때만", "ph": [{"s": "2027-04-19", "e": "2027-06-04", "t": "exp", "l": "사람·기계 겸용 VCM 실험"}, {"s": "2027-06-07", "e": "2027-06-18", "t": "write", "l": "VCIP 2027 원고"}, {"s": "2027-06-19", "e": "2027-09-03", "t": "wait", "l": "VCIP 심사"}, {"s": "2027-09-06", "e": "2027-11-26", "t": "write", "l": "TIP 확장 (실험 보강 포함)"}], "sub": [{"d": "2027-06-18", "v": "VCIP 2027", "k": "est", "c": "수요 인지 계층 비트 배분"}, {"d": "2027-11-26", "v": "IEEE TIP", "k": "rolling", "c": "VCIP 확장"}]}, {"no": 13, "short": "신뢰도 보장 생성형", "status": "idea", "note": "NeurIPS 2027 본 학회(5월 중순)는 착수 시점상 불가", "ph": [{"s": "2027-04-19", "e": "2027-08-20", "t": "exp", "l": "환각 위험 측정 · 등각 보장 (소규모)"}, {"s": "2027-08-23", "e": "2027-09-03", "t": "write", "l": "NeurIPS 워크숍 원고"}, {"s": "2027-09-06", "e": "2028-05-05", "t": "exp", "l": "율–위험 최적화 본 실험"}, {"s": "2028-05-08", "e": "2028-05-12", "t": "write", "l": "NeurIPS 2028 원고 마무리"}], "sub": [{"d": "2027-09-03", "v": "NeurIPS 2027 워크숍", "k": "est", "c": "문제 정의 · 예비 결과"}, {"d": "2028-05-12", "v": "NeurIPS 2028", "k": "est", "c": "영역별 신뢰도 · 등각 보장 · 율–위험"}]}, {"no": 6, "short": "다중 카메라 VCM", "status": "idea", "note": "", "ph": [{"s": "2027-11-15", "e": "2028-07-07", "t": "exp", "l": "시점 협조형 비트 배분 실험"}, {"s": "2028-07-10", "e": "2028-08-04", "t": "write", "l": "ACM MM Asia 2028 원고"}, {"s": "2028-08-07", "e": "2028-11-10", "t": "exp", "l": "확장 · MMSys 원고"}], "sub": [{"d": "2028-08-04", "v": "ACM MM Asia 2028", "k": "est", "c": "카메라 간 비트 배분 · 담당 시점"}, {"d": "2028-11-10", "v": "MMSys 2029", "k": "est", "c": "시스템 구현 · 확장"}]}, {"no": 11, "short": "1-A 캐리지", "status": "idea", "note": "MMSys(도전)는 2029 주기", "ph": [{"s": "2027-11-29", "e": "2028-01-14", "t": "exp", "l": "VCM 트랙 캐리지 · 동기화 프로토타입 · BMSB 원고"}, {"s": "2028-01-17", "e": "2028-03-31", "t": "write", "l": "MPEG Systems 기고 · ETRI Journal 원고"}], "sub": [{"d": "2028-01-14", "v": "IEEE BMSB 2028", "k": "est", "c": "하이브리드 스트리밍 캐리지"}, {"d": "2028-03-31", "v": "ETRI Journal", "k": "rolling", "c": "캐리지 · 기계 분석 이벤트 scheme"}, {"d": "2028-04-15", "v": "MPEG Systems 입력 기고", "k": "est", "c": "SyfAI 탐색 항목 (회의 일정 확인)"}]}, {"no": 9, "short": "ULL 부분 복호", "status": "idea", "note": "", "ph": [{"s": "2028-01-03", "e": "2028-03-17", "t": "exp", "l": "요청 영역 복호 구조 · 지연 측정"}, {"s": "2028-03-20", "e": "2028-03-24", "t": "write", "l": "ITC-CSCC 원고"}, {"s": "2028-03-27", "e": "2028-06-30", "t": "pause", "l": "대기"}, {"s": "2028-07-03", "e": "2028-09-29", "t": "exp", "l": "확장 · DCC 원고"}], "sub": [{"d": "2028-03-24", "v": "ITC-CSCC 2028", "k": "est", "c": "요청 부분 복호 기본 결과"}, {"d": "2028-09-29", "v": "DCC 2029", "k": "est", "c": "복호 단위 설계 · 율–지연 분석"}]}, {"no": 10, "short": "MoQ 전송", "status": "idea", "note": "해외 투고 없음", "ph": [{"s": "2028-04-03", "e": "2028-05-26", "t": "exp", "l": "MoQ 전송 실험 · 국내 학술대회 원고"}, {"s": "2028-05-29", "e": "2028-06-30", "t": "write", "l": "한국통신학회논문지 원고"}], "sub": [{"d": "2028-05-26", "v": "통신학회 하계 2028", "k": "est", "c": "3-A·3-B·3-C 결과"}, {"d": "2028-06-30", "v": "한국통신학회논문지", "k": "rolling", "c": "국내 연구로 마무리"}]}, {"no": 12, "short": "기계 클라이언트 ABR", "status": "idea", "note": "INFOCOM 심사 중에는 ICCE-Asia(8월)에 같은 내용 불가", "ph": [{"s": "2028-04-03", "e": "2028-07-14", "t": "exp", "l": "태스크 인지 ABR · CMCD 기계 키 실험"}, {"s": "2028-07-17", "e": "2028-07-21", "t": "write", "l": "INFOCOM 원고 마무리"}], "sub": [{"d": "2028-07-21", "v": "IEEE INFOCOM 2029", "k": "est", "c": "VCM-LL의 DASH/CMCD 확장"}]}], "conc": [{"m": "2026-12", "n": 4, "who": [1, 2, 7, 8]}, {"m": "2027-01", "n": 4, "who": [2, 3, 7, 8]}, {"m": "2027-02", "n": 4, "who": [2, 3, 7, 8]}, {"m": "2027-03", "n": 4, "who": [2, 3, 7, 8]}, {"m": "2027-04", "n": 4, "who": [2, 3, 7, 8]}, {"m": "2027-05", "n": 4, "who": [3, 5, 13, 4]}, {"m": "2027-06", "n": 4, "who": [3, 5, 13, 4]}, {"m": "2027-07", "n": 4, "who": [3, 7, 8, 13]}, {"m": "2027-08", "n": 4, "who": [3, 7, 8, 13]}, {"m": "2027-09", "n": 4, "who": [1, 3, 5, 13]}, {"m": "2027-10", "n": 4, "who": [1, 3, 5, 13]}, {"m": "2027-11", "n": 4, "who": [3, 5, 13, 4]}, {"m": "2027-12", "n": 4, "who": [13, 4, 6, 11]}, {"m": "2028-01", "n": 4, "who": [13, 6, 11, 9]}, {"m": "2028-02", "n": 4, "who": [13, 6, 11, 9]}, {"m": "2028-03", "n": 4, "who": [13, 6, 11, 9]}, {"m": "2028-04", "n": 4, "who": [13, 6, 12, 10]}, {"m": "2028-05", "n": 4, "who": [13, 6, 12, 10]}, {"m": "2028-06", "n": 3, "who": [6, 12, 10]}, {"m": "2028-07", "n": 3, "who": [6, 9, 12]}, {"m": "2028-08", "n": 2, "who": [6, 9]}, {"m": "2028-09", "n": 3, "who": [4, 6, 9]}, {"m": "2028-10", "n": 2, "who": [4, 6]}, {"m": "2028-11", "n": 1, "who": [6]}, {"m": "2028-12", "n": 0, "who": []}], "progress": [{"no": 1, "short": "Bit-RASD", "title": "Bit-RASD (VCM 비트스트림 메타데이터 기반 초고속 이상 행동 탐지)", "last": "2026-11-27", "src": "Bit-RASD 프로젝트 기록(결과·결정)", "next": "보고서 v2.1 확인 → Codex 감사", "done": 6, "doing": 0, "total": 10, "pct": 60, "ms": [{"label": "1단계 BiSTAR 학술대회 투고", "state": "done", "date": "09-21"}, {"label": "개선 파이프라인(D4–D10) · F_BK 확정", "state": "done", "date": "10-14"}, {"label": "CR1 cleanroom 재구현 · 전면 재부호화", "state": "done", "date": "11-23"}, {"label": "X1 검증 (처리 시간 · 지연)", "state": "done", "date": "11-26"}, {"label": "X2 개선 (보정 · 시간 평활, P/R/F1 · figure)", "state": "done", "date": "11-27"}, {"label": "연구 보고서 v2.1", "state": "done", "date": "11-27"}, {"label": "Codex 감사", "state": "next", "date": ""}, {"label": "방송공학회논문지 투고", "state": "todo", "date": ""}, {"label": "IEEE AVSS 2027 투고 · 발표", "state": "todo", "date": ""}, {"label": "IEEE TCSVT 투고", "state": "todo", "date": ""}]}, {"no": 2, "short": "ReMAC (디코더 신뢰도)", "title": "ReMAC (VCM 디코더 신뢰도 활용 연구)", "last": "2026-11-26", "src": "ReMAC 기록", "next": "신뢰도 힌트의 비트스트림 탑재 · 같은 비트율 판정, IPIU 원고 마무리", "done": 5, "doing": 2, "total": 10, "pct": 60, "ms": [{"label": "연구 제안서 (현재 v2.5)", "state": "done", "date": "11-23"}, {"label": "관문 A · 0단계 본 실험", "state": "done", "date": "10-09"}, {"label": "1단계 예비 · 보완 분석 → 분석 중심(초점 B) 확정", "state": "done", "date": "10-16"}, {"label": "장비 점검 후 실험 (제안서 7.1절)", "state": "done", "date": "11-21"}, {"label": "신뢰도 힌트 예비 실험", "state": "done", "date": "11-23"}, {"label": "저조도 영상 확장 (PandaSet 완료, Waymo 확보 중)", "state": "doing", "date": "11-09"}, {"label": "IPIU 2027 원고 (마감 12-18)", "state": "doing", "date": "11-21"}, {"label": "힌트 비트스트림 탑재 · 같은 비트율 판정", "state": "next", "date": ""}, {"label": "최종 메커니즘 (후처리 또는 인루프)", "state": "todo", "date": ""}, {"label": "IEEE TCSVT 투고", "state": "todo", "date": ""}]}, {"no": 3, "short": "VCM with VLM (Q-VCM)", "title": "VCM with VLM (텍스트 질의 기반 선택적 RoI 스케일링, Q-VCM)", "last": "2026-10-30", "src": "VCM with VLM 채팅", "next": "1-0 오라클 상한 실험 (관문)", "done": 1, "doing": 0, "total": 6, "pct": 17, "ms": [{"label": "아이디어 검토 · 4단계 제안서 · GPU 구동 점검 · 투고 로드맵", "state": "done", "date": "10-30"}, {"label": "1-0 오라클 상한 실험", "state": "next", "date": ""}, {"label": "1단계 Q-VCM 파이프라인 · CTC 평가", "state": "todo", "date": ""}, {"label": "방송공학회논문지 투고", "state": "todo", "date": ""}, {"label": "2단계 개방 어휘 평가 → ICIP 또는 ACM MM 2027", "state": "todo", "date": ""}, {"label": "3단계 학습형 제어 → IEEE TCSVT 투고", "state": "todo", "date": ""}]}, {"no": 7, "short": "VCM-LL (저지연 통신)", "title": "VCM-LL (VCM 저지연 통신 연구: 링크 용량 인지 시간 축소·전송 제어)", "last": "2026-11-23", "src": "VCM-LL 프로젝트 기록", "next": "연구계획서 갱신 · 2단계 결과 보고서", "done": 7, "doing": 0, "total": 11, "pct": 64, "ms": [{"label": "제안서 · 환경 구축 · 0단계 전제 확인", "state": "done", "date": "10-07"}, {"label": "1단계 실험 (P1–P7c), 강화학습 배제", "state": "done", "date": "11-12"}, {"label": "1단계 학술대회 · 논문지 원고, 종료 보고서", "state": "done", "date": "11-13"}, {"label": "2단계 준비 · 진단 · 평가 틀 고정 (S2-P0–P2)", "state": "done", "date": "11-13"}, {"label": "방법 확정 · 전송 프로토콜 (S2-P3 · P3b)", "state": "done", "date": "11-15"}, {"label": "보류 자료 검증 · 보충 실행 (S2-P4–P6)", "state": "done", "date": "11-22"}, {"label": "비트율 무관 용량 예측기 (S2-P7)", "state": "done", "date": "11-23"}, {"label": "연구계획서 갱신 · 2단계 결과 보고서", "state": "next", "date": ""}, {"label": "새 데이터셋 확증 실험", "state": "todo", "date": ""}, {"label": "방미공 동계학술대회 투고", "state": "todo", "date": ""}, {"label": "해외 지면 투고 (TCSVT · ACM MM 목표)", "state": "todo", "date": ""}]}, {"no": 8, "short": "VCM 영상 통신 복원", "title": "VCM 영상 통신 복원 연구 (패킷 손실 시 machine task가 버틸 만큼 복원)", "last": "2026-11-04", "src": "VCM 영상 통신 복원 연구 채팅", "next": "관문 C 결과 판정 (H1–H4)", "done": 3, "doing": 1, "total": 8, "pct": 44, "ms": [{"label": "아이디어 평가 · 방향 확정", "state": "done", "date": "10-13"}, {"label": "관문 A (사실 확인 · 손실 주입 하네스)", "state": "done", "date": "10-16"}, {"label": "관문 B (AP −13.8점, 결합 oracle 71% 회복)", "state": "done", "date": "10-24"}, {"label": "관문 C (모션 · 픽셀 복원 후보, DEV 선택 → TEST 검증)", "state": "doing", "date": "11-04"}, {"label": "방미공 학술대회 투고 (관문 B 결과)", "state": "todo", "date": ""}, {"label": "확장 실험 (채널 B2 · 해상도 변화 · 지연)", "state": "todo", "date": ""}, {"label": "국제 학회 투고 (ACM MM 2027)", "state": "todo", "date": ""}, {"label": "IEEE TCSVT 투고", "state": "todo", "date": ""}]}], "asof": "2026-11-27", "research": [{"cat": "A", "status": "research", "short": "Bit-RASD", "title": "Bit-RASD (VCM 비트스트림 메타데이터 기반 초고속 이상 행동 탐지)", "novelty": 3.5, "maturity": 4.5, "verdict": "가장 완성도 높음 — 정확도 격차를 속도·경량성 서사로 상쇄하는 게 관건", "novelty_basis": "압축 영역 이상 탐지(VADiffusion, ARD-VAD 등)와 움직임 벡터 기반 압축 영역 추적은 선행이 있음. VCM 비트스트림 메타데이터(RoI·객체 목록 NAL)만으로 산술 복호·화소 복원 없이 탐지하는 구성은 새로움. 처리 시간 0.27–0.42 ms/frame으로 속도 우위가 뚜렷함.", "maturity_basis": "CR1 cleanroom 재구현·전면 재부호화, X1·X2(보정·시간 평활 개선, P/R/F1·AUC 산출), 보고서 v2.1까지 진행해 Codex 감사만 남은 단계. 화소 기반 대비 정확도 격차와 최신 압축 영역 VAD와의 직접 비교가 심사 쟁점.", "dom_journal": "방송공학회논문지", "dom_conf": "방미공 학술대회", "ov_j_fit": "IEEE TCE", "ov_j_chal": "IEEE TCSVT", "ov_c_fit": "IEEE AVSS", "ov_c_chal": "ACM MM", "fixed": ["dom_journal", "ov_j_chal", "ov_c_fit", "ov_c_chal"], "no": 1}, {"cat": "A", "status": "research", "short": "ReMAC (디코더 신뢰도)", "title": "ReMAC (VCM 디코더 신뢰도 활용 연구)", "novelty": 3.0, "maturity": 3.5, "verdict": "분석 기여는 확보, TCSVT는 최종 메커니즘에 달림", "novelty_basis": "VCM 도구별 오류 귀속, 오류의 영역 국소성, 도구 조합 상호작용, 작은 물체 누락 증가를 정량화한 분석은 VCM에서 처음. 신호 정보로 누락을 예측하는 원안은 사전 기준에 못 미쳐(GBM +0.016) 분석 중심으로 전환했고, 인코더 측 신뢰도 힌트와 최종 메커니즘이 새로운 방법 기여가 될 부분.", "maturity_basis": "0·1단계 분석과 IPIU 원고 자산 완료, 신뢰도 힌트 예비 실험 완료 → 힌트의 비트스트림 탑재·같은 비트율 판정 단계. 저조도 영상 데이터(Waymo) 확보 중.", "dom_journal": "방송공학회논문지", "dom_conf": "IPIU", "ov_j_fit": "JVCIR", "ov_j_chal": "IEEE TCSVT", "ov_c_fit": "ICIP", "ov_c_chal": "ICASSP", "fixed": ["dom_journal", "dom_conf", "ov_j_chal", "ov_c_fit"], "no": 2}, {"cat": "A", "status": "research", "short": "VCM with VLM (Q-VCM)", "title": "VCM with VLM (텍스트 질의 기반 선택적 RoI 스케일링, Q-VCM)", "novelty": 2.5, "maturity": 2.5, "verdict": "선행이 많아 VLM 고유 기여를 분해해 보여야 함", "novelty_basis": "질의·프롬프트 기반 부호화 선행이 많음 — SDComp, Prompt-Guided Prefiltering(ICME 2026), VaVLM, Q-TOFC 등. 비디오·VCM 툴·객체 단위 등급으로 넓히고, 개방 어휘 그라운딩·질의 해석·맥락 등급의 기여를 나눠 보이는 것이 차별점. 단순 클래스 필터만으로도 이득 상당 부분이 나올 수 있다는 점이 위험.", "maturity_basis": "4단계 연구 제안서와 GPU별 구동 가능성 점검 완료, 파일럿(오라클 상한) 실험 전 단계. 단계별 목표: 논문지 → ICIP(또는 ACM MM) → TCSVT → CVPR 2028.", "dom_journal": "방송공학회논문지", "dom_conf": "IPIU", "ov_j_fit": "JVCIR", "ov_j_chal": "IEEE TCSVT", "ov_c_fit": "ICIP", "ov_c_chal": "CVPR", "fixed": ["dom_journal", "ov_j_chal", "ov_c_fit", "ov_c_chal"], "no": 3}, {"no": 4, "cat": "A", "title": "VCM 인코더 고속화 (RoI 기반 RDO 노력 배분)", "novelty": 2.5, "maturity": 4.0, "verdict": "빠른 성과용, 최상위 지면은 어려움", "novelty_basis": "CU 분할 고속화 문헌이 매우 많음. 'VCM RoI 지도로 노력을 배분'하는 연구는 찾지 못했지만, RoI 기반 복잡도 배분은 자연스러운 발상이라 증분 연구로 보일 수 있음.", "maturity_basis": "VCM-RS 환경이 이미 있어 RoI 밖 조기 종료 오라클 실험까지 빠름.", "dom_journal": "방송공학회논문지", "dom_conf": "방미공 학술대회, IPIU", "ov_j_fit": "J. Real-Time Image Processing", "ov_j_chal": "IEEE TIP", "ov_c_fit": "ICEIC", "ov_c_chal": "ICIP", "short": "VCM 고속화", "status": "idea", "fixed": []}, {"no": 5, "cat": "A", "title": "사람·기계 하이브리드 VCM (수요 인지형 스케일러블 부호화)", "novelty": 3.0, "maturity": 3.5, "verdict": "가장 균형이 좋음 (주력 후보)", "novelty_basis": "이벤트 시 향상 계층을 요청하는 시간 축 수요 대응은 Choi & Bajić가 이미 제안. Nokia(ICME 2024)는 VVC 다계층 구현. 영역 단위 선택적 향상 계층과 기대 비트 일반화가 남은 기여.", "maturity_basis": "VTM 다계층으로 Nokia 방식 재현이 현실적. 수요 모델용 사건 라벨 데이터 확보가 필요.", "dom_journal": "방송공학회논문지", "dom_conf": "IPIU, 방미공 학술대회", "ov_j_fit": "EURASIP JIVP", "ov_j_chal": "IEEE TIP", "ov_c_fit": "VCIP", "ov_c_chal": "DCC", "short": "하이브리드 VCM", "status": "idea", "fixed": []}, {"no": 6, "cat": "A", "title": "다중 카메라 시점 협조형 VCM", "novelty": 3.0, "maturity": 3.0, "verdict": "차별점은 분명하나 구현량이 많음", "novelty_basis": "CrossRoI, CrossVision, CEVAS가 다중 카메라 중복을 다룸. 동적 담당 시점, 융합 태스크를 고려한 중복 유지, VCM 파이프라인 결합은 새로운 부분.", "maturity_basis": "공개 데이터셋(Wildtrack 등)은 있음. VCM-RS 외부 RoI 입력 수정과 카메라 보정 처리가 필요하고, 고정/이동 카메라 범위가 미정.", "dom_journal": "방송공학회논문지", "dom_conf": "IPIU, 방미공 학술대회", "ov_j_fit": "IEEE Access", "ov_j_chal": "IEEE TMM", "ov_c_fit": "ACM MM Asia", "ov_c_chal": "MMSys", "short": "다중 카메라 VCM", "status": "idea", "fixed": []}, {"cat": "B", "status": "research", "short": "VCM-LL (저지연 통신)", "title": "VCM-LL (VCM 저지연 통신 연구: 링크 용량 인지 시간 축소·전송 제어)", "novelty": 3.0, "maturity": 4.0, "verdict": "실험량은 충분, 분석 목적 전송 선행과의 차별화가 관건", "novelty_basis": "분석 목적 전송 적응(DDS, AccMPEG, DAO 등) 선행이 많음. VCM 시간 재표본화 비율을 링크 용량에 맞춰 조절하고 청크 전송 제어·용량 예측기·RTP+NACK로 정리한 구성, HOTA와 LTE/5G 망 기록 평가는 VCM 관점의 새 정리. 강화학습은 고정 비율을 넘지 못해 배제.", "maturity_basis": "1단계 종료(학술대회·논문지 원고), 2단계 S2-P3~P7(방법 확정, 보류 자료 검증, 보충 실행, 비트율 무관 용량 예측기) 구동 완료 → 계획서 갱신·결과 보고서·새 데이터셋 확증 단계.", "dom_journal": "방송공학회논문지", "dom_conf": "방미공 학술대회", "ov_j_fit": "IEEE TBC", "ov_j_chal": "IEEE TCSVT", "ov_c_fit": "VCIP", "ov_c_chal": "ACM MM", "fixed": ["dom_journal", "dom_conf", "ov_j_fit", "ov_j_chal", "ov_c_fit", "ov_c_chal"], "no": 7}, {"cat": "B", "status": "research", "short": "VCM 영상 통신 복원", "title": "VCM 영상 통신 복원 연구 (패킷 손실 시 machine task가 버틸 만큼 복원)", "novelty": 3.0, "maturity": 3.5, "verdict": "문제 정의는 분명, 관문 C 방법 결과가 지면을 정함", "novelty_basis": "가장 가까운 선행은 Logan(MobiCom 2024, 코덱 인지 인페인팅+오류 전파 차단으로 분석 정확도 유지)과 M-GDM(CVPR 2025, 메타데이터 가이드 diffusion 복원). 관문 B에서 화질 최적 복원이 AP 최적이 아님을 확인한 것이 핵심 근거. 출력 수준 보정→모션 상태 복원→픽셀 복원→생성형 복원 중 태스크가 버틸 만큼의 최소 단계를 고르는 정식화를 차별점으로 추가 제안. RoI 단서는 현재 CTC 설정에서 약함(7개 중 1개).", "maturity_basis": "관문 A(손실 주입·외부 참조 주입 하네스)·B(프레임 복사 은닉 시 영향 영역 AP 13.8점 하락, 픽셀+모션 결합 oracle이 격차 약 71% 회복) 완료, 관문 C(모션·픽셀 복원 후보) 진행.", "dom_journal": "방송공학회논문지", "dom_conf": "방미공 학술대회, IPIU", "ov_j_fit": "IEEE TBC", "ov_j_chal": "IEEE TCSVT", "ov_c_fit": "IEEE MMSP", "ov_c_chal": "ACM MM", "fixed": ["ov_j_chal", "ov_c_chal"], "no": 8}, {"no": 9, "cat": "B", "title": "Ultra Low Latency 요청 부분 복호", "novelty": 3.0, "maturity": 2.0, "verdict": "문제 정의부터 확정해야 함", "novelty_basis": "R-D-A(율–왜곡–접근) 정식화는 새로울 수 있으나 RoI 스트리밍·임의 접근 연구와 경계가 가까움.", "maturity_basis": "시나리오(라이브/저장, 사람/기계)와 지연 정의가 미정이라 실험 설계 전 단계.", "dom_journal": "방송공학회논문지, 한국통신학회논문지", "dom_conf": "방미공 학술대회, 통신학회 종합학술발표회", "ov_j_fit": "IEIE SPC", "ov_j_chal": "IEEE TBC", "ov_c_fit": "ITC-CSCC", "ov_c_chal": "DCC", "short": "ULL 부분 복호", "status": "idea", "fixed": []}, {"no": 10, "cat": "B", "title": "VCM/스케일러블 스트림의 태스크 인지형 MoQ 전송 (3-A·3-B·3-C)", "novelty": 2.0, "maturity": 3.0, "verdict": "핵심 매핑이 이미 공개됨, VCM 각도로만 생존", "novelty_basis": "MoMQ 논문(arXiv 2608.10741)이 시간 계층→Subgroup 매핑, publisher priority, 다중 경로를 이미 공개. 남는 차별점은 VCM 태스크 기여도 기반 폐기와 수신 측 재생 정책(3-B).", "maturity_basis": "오픈소스 MoQ 구현과 망 에뮬레이터로 실험 가능. 국내 연구로 마무리하기로 해 해외 투고처는 비워 둠.", "dom_journal": "한국통신학회논문지", "dom_conf": "통신학회 종합학술발표회, 방미공 학술대회", "ov_j_fit": "", "ov_j_chal": "", "ov_c_fit": "", "ov_c_chal": "", "short": "MoQ 전송", "status": "idea", "fixed": [], "domestic_only": true}, {"no": 11, "cat": "C", "title": "1-A 하이브리드 스트리밍용 VCM 캐리지·동기화", "novelty": 2.0, "maturity": 3.0, "verdict": "논문보다 표준 기고 가치가 큼", "novelty_basis": "학술 논문으로는 시스템 엔지니어링 성격이 강함. 표준 기고 가치(SyfAI VCM 캐리지 예비 초안)는 별개로 높음.", "maturity_basis": "SyfAI 예비 초안 원문 확보 여부에 달림. 구현은 GPAC·dash.js로 가능.", "dom_journal": "방송공학회논문지", "dom_conf": "방미공 학술대회", "ov_j_fit": "ETRI Journal", "ov_j_chal": "IEEE TBC", "ov_c_fit": "IEEE BMSB", "ov_c_chal": "MMSys", "short": "1-A 캐리지", "status": "idea", "fixed": []}, {"no": 12, "cat": "C", "title": "기계 분석 클라이언트용 적응 스트리밍 (태스크 인지 ABR·CMCD)", "novelty": 3.0, "maturity": 3.0, "verdict": "표준 기반이라는 점이 차별점 — VCM-LL의 DASH/CMCD 확장으로 위치시키는 게 자연스러움", "novelty_basis": "DDS, AccMPEG, DAO, VaVLM 등 분석 목적 스트리밍이 있음. 표준 DASH/CMCD 위의 VCM 사다리와 신뢰도 피드백이 차별점.", "maturity_basis": "dash.js가 CMCD v2를 지원해 구현 기반이 좋음. 기계용 QoE 모델은 새로 정의해야 함.", "dom_journal": "한국통신학회논문지, 방송공학회논문지", "dom_conf": "통신학회 종합학술발표회, 방미공 학술대회", "ov_j_fit": "IEEE Access", "ov_j_chal": "IEEE TMC", "ov_c_fit": "ICCE-Asia", "ov_c_chal": "IEEE INFOCOM", "short": "기계 클라이언트 ABR", "status": "idea", "fixed": []}, {"no": 13, "cat": "D", "title": "신뢰도가 보장되는 생성형 영상 통신 (율–위험 최적화)", "novelty": 4.0, "maturity": 2.0, "verdict": "가장 새롭지만 가장 위험함 (장기 주력 후보)", "novelty_basis": "초해상도용 등각 신뢰 마스크, Conf-Gen(ICML 2026) 같은 일반 틀은 있으나, 영상 통신에서 검증 비트를 보내는 율–위험 결합은 찾지 못함. 초해상도 신뢰 마스크와의 차이를 분명히 해야 함.", "maturity_basis": "생성형 코덱 기반 코드(DiSCo, GNVC-VD 등) 확보 여부 확인 필요. 통계 이론과 계산 자원 부담이 큼.", "dom_journal": "정보과학회논문지", "dom_conf": "IPIU, KCC/KSC", "ov_j_fit": "IEEE OJSP", "ov_j_chal": "IEEE JSAC", "ov_c_fit": "NeurIPS 워크숍", "ov_c_chal": "NeurIPS", "short": "신뢰도 보장 생성형", "status": "idea", "fixed": []}], "categories": {"A": "코덱·부호화·비트스트림 분석", "B": "전송·접근", "C": "MPEG Systems 기고 겸 탑티어", "D": "CVPR·NeurIPS 목표"}, "scales": [["Novelty 5", "가까운 선행 연구가 없는 새 문제"], ["Novelty 3", "기존 문제에 새 각도"], ["Novelty 1", "대부분 이미 나온 것"], ["완성도 5", "바로 실험 가능 (설계·데이터·도구·검증 경로·자원 모두 갖춤)"], ["완성도 1", "개념 단계"]], "notes": ["평가는 2026-11-27 시점 웹 검색과 각 연구 채팅·프로젝트 기록으로 확인한 내용 기준이며, 철저한 문헌 조사는 아님.", "◆ 표시는 본인이 이미 정한 투고 목표라 그대로 두었음. 같은 칸 최대 2회 분산 원칙(SPIC 제외)은 Claude가 배정한 곳에만 적용함 — 그래서 IEEE TCSVT·ACM MM은 2회를 넘음.", "학회 등급·저널 지표(SCIE 여부, 분야 순위)는 연구실·학교 평가 기준에 따라 다르니 최종 결정 전 확인.", "ICEIC는 IEIE 공식(iceic.org)인지 확인할 것 — WASET이 같은 이름의 행사를 엶.", "CVPR·NeurIPS를 노리는 연구(3번 4단계, 13번)는 국내 학회를 예비 결과 공유용으로만 쓰고, 이중 투고 규정을 확인할 것.", "학회 마감일은 해마다 바뀌므로 각 학회 공지를 확인할 것 (IPIU 2027 마감 2026-12-18).", "학회 일정 출처: 각 학회 공식 사이트와 IEEE SPS·ComSoc·CAS 공지, 일부 마감은 학회 일정 집계 사이트 기준. INFOCOM 2027 개최일은 출처에 따라 5월 17~20일과 24~27일로 다름.", "연구 일정의 국내 마감(방미공 동계 2027, 통신학회 하계 2028)과 '추정' 표시 해외 마감은 공고가 나오면 다시 맞춰야 함. 심사 회신 대응(수정 원고)은 동시 진행 4개에서 빼고 계획함."], "abbr": [["방미공 학술대회", "한국방송·미디어공학회 하계·추계·동계 학술대회"], ["IPIU", "영상처리 및 이해에 관한 워크샵"], ["KCC/KSC", "한국정보과학회 한국컴퓨터종합학술대회 / 한국소프트웨어종합학술대회"], ["JVCIR", "Journal of Visual Communication and Image Representation"], ["EURASIP JIVP", "EURASIP Journal on Image and Video Processing"], ["IEIE SPC", "IEIE Transactions on Smart Processing and Computing (한국전자공학회 영문지)"], ["IEEE OJSP", "IEEE Open Journal of Signal Processing"], ["IEEE TBC", "IEEE Transactions on Broadcasting"], ["ICEIC / ITC-CSCC / ICCE-Asia", "한국전자공학회(IEIE) 주관·공동 주최 국제 학술대회"], ["IEEE BMSB", "IEEE Int'l Symposium on Broadband Multimedia Systems and Broadcasting"], ["IEEE TCE", "IEEE Transactions on Consumer Electronics"], ["IEEE INFOCOM", "IEEE International Conference on Computer Communications"], ["IEEE AVSS", "IEEE Int'l Conference on Advanced Visual and Signal-Based Systems (영상 감시 분야)"], ["IEEE MMSP", "IEEE Int'l Workshop on Multimedia Signal Processing"], ["ICASSP", "IEEE Int'l Conference on Acoustics, Speech and Signal Processing"]], "domestic": ["방송공학회논문지", "한국통신학회논문지", "정보과학회논문지", "방미공 학술대회", "IPIU", "통신학회 종합학술발표회", "KCC/KSC"]};
+const R = DATA.research, CAT = DATA.categories;
+const ST = {research:"진행 연구", idea:"아이디어"};
+const overseas = d => !d.domestic_only;
+const isFixed = (d, k) => (d.fixed || []).includes(k);
+const vc = (d, k) => `${esc(d[k])}${isFixed(d, k) ? '<span class="fx" title="본인이 정한 목표">◆</span>' : ""}`;
+const NS = "http://www.w3.org/2000/svg";
+const $ = s => document.querySelector(s);
+const el = (tag, attrs={}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+const fmt = v => Number(v).toFixed(1);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* tooltip */
+const tip = $("#tip");
+function showTip(html, ev){ tip.innerHTML = html; tip.style.opacity = 1; moveTip(ev); }
+function moveTip(ev){ const pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = ev.clientX + pad, y = ev.clientY + pad;
+  if (x + w > innerWidth - 8) x = ev.clientX - w - pad;
+  if (y + h > innerHeight - 8) y = ev.clientY - h - pad;
+  x = Math.max(8, Math.min(x, innerWidth - w - 8)); y = Math.max(8, Math.min(y, innerHeight - h - 8));
+  tip.style.left = x + "px"; tip.style.top = y + "px"; }
+function hideTip(){ tip.style.opacity = 0; }
+function researchTip(d){
+  return `<div class="t">${d.no}. ${esc(d.title)}</div>
+  <div class="row"><span><i class="sw" style="background:var(--series-1)"></i>Novelty</span><span>${fmt(d.novelty)}</span></div>
+  <div class="row"><span><i class="sw" style="background:var(--series-2)"></i>완성도</span><span>${fmt(d.maturity)}</span></div>
+  <div style="margin-top:4px;color:var(--text-secondary)">${esc(d.verdict)}</div><div style="margin-top:4px"><span class="st st-${d.status}">${ST[d.status]}</span></div>`;
+}
+
+/* KPIs */
+(function(){
+  const act = R.filter(overseas);
+  const res = R.filter(d => d.status === "research"), ide = R.filter(d => d.status === "idea");
+  const avg = (a, k) => (a.reduce((s,d)=>s+d[k],0)/a.length).toFixed(2);
+  const k = [
+    ["연구 상태", `진행 연구 ${res.length} · 아이디어 ${ide.length}`, true],
+    ["해외 투고 대상 평균 Novelty", avg(act, "novelty") + " / 5", false],
+    ["해외 투고 대상 평균 완성도", avg(act, "maturity") + " / 5", false],
+    ["주력 후보", "성숙도 #1 Bit-RASD · 균형 #5 하이브리드<br>신규성 #13 신뢰도 보장 생성형", true],
+  ];
+  $("#kpis").innerHTML = k.map(([l,v,s]) => `<div class="kpi"><div class="label">${l}</div><div class="value${s?" small":""}">${v}</div></div>`).join("");
+})();
+
+/* key list under matrix */
+(function(){
+  let h = "";
+  for (const c of Object.keys(CAT)) {
+    h += `<div class="cat">${c}. ${CAT[c]}</div>`;
+    for (const d of R.filter(x => x.cat === c)) h += `<div><span class="n">${d.no}</span><span>${esc(d.short)}</span>${d.status === 'research' ? ` <span class="st st-${d.status}">${ST[d.status]}</span>` : ''}</div>`;
+  }
+  $("#keylist").innerHTML = h;
+})();
+
+/* matrix */
+function drawMatrix(){
+  const svg = $("#matrix"); svg.innerHTML = "";
+  const W = 620, H = 400, ml = 52, mr = 18, mt = 16, mb = 46;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.style.width = "100%";
+  const x = v => ml + (v - 1) / 4 * (W - ml - mr), y = v => H - mb - (v - 1) / 4 * (H - mt - mb);
+  el("rect", {x: x(3), y: y(5), width: x(5) - x(3), height: y(3) - y(5), fill: "var(--zone)", rx: 4}, svg);
+  const zl = el("text", {x: x(5) - 8, y: y(5) + 18, "text-anchor": "end", "font-size": 12, fill: "var(--text-secondary)"}, svg);
+  zl.textContent = "주력 영역 (둘 다 3 이상)";
+  for (let v = 1; v <= 5; v += 0.5) {
+    const major = Number.isInteger(v);
+    el("line", {x1: x(v), x2: x(v), y1: y(1), y2: y(5), stroke: "var(--grid)", "stroke-width": major ? 1 : 0.6, "stroke-dasharray": major ? "" : "2 3"}, svg);
+    el("line", {x1: x(1), x2: x(5), y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": major ? 1 : 0.6, "stroke-dasharray": major ? "" : "2 3"}, svg);
+    if (major) {
+      const tx = el("text", {x: x(v), y: y(1) + 18, "text-anchor": "middle", "font-size": 11, fill: "var(--text-secondary)"}, svg); tx.textContent = v;
+      const ty = el("text", {x: x(1) - 10, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--text-secondary)"}, svg); ty.textContent = v;
+    }
+  }
+  const ax = el("text", {x: (x(1) + x(5)) / 2, y: H - 8, "text-anchor": "middle", "font-size": 12, fill: "var(--text-secondary)"}, svg); ax.textContent = "Novelty →";
+  const ay = el("text", {x: 14, y: (y(1) + y(5)) / 2, "text-anchor": "middle", "font-size": 12, fill: "var(--text-secondary)", transform: `rotate(-90 14 ${(y(1) + y(5)) / 2})`}, svg); ay.textContent = "완성도 →";
+  const groups = {};
+  R.forEach(d => { (groups[d.novelty + "|" + d.maturity] ||= []).push(d); });
+  for (const key in groups) {
+    const g = groups[key], n = g.length;
+    g.forEach((d, i) => {
+      const cx = x(d.novelty) + (i - (n - 1) / 2) * 31, cy = y(d.maturity);
+      const gg = el("g", {class: "chip", tabindex: 0, role: "button", "aria-label": `${d.no}. ${d.title}, ${ST[d.status]}, Novelty ${fmt(d.novelty)}, 완성도 ${fmt(d.maturity)}`}, svg);
+      if (d.status === "research") {
+        el("rect", {x: cx - 13, y: cy - 13, width: 26, height: 26, rx: 6, fill: "var(--series-1)", stroke: "var(--surface-1)", "stroke-width": 2}, gg);
+      } else {
+        el("circle", {cx, cy, r: 13, fill: "var(--series-1)", stroke: "var(--surface-1)", "stroke-width": 2}, gg);
+      }
+      const t = el("text", {x: cx, y: cy + 4, "text-anchor": "middle", "font-size": 12, "font-weight": 700,
+        fill: "#ffffff"}, gg); t.textContent = d.no;
+      gg.addEventListener("mouseenter", e => showTip(researchTip(d), e));
+      gg.addEventListener("mousemove", moveTip);
+      gg.addEventListener("mouseleave", hideTip);
+      gg.addEventListener("focus", () => { const b = gg.getBoundingClientRect(); showTip(researchTip(d), {clientX: b.right, clientY: b.bottom}); });
+      gg.addEventListener("blur", hideTip);
+      const go = () => jumpTo(d.no);
+      gg.addEventListener("click", go);
+      gg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+  }
+}
+
+/* bar path with rounded data end (right side) */
+function barPath(x0, y0, w, h, r){
+  if (w <= 0) return "";
+  r = Math.min(r, w, h / 2);
+  return `M${x0},${y0}H${x0 + w - r}A${r},${r} 0 0 1 ${x0 + w},${y0 + r}V${y0 + h - r}A${r},${r} 0 0 1 ${x0 + w - r},${y0 + h}H${x0}Z`;
+}
+
+/* score bars */
+function drawScores(){
+  const svg = $("#scores"); svg.innerHTML = "";
+  const W = 540, ml = 192, mr = 16, mt = 8, row = 31, bh = 10, gap = 2, mb = 26;
+  const H = mt + row * R.length + mb;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.style.width = "100%";
+  const x = v => ml + v / 5 * (W - ml - mr);
+  for (let v = 0; v <= 5; v++) {
+    el("line", {x1: x(v), x2: x(v), y1: mt, y2: H - mb + 4, stroke: v === 0 ? "var(--axis)" : "var(--grid)"}, svg);
+    const t = el("text", {x: x(v), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: "var(--text-secondary)"}, svg); t.textContent = v;
+  }
+  R.forEach((d, i) => {
+    const y0 = mt + i * row + (row - (bh * 2 + gap)) / 2;
+    const lab = el("text", {x: ml - 10, y: y0 + bh + 4, "text-anchor": "end", "font-size": 12, fill: "var(--text-primary)"}, svg);
+    lab.textContent = `${d.no}. ${d.short}`;
+    el("path", {d: barPath(x(0), y0, x(d.novelty) - x(0), bh, 4), fill: "var(--series-1)"}, svg);
+    el("path", {d: barPath(x(0), y0 + bh + gap, x(d.maturity) - x(0), bh, 4), fill: "var(--series-2)"}, svg);
+    const hit = el("rect", {class: "hit", x: 0, y: mt + i * row, width: W, height: row}, svg);
+    hit.addEventListener("mouseenter", e => showTip(researchTip(d), e));
+    hit.addEventListener("mousemove", moveTip);
+    hit.addEventListener("mouseleave", hideTip);
+    hit.addEventListener("click", () => jumpTo(d.no));
+  });
+}
+
+/* venue distribution */
+function venueCounts(kind){
+  const fit = kind === "j" ? "ov_j_fit" : "ov_c_fit", chal = kind === "j" ? "ov_j_chal" : "ov_c_chal";
+  const m = new Map();
+  R.filter(overseas).forEach(d => {
+    for (const [k, role] of [[fit, "fit"], [chal, "chal"]]) {
+      const v = d[k]; if (!m.has(v)) m.set(v, {name: v, fit: [], chal: []});
+      m.get(v)[role].push({d, fx: isFixed(d, k)});
+    }
+  });
+  return [...m.values()].sort((a, b) => (b.fit.length + b.chal.length) - (a.fit.length + a.chal.length) || a.name.localeCompare(b.name));
+}
+function drawVenues(kind){
+  const svg = $("#venues"); svg.innerHTML = "";
+  const rows = venueCounts(kind);
+  const W = 560, ml = 190, mr = 30, mt = 8, row = 24, bh = 14, mb = 26, max = Math.max(3, ...rows.map(r => r.fit.length + r.chal.length));
+  const H = mt + row * rows.length + mb;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.style.width = "100%";
+  const x = v => ml + v / max * (W - ml - mr);
+  for (let v = 0; v <= max; v++) {
+    el("line", {x1: x(v), x2: x(v), y1: mt, y2: H - mb + 4, stroke: v === 0 ? "var(--axis)" : "var(--grid)"}, svg);
+    const t = el("text", {x: x(v), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: "var(--text-secondary)"}, svg); t.textContent = v;
+  }
+  el("line", {x1: x(2), x2: x(2), y1: mt, y2: H - mb + 4, stroke: "var(--text-secondary)", "stroke-dasharray": "4 3", "stroke-width": 1.2}, svg);
+  rows.forEach((r, i) => {
+    const y0 = mt + i * row + (row - bh) / 2, f = r.fit.length, c = r.chal.length;
+    const lab = el("text", {x: ml - 10, y: y0 + bh - 3, "text-anchor": "end", "font-size": 12, fill: "var(--text-primary)"}, svg);
+    lab.textContent = r.name;
+    if (f) el(c ? "rect" : "path", c ? {x: x(0), y: y0, width: x(f) - x(0) - 1, height: bh, fill: "var(--series-1)"} : {d: barPath(x(0), y0, x(f) - x(0), bh, 4), fill: "var(--series-1)"}, svg);
+    if (c) el("path", {d: barPath(x(f) + (f ? 1 : 0), y0, x(f + c) - x(f) - (f ? 1 : 0), bh, 4), fill: "var(--series-2)"}, svg);
+    const tot = el("text", {x: x(f + c) + 6, y: y0 + bh - 3, "font-size": 11, fill: "var(--text-secondary)"}, svg); tot.textContent = f + c;
+    const hit = el("rect", {class: "hit", x: 0, y: mt + i * row, width: W, height: row}, svg);
+    const list = a => a.length ? a.map(o => `${o.d.no}. ${esc(o.d.short)}${o.fx ? " ◆" : ""}`).join("<br>") : "—";
+    const html = `<div class="t">${esc(r.name)}</div>
+      <div class="row"><span><i class="sw" style="background:var(--series-1)"></i>적합</span><span>${f}</span></div>
+      <div style="color:var(--text-secondary);margin:0 0 4px 13px">${list(r.fit)}</div>
+      <div class="row"><span><i class="sw" style="background:var(--series-2)"></i>도전</span><span>${c}</span></div>
+      <div style="color:var(--text-secondary);margin-left:13px">${list(r.chal)}</div>`;
+    hit.addEventListener("mouseenter", e => showTip(html, e));
+    hit.addEventListener("mousemove", moveTip);
+    hit.addEventListener("mouseleave", hideTip);
+  });
+}
+document.querySelectorAll(".seg [data-kind]").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".seg [data-kind]").forEach(o => o.setAttribute("aria-pressed", o === b));
+  drawVenues(b.dataset.kind);
+}));
+
+/* domestic distribution */
+function drawDomestic(){
+  const svg = $("#domestic"); svg.innerHTML = "";
+  const names = DATA.domestic;
+  const rows = names.map(n => {
+    const who = R.filter(d => (d.dom_journal + ", " + d.dom_conf).split(", ").includes(n));
+    return {name: n, who};
+  }).sort((a, b) => b.who.length - a.who.length);
+  const W = 460, ml = 160, mr = 30, mt = 8, row = 30, bh = 14, mb = 26, max = 12;
+  const H = mt + row * rows.length + mb;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.style.width = "100%";
+  const x = v => ml + v / max * (W - ml - mr);
+  for (let v = 0; v <= max; v += 3) {
+    el("line", {x1: x(v), x2: x(v), y1: mt, y2: H - mb + 4, stroke: v === 0 ? "var(--axis)" : "var(--grid)"}, svg);
+    const t = el("text", {x: x(v), y: H - 8, "text-anchor": "middle", "font-size": 11, fill: "var(--text-secondary)"}, svg); t.textContent = v;
+  }
+  rows.forEach((r, i) => {
+    const y0 = mt + i * row + (row - bh) / 2;
+    const lab = el("text", {x: ml - 10, y: y0 + bh - 3, "text-anchor": "end", "font-size": 12, fill: "var(--text-primary)"}, svg); lab.textContent = r.name;
+    el("path", {d: barPath(x(0), y0, x(r.who.length) - x(0), bh, 4), fill: "var(--series-1)"}, svg);
+    const t = el("text", {x: x(r.who.length) + 6, y: y0 + bh - 3, "font-size": 11, fill: "var(--text-secondary)"}, svg); t.textContent = r.who.length;
+    const hit = el("rect", {class: "hit", x: 0, y: mt + i * row, width: W, height: row}, svg);
+    const html = `<div class="t">${esc(r.name)} · ${r.who.length}건</div><div style="color:var(--text-secondary)">${r.who.map(d => `${d.no}. ${esc(d.short)}`).join("<br>")}</div>`;
+    hit.addEventListener("mouseenter", e => showTip(html, e));
+    hit.addEventListener("mousemove", moveTip);
+    hit.addEventListener("mouseleave", hideTip);
+  });
+}
+
+/* table */
+let catFilter = "all", stFilter = "all", sortKey = "no", query = "";
+const open = new Set();
+function stars(v){
+  const full = Math.floor(v), half = v - full >= 0.5, off = 5 - Math.ceil(v);
+  return `<span class="stars" aria-label="${fmt(v)}점">${"★".repeat(full)}${half ? "½" : ""}<span class="off">${"☆".repeat(off)}</span></span> <span style="color:var(--text-secondary)">${fmt(v)}</span>`;
+}
+function renderTable(){
+  let rows = R.filter(d => (catFilter === "all" || d.cat === catFilter) && (stFilter === "all" || d.status === stFilter));
+  if (query) {
+    const q = query.toLowerCase();
+    rows = rows.filter(d => [d.title, d.short, d.verdict, d.dom_journal, d.dom_conf, d.ov_j_fit, d.ov_j_chal, d.ov_c_fit, d.ov_c_chal].join(" ").toLowerCase().includes(q));
+  }
+  const key = {no: d => -d.no, sum: d => d.novelty + d.maturity, novelty: d => d.novelty, maturity: d => d.maturity}[sortKey];
+  rows = rows.slice().sort((a, b) => key(b) - key(a) || a.no - b.no);
+  const tb = $("#tbody");
+  if (!rows.length) { tb.innerHTML = `<tr><td colspan="13" style="text-align:center;color:var(--text-secondary);padding:20px">조건에 맞는 연구가 없습니다</td></tr>`; return; }
+  tb.innerHTML = rows.map(d => `
+    <tr class="main" id="row-${d.no}" data-no="${d.no}" aria-expanded="${open.has(d.no)}">
+      <td class="num"><span class="chev">${open.has(d.no) ? "▾" : "▸"}</span>${d.no}</td>
+      <td class="num"><span class="st st-${d.status}">${ST[d.status]}</span></td>
+      <td style="min-width:175px"><span class="pill" title="${esc(CAT[d.cat])}">${d.cat}</span> <span class="ttl" style="font-weight:600">${esc(d.title)}</span></td>
+      <td class="num">${stars(d.novelty)}</td>
+      <td class="num">${stars(d.maturity)}</td>
+      <td class="num"><b>${fmt(d.novelty + d.maturity)}</b></td>
+      <td style="min-width:125px">${esc(d.verdict)}</td>
+      <td>${vc(d, "dom_journal")}</td><td>${vc(d, "dom_conf")}</td>
+      <td>${vc(d, "ov_j_fit")}</td><td>${vc(d, "ov_j_chal")}</td><td>${vc(d, "ov_c_fit")}</td><td>${vc(d, "ov_c_chal")}</td>
+    </tr>
+    ${open.has(d.no) ? `<tr class="detail"><td></td><td colspan="12">
+      <div><b>Novelty 근거</b>${esc(d.novelty_basis)}</div>
+      <div style="margin-top:4px"><b>완성도 근거</b>${esc(d.maturity_basis)}</div></td></tr>` : ""}`).join("");
+  tb.querySelectorAll("tr.main").forEach(tr => tr.addEventListener("click", () => {
+    const n = +tr.dataset.no; open.has(n) ? open.delete(n) : open.add(n); renderTable();
+  }));
+}
+function jumpTo(no){
+  showPage("table");
+  catFilter = "all"; stFilter = "all"; query = ""; $("#q").value = ""; buildCatSeg(); buildStSeg();
+  open.add(no); renderTable();
+  const tr = $("#row-" + no); tr.scrollIntoView({behavior: "smooth", block: "center"});
+  tr.classList.add("flash"); setTimeout(() => tr.classList.remove("flash"), 1400);
+}
+function buildCatSeg(){
+  const opts = [["all", "전체"], ...Object.keys(CAT).map(c => [c, `${c}. ${CAT[c]}`])];
+  $("#catSeg").innerHTML = opts.map(([k, l]) => `<button type="button" data-cat="${k}" aria-pressed="${catFilter === k}">${esc(l)}</button>`).join("");
+  $("#catSeg").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { catFilter = b.dataset.cat; buildCatSeg(); renderTable(); }));
+}
+function buildStSeg(){
+  const opts = [["all", "전체 상태"], ["research", "진행 연구"], ["idea", "아이디어"]];
+  $("#stSeg").innerHTML = opts.map(([k, l]) => `<button type="button" data-st="${k}" aria-pressed="${stFilter === k}">${l}</button>`).join("");
+  $("#stSeg").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { stFilter = b.dataset.st; buildStSeg(); renderTable(); }));
+}
+$("#sortSel").addEventListener("change", e => { sortKey = e.target.value; renderTable(); });
+$("#q").addEventListener("input", e => { query = e.target.value.trim(); renderTable(); });
+
+/* progress */
+const PST = {done: "완료", doing: "진행 중", next: "다음 할 일", todo: "예정"};
+function pIcon(st){
+  const c = {done: `<circle cx="6" cy="6" r="5.5" fill="var(--series-1)"/><path d="M3.3 6.2l1.8 1.8 3.6-3.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+    doing: `<circle cx="6" cy="6" r="4.8" fill="var(--surface-1)" stroke="var(--series-1)" stroke-width="1.4"/><path d="M6 1.2a4.8 4.8 0 0 1 0 9.6z" fill="var(--series-1)"/>`,
+    next: `<circle cx="6" cy="6" r="4.6" fill="var(--surface-1)" stroke="var(--accent)" stroke-width="2.2"/>`,
+    todo: `<circle cx="6" cy="6" r="4.8" fill="none" stroke="var(--axis)" stroke-width="1.4"/>`}[st];
+  return `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">${c}</svg>`;
+}
+function daysBetween(a, b){ return Math.round((new Date(b) - new Date(a)) / 864e5); }
+(function(){
+  $("#pkey").innerHTML = Object.keys(PST).map(k => `<span>${pIcon(k)}${PST[k]}</span>`).join("");
+  $("#prows").innerHTML = DATA.progress.map(p => {
+    const age = daysBetween(p.last, DATA.asof);
+    const stale = age > 14 ? ` <span class="stale">${age}일 전 기록 · 이후 진행분 미반영 가능</span>` : "";
+    return `<div class="prow" role="group" aria-label="${p.no}. ${esc(p.short)} 달성률 ${p.pct}%">
+      <div class="pname"><div class="t" data-jump="${p.no}">${p.no}. ${esc(p.short)}</div>
+        <div class="m">근거: ${esc(p.src)} · 마지막 기록 ${p.last}${stale}</div></div>
+      <div>
+        <div class="pbar" data-no="${p.no}">${p.ms.map((m, i) => `<span class="s-${m.state}" data-i="${i}"></span>`).join("")}</div>
+        <ol class="mlist" data-no="${p.no}">${p.ms.map((m, i) => `<li class="${m.state}" data-i="${i}">${pIcon(m.state)}<span class="n">${i + 1}</span><span class="lb">${esc(m.label)}</span>${m.date ? `<span class="d">${m.date}</span>` : ""}</li>`).join("")}</ol>
+        <div class="pnext"><b>다음</b> ${esc(p.next)}</div>
+      </div>
+      <div class="ppct"><div class="v">${p.pct}<small>%</small></div>
+        <div class="c">완료 ${p.done} / ${p.total}단계${p.doing ? `<br>진행 중 ${p.doing}` : ""}</div></div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll(".pbar").forEach(bar => {
+    const p = DATA.progress.find(q => q.no === +bar.dataset.no), list = document.querySelector(`.mlist[data-no="${p.no}"]`);
+    const mark = (i, on) => { bar.children[i].classList.toggle("on", on); list.children[i].classList.toggle("on", on); };
+    const tipHtml = i => { const m = p.ms[i]; return `<div class="t">${i + 1}. ${esc(m.label)}</div><div class="row"><span>${PST[m.state]}</span><span>${m.date || "—"}</span></div>`; };
+    [...bar.children, ...list.children].forEach(n => {
+      const i = +n.dataset.i;
+      n.addEventListener("mouseenter", e => { mark(i, true); if (n.parentNode === bar) showTip(tipHtml(i), e); });
+      n.addEventListener("mousemove", e => { if (n.parentNode === bar) moveTip(e); });
+      n.addEventListener("mouseleave", () => { mark(i, false); hideTip(); });
+    });
+  });
+  document.querySelectorAll("[data-jump]").forEach(t => t.addEventListener("click", () => jumpTo(+t.dataset.jump)));
+})();
+
+/* conference table */
+const ASOF = DATA.asof;
+(function(){
+  const short = no => (R.find(d => d.no === no) || {}).short || "";
+  $("#ccount").textContent = DATA.confs.length;
+  $("#ctbody").innerHTML = DATA.confs.map(c => `<tr><td style="font-weight:700;white-space:nowrap">${esc(c.name)}</td>
+    <td>${c.rel.map(n => `<span class="rn" title="${esc(short(n))}">${n}</span>`).join("")}</td>
+    ${["2026","2027","2028"].map(y => { const [ev, dl, st] = c.y[y];
+      const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?(?:~(\d{2}))?/.exec(dl);
+      const past = !!m && (m[3] ? `${m[1]}-${m[2]}-${m[3]}` < ASOF : `${m[1]}-${m[4] || m[2]}` < ASOF.slice(0, 7));
+      const badge = past ? `<span class="bdg past">지남</span>` : `<span class="bdg ${st}">${st === "ok" ? "확정" : "추정"}</span>`;
+      return `<td><div class="ev">${esc(ev)}</div><div class="dl ${past ? "past" : "up"}">마감 <b>${esc(dl)}</b>${badge}</div></td>`; }).join("")}</tr>`).join("");
+})();
+
+/* ===== 일정 페이지 ===== */
+const RANGES = {all: ["2026-11-01", "2029-01-01"], "2027": ["2026-11-15", "2028-01-01"], "2028": ["2027-12-01", "2029-01-01"]};
+let planRange = "2027";
+const DAY = 864e5;
+const dd = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
+const KIND = {exp: "실험", write: "집필", wait: "심사 대기", pause: "대기 (자리 없음)"};
+const BASIS = {ok: "마감 확정", est: "마감 추정", rolling: "상시 접수"};
+const BASIS_BDG = {ok: '<span class="bdg ok">마감 확정</span>', est: '<span class="bdg est">마감 추정</span>', rolling: '<span class="bdg">상시 접수</span>'};
+function vshort(v){
+  const m = {"방송공학회논문지": "논문지", "방미공 동계학술대회": "방미공 동계", "한국통신학회논문지": "통신학회지",
+    "MPEG Systems 입력 기고": "MPEG 기고", "NeurIPS 2027 워크숍": "NeurIPS WS", "ETRI Journal": "ETRI J."};
+  if (m[v]) return m[v];
+  return v.replace(/^IEEE\s+/, "").replace(/\s+20\d\d$/, "").replace(/ 20\d\d /, " ");
+}
+const ALLSUB = [];
+DATA.plan.forEach(p => p.sub.forEach(s => ALLSUB.push({...s, p})));
+ALLSUB.sort((a, b) => a.d.localeCompare(b.d) || a.p.no - b.p.no);
+const dday = d => { const n = dd(ASOF, d); return n < 0 ? "지남" : n === 0 ? "D-day" : `D-${n}`; };
+function subTip(s){
+  return `<div class="t">◆ ${esc(s.v)}</div><div class="row"><span>${s.p.no}. ${esc(s.p.short)}</span><span>${s.d} · ${dday(s.d)}</span></div><div style="color:var(--text-secondary)">${BASIS[s.k]} · ${esc(s.c)}</div>`;
+}
+function bindTip(node, html){
+  node.addEventListener("mouseenter", e => showTip(typeof html === "function" ? html() : html, e));
+  node.addEventListener("mousemove", moveTip); node.addEventListener("mouseleave", hideTip);
+}
+
+function drawUpcoming(){
+  const up = ALLSUB.filter(s => s.d >= ASOF);
+  $("#ucount").textContent = `남은 ${up.length}건`;
+  let lastM = "";
+  $("#upcoming").innerHTML = up.map(s => {
+    const n = dd(ASOF, s.d);
+    const m = s.d.slice(0, 7), mh = m !== lastM ? `<div class="umon">${+m.slice(5)}월<span>${m.slice(0, 4)}</span></div>` : ""; lastM = m;
+    return mh + `<div class="ucard${n <= 31 ? " soon" : ""}">
+      <div class="uday">${dday(s.d)}</div>
+      <div class="udate">${s.d}</div>
+      <div class="uven">${esc(s.v)}</div>
+      <div class="ures" data-jump="${s.p.no}">${s.p.no}. ${esc(s.p.short)}</div>
+      <div class="ubasis">${BASIS_BDG[s.k]}</div>
+      <div class="ucon">${esc(s.c)}</div></div>`;
+  }).join("");
+  const box = $("#upcoming");
+  $("#uPrev").onclick = () => box.scrollBy({left: -box.clientWidth * 0.8, behavior: "smooth"});
+  $("#uNext").onclick = () => box.scrollBy({left: box.clientWidth * 0.8, behavior: "smooth"});
+  $("#upcoming").querySelectorAll("[data-jump]").forEach(t => t.addEventListener("click", () => jumpTo(+t.dataset.jump)));
+}
+
+function axis(svg, x, r0, r1, W, ml, mr, top, H, zoom){
+  // year band + month labels + grid
+  const y0 = +r0.slice(0, 4), y1 = +r1.slice(0, 4);
+  for (let yy = y0; yy <= y1; yy++) {
+    const a = `${yy}-01-01` < r0 ? r0 : `${yy}-01-01`, b = `${yy + 1}-01-01` > r1 ? r1 : `${yy + 1}-01-01`;
+    if (a >= b) continue;
+    el("rect", {x: x(a), y: top, width: x(b) - x(a), height: 18, fill: yy % 2 ? "var(--surface-2)" : "var(--zone)"}, svg);
+    const t = el("text", {x: (x(a) + x(b)) / 2, y: top + 13, "text-anchor": "middle", "font-size": 12, "font-weight": 700, fill: "var(--text-primary)"}, svg);
+    t.textContent = `${yy}년`;
+  }
+  for (let t = Date.parse(r0.slice(0, 7) + "-01"); t < Date.parse(r1); ) {
+    const d = new Date(t), yy = d.getUTCFullYear(), mm = d.getUTCMonth() + 1;
+    const a = `${yy}-${String(mm).padStart(2, "0")}-01`, nx = mm === 12 ? `${yy + 1}-01-01` : `${yy}-${String(mm + 1).padStart(2, "0")}-01`;
+    if (a >= r0) el("line", {x1: x(a), x2: x(a), y1: top + 18, y2: H, stroke: mm === 1 ? "var(--axis)" : "var(--grid)", "stroke-width": mm === 1 ? 1.2 : 0.8}, svg);
+    const a2 = a < r0 ? r0 : a, b2 = nx > r1 ? r1 : nx;
+    if ((x(b2) - x(a2)) > 14) { const lb = el("text", {x: (x(a2) + x(b2)) / 2, y: top + 32, "text-anchor": "middle", "font-size": 10.5, fill: "var(--text-secondary)"}, svg); lb.textContent = zoom ? `${mm}월` : mm; }
+    t = Date.parse(nx);
+  }
+}
+
+const isCompact = () => matchMedia("(max-width:1000px)").matches;
+function sizeSvg(svg, cmp, W, H){
+  if (cmp) { svg.style.width = W + "px"; svg.style.minWidth = W + "px"; svg.style.height = H + "px"; }
+  else { svg.style.width = "100%"; svg.style.minWidth = ""; svg.style.height = ""; }
+}
+function stickyLabels(svg, cmp, H, w, items){
+  const wrap = svg.parentNode; let col = wrap.querySelector(".glabels");
+  wrap.classList.toggle("flex", cmp);
+  if (!cmp) { if (col) col.remove(); return; }
+  if (!col) { col = document.createElement("div"); col.className = "glabels"; wrap.insertBefore(col, svg); }
+  col.style.width = w + "px"; col.style.height = H + "px";
+  col.innerHTML = items.map(it => `<div class="gl${it.no ? " link" : ""}" ${it.no ? `data-jump="${it.no}"` : ""} style="top:${it.y}px;height:${it.h}px">${it.html}</div>`).join("");
+  col.querySelectorAll("[data-jump]").forEach(d => d.addEventListener("click", () => jumpTo(+d.dataset.jump)));
+}
+function drawGantt(){
+  const svg = $("#gantt"); svg.innerHTML = "";
+  const [r0, r1] = RANGES[planRange], zoom = planRange !== "all", cmp = isCompact();
+  const W = cmp ? (planRange === "all" ? 1000 : 820) : 1140, ml = cmp ? 4 : 210, mr = 14, top = 0, head = 40, lane = 15, lgap = 3, band = 28, pad = 6, ghead = 22;
+  const x = d => ml + (Date.parse(d) - Date.parse(r0)) / (Date.parse(r1) - Date.parse(r0)) * (W - ml - mr);
+  const inR = (a, b) => b >= r0 && a < r1;
+  const groups = [["research", "진행 연구"], ["idea", "아이디어 (착수 순)"]];
+  // layout
+  const rows = []; let y = head + 6;
+  groups.forEach(([st, name]) => {
+    const ps = DATA.plan.filter(p => (p.status === "research") === (st === "research"));
+    rows.push({group: name, n: ps.length, y}); y += ghead;
+    ps.forEach(p => {
+      const ph = p.ph.map(f => ({...f})).sort((a, b) => a.s.localeCompare(b.s)); const lanes = [];
+      ph.forEach(f => { let k = lanes.findIndex(e => e < f.s); if (k < 0) { k = lanes.length; lanes.push(""); } lanes[k] = f.e; f.k = k; });
+      const h = band + lanes.length * lane + (lanes.length - 1) * lgap + pad * 2;
+      rows.push({p, ph, y, h}); y += h;
+    });
+  });
+  const H = y + 4; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); sizeSvg(svg, cmp, W, H);
+  stickyLabels(svg, cmp, H, 132, rows.map(r => r.group
+    ? {y: r.y, h: ghead, html: `<b class="gl-g">${esc(r.group)} · ${r.n}</b>`}
+    : {y: r.y, h: r.h, no: r.p.no, html: (() => { const nx = r.p.sub.find(s => s.d >= ASOF);
+        return `<span class="gl-n${r.p.status === "research" ? " r" : ""}">${r.p.no}. ${esc(r.p.short)}</span><span class="gl-s">${nx ? `◆ ${nx.d.slice(2).replace(/-/g, ".")} ${esc(vshort(nx.v))}` : "남은 투고 없음"}</span>`; })()}));
+  rows.forEach((r, i) => { if (r.p && i % 2) el("rect", {x: 0, y: r.y, width: W, height: r.h, fill: "var(--surface-2)", opacity: 0.6}, svg); });
+  axis(svg, x, r0, r1, W, ml, mr, top, H, zoom);
+  const defs = el("defs", {}, svg);
+  const pat = el("pattern", {id: "hatch", width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)"}, defs);
+  el("rect", {width: 5, height: 5, fill: "var(--surface-1)"}, pat);
+  el("line", {x1: 0, y1: 0, x2: 0, y2: 5, stroke: "var(--axis)", "stroke-width": 2}, pat);
+  const cp = el("clipPath", {id: "gclip"}, defs); el("rect", {x: ml, y: 0, width: W - ml - mr, height: H}, cp);
+  const plot = el("g", {"clip-path": "url(#gclip)"}, svg);
+  const halo = "paint-order:stroke;stroke:var(--surface-1);stroke-width:3px;stroke-linejoin:round";
+  rows.forEach(r => {
+    if (r.group) {
+      if (cmp) { el("line", {x1: 0, x2: W, y1: r.y + ghead - 1, y2: r.y + ghead - 1, stroke: "var(--border)"}, svg); return; }
+      const t = el("text", {x: 8, y: r.y + 15, "font-size": 11.5, "font-weight": 700, fill: "var(--text-secondary)"}, svg); t.textContent = `${r.group} · ${r.n}`;
+      el("line", {x1: 0, x2: W, y1: r.y + ghead - 1, y2: r.y + ghead - 1, stroke: "var(--border)"}, svg);
+      return;
+    }
+    const p = r.p, lanesTop = r.y + pad + band;
+    if (!cmp) {
+    const lab = el("text", {x: 10, y: r.y + r.h / 2 - 2, "font-size": 12.5, "font-weight": p.status === "research" ? 700 : 500, fill: "var(--text-primary)", style: "cursor:pointer"}, svg);
+    lab.textContent = `${p.no}. ${p.short}`; lab.addEventListener("click", () => jumpTo(p.no));
+    if (p.note) bindTip(lab, `<div class="t">${p.no}. ${esc(p.short)}</div><div style="color:var(--text-secondary)">${esc(p.note)}</div>`);
+    const nx = p.sub.find(s => s.d >= ASOF);
+    const sl = el("text", {x: 10, y: r.y + r.h / 2 + 13, "font-size": 11, fill: nx ? "var(--accent)" : "var(--text-secondary)"}, svg);
+    sl.textContent = nx ? `다음 ◆ ${nx.d.slice(2).replace(/-/g, ".")} ${vshort(nx.v)}` : "남은 투고 없음";
+    }
+    r.ph.forEach(f => {
+      if (!inR(f.s, f.e)) return;
+      const X0 = x(f.s) + 1, X1 = x(f.e) + (x("2026-11-02") - x("2026-11-01")) - 1, w = Math.max(2, X1 - X0), Y = lanesTop + f.k * (lane + lgap);
+      const a = {x: X0, y: Y, width: w, height: lane, rx: 3};
+      if (f.t === "exp") a.fill = "var(--series-1)";
+      else if (f.t === "write") a.fill = "var(--series-2)";
+      else if (f.t === "wait") Object.assign(a, {fill: "url(#hatch)", stroke: "var(--axis)", "stroke-width": 1});
+      else Object.assign(a, {fill: "none", stroke: "var(--text-secondary)", "stroke-width": 1.2, "stroke-dasharray": "3 2"});
+      const b = el("rect", a, plot);
+      bindTip(b, `<div class="t">${p.no}. ${esc(p.short)}</div><div>${esc(f.l)}</div><div class="row"><span>${KIND[f.t]}</span><span>${f.s.slice(2)} ~ ${f.e.slice(2)} · ${dd(f.s, f.e) + 1}일</span></div>`);
+      // inside label
+      const vis0 = Math.max(X0, ml + 2), vis1 = Math.min(X0 + w, W - mr - 2);
+      const t = el("text", {x: vis0 + 5, y: Y + 11, "font-size": 10.5, fill: f.t === "exp" || f.t === "write" ? "#ffffff" : "var(--text-secondary)", "pointer-events": "none", style: f.t === "exp" || f.t === "write" ? "" : halo}, plot);
+      t.textContent = f.l;
+      if (t.getComputedTextLength() > vis1 - vis0 - 10) {
+        t.textContent = KIND[f.t];
+        if (t.getComputedTextLength() > vis1 - vis0 - 10) t.remove();
+      }
+    });
+    // submissions with labels (two lines, collision-aware)
+    const used = [[], []];
+    p.sub.filter(s => s.d >= r0 && s.d < r1).forEach(s => {
+      const X = x(s.d), Yd = lanesTop - 7;
+      const g = el("g", {style: "cursor:pointer"}, plot);
+      el("path", {d: `M${X},${Yd - 5}L${X + 5.5},${Yd + 0.5} ${X},${Yd + 6}L${X - 5.5},${Yd + 0.5}Z`, fill: s.d < ASOF ? "var(--axis)" : "var(--text-primary)", stroke: "var(--surface-1)", "stroke-width": 1.5}, g);
+      el("rect", {x: X - 9, y: Yd - 9, width: 18, height: 18, fill: "transparent"}, g);
+      bindTip(g, subTip({...s, p}));
+      const t = el("text", {x: X, y: 0, "text-anchor": "middle", "font-size": 10.5, "font-weight": 600, fill: "var(--text-primary)", style: halo, "pointer-events": "none"}, plot);
+      t.textContent = vshort(s.v);
+      const w = t.getComputedTextLength(), a = X - w / 2 - 3, b = X + w / 2 + 3;
+      let line = [0, 1].find(L => used[L].every(([u, v]) => b < u || a > v));
+      if (line === undefined) { t.remove(); return; }
+      used[line].push([a, b]); t.setAttribute("y", Yd - 9 - line * 12);
+    });
+  });
+  if (ASOF >= r0 && ASOF < r1) {
+    const T = x(ASOF);
+    el("line", {x1: T, x2: T, y1: head - 4, y2: H, stroke: "var(--accent)", "stroke-width": 2, "stroke-dasharray": "4 3"}, svg);
+    const tl = el("text", {x: T + 4, y: head + 14, "font-size": 10.5, "font-weight": 700, fill: "var(--accent)"}, svg); tl.textContent = "오늘";
+  }
+}
+
+function slotSpans(){
+  const spans = [];
+  DATA.plan.forEach(p => {
+    const act = p.ph.filter(f => f.t === "exp" || f.t === "write").map(f => [f.s, f.e]).sort((a, b) => a[0].localeCompare(b[0]));
+    let cur = null;
+    act.forEach(([s, e]) => {
+      if (cur && dd(cur.e, s) <= 3) { if (e > cur.e) cur.e = e; }
+      else { if (cur) spans.push(cur); cur = {p, s, e}; }
+    });
+    if (cur) spans.push(cur);
+  });
+  spans.sort((a, b) => a.s.localeCompare(b.s));
+  const lanes = [];
+  spans.forEach(sp => { let k = lanes.findIndex(e => e < sp.s); if (k < 0) { k = lanes.length; lanes.push(""); } lanes[k] = sp.e; sp.k = k; });
+  return {spans, n: lanes.length};
+}
+function drawSlots(){
+  const svg = $("#slots"); svg.innerHTML = "";
+  const [r0, r1] = RANGES[planRange], zoom = planRange !== "all";
+  const {spans, n} = slotSpans();
+  const cmp = isCompact(), W = cmp ? (planRange === "all" ? 1000 : 820) : 1140, ml = cmp ? 4 : 210, mr = 14, head = 40, lh = 28, gap = 6;
+  const L = Math.max(4, n), H = head + 8 + L * (lh + gap);
+  const x = d => ml + (Date.parse(d) - Date.parse(r0)) / (Date.parse(r1) - Date.parse(r0)) * (W - ml - mr);
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); sizeSvg(svg, cmp, W, H);
+  stickyLabels(svg, cmp, H, 64, [...Array(L)].map((_, k) => ({y: head + 8 + k * (lh + gap), h: lh, html: `<span class="gl-n r">${k < 4 ? `자리 ${k + 1}` : `초과 ${k - 3}`}</span>`})));
+  axis(svg, x, r0, r1, W, ml, mr, 0, H, zoom);
+  for (let k = 0; k < L; k++) {
+    const Y = head + 8 + k * (lh + gap);
+    el("rect", {x: ml, y: Y, width: W - ml - mr, height: lh, rx: 4, fill: "var(--surface-2)", stroke: "var(--border)"}, svg);
+    if (!cmp) { const t = el("text", {x: 10, y: Y + 18, "font-size": 12.5, "font-weight": 700, fill: k < 4 ? "var(--text-primary)" : "var(--series-2)"}, svg);
+    t.textContent = k < 4 ? `자리 ${k + 1}` : `초과 ${k - 3}`; }
+  }
+  const defs = el("defs", {}, svg), cp = el("clipPath", {id: "sclip"}, defs);
+  el("rect", {x: ml, y: 0, width: W - ml - mr, height: H}, cp);
+  const plot = el("g", {"clip-path": "url(#sclip)"}, svg);
+  spans.forEach(sp => {
+    if (!(sp.e >= r0 && sp.s < r1)) return;
+    const Y = head + 8 + sp.k * (lh + gap), X0 = x(sp.s) + 1, X1 = x(sp.e) + (x("2026-11-02") - x("2026-11-01")) - 1, w = Math.max(2, X1 - X0);
+    const res = sp.p.status === "research";
+    const b = el("rect", {x: X0, y: Y + 2, width: w, height: lh - 4, rx: 4, fill: res ? "var(--series-1)" : "var(--series-2)", style: "cursor:pointer"}, plot);
+    const inside = sp.p.ph.filter(f => f.s <= sp.e && f.e >= sp.s && (f.t === "exp" || f.t === "write"));
+    bindTip(b, `<div class="t">${sp.p.no}. ${esc(sp.p.short)}</div><div class="row"><span>자리 ${sp.k + 1}</span><span>${sp.s.slice(2)} ~ ${sp.e.slice(2)}</span></div><div style="color:var(--text-secondary)">${inside.map(f => `${KIND[f.t]} · ${esc(f.l)}`).join("<br>")}</div>`);
+    b.addEventListener("click", () => jumpTo(sp.p.no));
+    const vis0 = Math.max(X0, ml + 2), vis1 = Math.min(X0 + w, W - mr - 2);
+    const t = el("text", {x: vis0 + 6, y: Y + 18, "font-size": 11.5, "font-weight": 600, fill: "#ffffff", "pointer-events": "none"}, plot);
+    t.textContent = `${sp.p.no}. ${sp.p.short}`;
+    if (t.getComputedTextLength() > vis1 - vis0 - 10) { t.textContent = `${sp.p.no}`; if (t.getComputedTextLength() > vis1 - vis0 - 8) t.remove(); }
+  });
+  if (ASOF >= r0 && ASOF < r1) { const T = x(ASOF); el("line", {x1: T, x2: T, y1: head - 4, y2: H, stroke: "var(--accent)", "stroke-width": 2, "stroke-dasharray": "4 3"}, svg); }
+}
+
+function drawSubList(){
+  const [r0, r1] = RANGES[planRange];
+  const rows = ALLSUB.filter(s => s.d >= r0 && s.d < r1);
+  let q = "", html = "";
+  rows.forEach(r => {
+    const yy = r.d.slice(0, 4), qn = Math.floor((+r.d.slice(5, 7) - 1) / 3) + 1, key = `${yy}-${qn}`;
+    if (key !== q) { q = key; html += `<tr class="qhead"><td colspan="6">${yy}년 ${qn}분기 (${(qn - 1) * 3 + 1}~${qn * 3}월)</td></tr>`; }
+    const past = r.d < ASOF;
+    html += `<tr class="${past ? "past" : ""}"><td class="d">${r.d}</td><td class="d">${dday(r.d)}</td><td><a href="#" data-jump="${r.p.no}">${r.p.no}. ${esc(r.p.short)}</a></td><td style="font-weight:600">${esc(r.v)}</td><td>${BASIS_BDG[r.k]}</td><td>${esc(r.c)}</td></tr>`;
+  });
+  $("#sbody").innerHTML = html || `<tr><td colspan="6" style="color:var(--text-secondary)">이 기간에 투고 없음</td></tr>`;
+  $("#sbody").querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); jumpTo(+a.dataset.jump); }));
+  $("#pnotes").innerHTML = DATA.plan.filter(p => p.note).map(p => `<li><b>${p.no}. ${esc(p.short)}</b> — ${esc(p.note)}</li>`).join("");
+}
+function drawPlan(){ drawUpcoming(); drawGantt(); drawSlots(); drawSubList(); }
+document.querySelectorAll("#rangeSeg button").forEach(b => b.addEventListener("click", () => {
+  planRange = b.dataset.r;
+  document.querySelectorAll("#rangeSeg button").forEach(o => o.setAttribute("aria-pressed", o === b));
+  drawGantt(); drawSlots(); drawSubList();
+}));
+
+/* ===== 페이지 전환 ===== */
+const PAGE_IDS = [...document.querySelectorAll(".tabs [data-page]")].map(b => b.dataset.page);
+const DRAW = {
+  overview: () => { drawMatrix(); drawScores(); },
+  venues: () => { const k = document.querySelector('.seg [data-kind][aria-pressed="true"]'); drawVenues(k ? k.dataset.kind : "j"); drawDomestic(); },
+  plan: drawPlan,
+};
+function updateScrollHints(){
+  document.querySelectorAll(".svgwrap").forEach(w => {
+    const sc = w.scrollWidth > w.clientWidth + 4;
+    w.classList.toggle("scrolls", sc);
+    w.classList.toggle("end", sc && w.scrollLeft + w.clientWidth >= w.scrollWidth - 4);
+  });
+}
+document.querySelectorAll(".svgwrap").forEach(w => w.addEventListener("scroll", () => { hideTip(); updateScrollHints(); }, {passive: true}));
+let rzT; window.addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { hideTip(); updateScrollHints(); }, 120); });
+document.addEventListener("touchstart", e => { if (!e.target.closest("svg, .pbar")) hideTip(); }, {passive: true});
+window.addEventListener("scroll", hideTip, {passive: true});
+window.addEventListener("beforeprint", () => { Object.values(DRAW).forEach(f => f()); });
+matchMedia("(max-width:1000px)").addEventListener("change", () => { const cur = document.querySelector(".page:not([hidden])"); if (cur && DRAW[cur.dataset.page]) DRAW[cur.dataset.page](); updateScrollHints(); });
+function showPage(id, push){
+  if (!PAGE_IDS.includes(id)) id = "overview";
+  document.querySelectorAll(".page").forEach(pg => pg.hidden = pg.dataset.page !== id);
+  document.querySelectorAll(".tabs [data-page]").forEach(b => { b.setAttribute("aria-selected", b.dataset.page === id); });
+  hideTip();
+  if (DRAW[id]) DRAW[id]();
+  const tb = document.querySelector(`.tabs [data-page="${id}"]`); if (tb) tb.scrollIntoView({block: "nearest", inline: "center"});
+  requestAnimationFrame(updateScrollHints);
+  if (push !== false && location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+}
+document.querySelectorAll(".tabs [data-page]").forEach(b => b.addEventListener("click", () => { showPage(b.dataset.page); window.scrollTo({top: 0}); }));
+window.addEventListener("hashchange", () => showPage(location.hash.slice(1), false));
+
+/* notes */
+$("#scales").innerHTML = DATA.scales.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("");
+$("#notes").innerHTML = DATA.notes.map(n => `<li>${esc(n)}</li>`).join("");
+$("#abbr").innerHTML = DATA.abbr.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("");
+
+/* theme toggle */
+$("#themeBtn").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme")
+    || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+});
+
+buildStSeg(); buildCatSeg(); renderTable();
+showPage(location.hash.slice(1), false);
+</script>
+</body>
+</html>
